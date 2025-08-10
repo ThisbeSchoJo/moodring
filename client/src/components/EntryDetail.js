@@ -86,123 +86,16 @@ const EntryDetail = () => {
   return (
     <div className="entry-detail">
       <div className="detail-header">
-        <button onClick={() => navigate('/')} className="back-btn">
-          <ArrowLeft size={20} />
+        <button>
           Back to Journal
         </button>
-        <div className="header-actions">
-          <button
-            onClick={() => setIsEditing(!isEditing)}
-            className="edit-btn"
-          >
-            <Edit size={16} />
-            {isEditing ? 'Cancel' : 'Edit'}
-          </button>
-          <button onClick={handleDelete} className="delete-btn">
-            <Trash2 size={16} />
-            Delete
-          </button>
-        </div>
       </div>
 
       <div className="entry-content">
-        <div className="entry-meta">
-          <div className="entry-date">
-            <Calendar size={16} />
-            {formatDate(entry.timestamp)}
-          </div>
-          <div
-            className="emotion-badge large"
-            style={{
-              backgroundColor: entry.emotion_analysis.color_assignment
-            }}
-          >
-            {entry.emotion_analysis.primary_emotion}
-          </div>
-        </div>
-
-        {isEditing ? (
-          <div className="edit-form">
-            <textarea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-              rows={15}
-              className="edit-textarea"
-            />
-            <div className="edit-actions">
-              <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="save-btn"
-              >
-                {isSaving ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="entry-text">
-            <p>{entry.content}</p>
-          </div>
-        )}
+        <div className="entry-meta"></div>
       </div>
 
-      <div className="emotion-analysis">
-        <h3>Emotion Analysis</h3>
-        <div className="analysis-grid">
-          <div className="analysis-card">
-            <div className="analysis-icon">
-              <Heart size={20} />
-            </div>
-            <div className="analysis-content">
-              <h4>Primary Emotion</h4>
-              <p>{entry.emotion_analysis.primary_emotion}</p>
-            </div>
-          </div>
-
-          <div className="analysis-card">
-            <div className="analysis-icon">
-              <div className="intensity-meter">
-                <div
-                  className="intensity-fill"
-                  style={{
-                    width: `${(entry.emotion_analysis.emotion_intensity / 10) * 100}%`
-                  }}
-                ></div>
-              </div>
-            </div>
-            <div className="analysis-content">
-              <h4>Intensity</h4>
-              <p>{entry.emotion_analysis.emotion_intensity}/10</p>
-            </div>
-          </div>
-
-          <div className="analysis-card">
-            <div className="analysis-icon">
-              <div
-                className="color-display"
-                style={{
-                  backgroundColor: entry.emotion_analysis.color_assignment
-                }}
-              ></div>
-            </div>
-            <div className="analysis-content">
-              <h4>Color Assignment</h4>
-              <p>{entry.emotion_analysis.color_assignment}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="emotion-tags-section">
-          <h4>Emotion Tags</h4>
-          <div className="emotion-tags">
-            {entry.emotion_analysis.emotion_tags.map((tag, index) => (
-              <span key={index} className="emotion-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+      <div className="emotion-analysis"></div>
     </div>
   );
 };

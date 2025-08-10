@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Home } from 'lucide-react';
 
-const Header = () => {
+const NavBar = () => {
   return (
     <header className="header">
       <div className="header-content">
@@ -11,11 +10,9 @@ const Header = () => {
         </Link>
         <nav className="nav">
           <Link to="/" className="nav-link">
-            <Home size={20} />
             <span>Journal</span>
           </Link>
           <Link to="/new" className="nav-link">
-            <Plus size={20} />
             <span>New Entry</span>
           </Link>
         </nav>
@@ -24,5 +21,5 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavBar;
 
