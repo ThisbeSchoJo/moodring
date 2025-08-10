@@ -1,0 +1,10 @@
+{
+  "short_name": "MoodRing",
+  "name": "MoodRing - AI-powered Emotional Journal",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "description": "An AI-powered journal app that analyzes emotions and assigns colors to your entries"
+}

@@ -48,3 +48,4 @@ echo "4. Open http://localhost:3000 in your browser"
 echo ""
 echo "Happy journaling! ✨"
 
+
