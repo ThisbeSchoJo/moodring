@@ -9,7 +9,7 @@ const EntryForm = () => {
   return (
     <div className="entry-form">
       <div className="form-header">
-        <button onClick={() => navigate('/')}>
+        <button className="back-button" onClick={() => navigate('/')}>
           Back to Journal
         </button>
         <h2>New Journal Entry</h2>
