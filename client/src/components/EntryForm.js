@@ -1,55 +1,15 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Save, ArrowLeft, Sparkles } from 'lucide-react';
-// import axios from 'axios';
 import '../styling/entryform.css';
 
 const EntryForm = () => {
-  // const [content, setContent] = useState('');
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [preview, setPreview] = useState(null);
-  // const navigate = useNavigate();
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!content.trim()) return;
-
-  //   setIsSubmitting(true);
-  //   try {
-  //     const response = await axios.post('/api/entries', { content });
-  //     navigate(`/entry/${response.data.id}`);
-  //   } catch (error) {
-  //     console.error('Error creating entry:', error);
-  //     alert('Failed to create entry. Please try again.');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-  // const handleContentChange = (e) => {
-  //   const newContent = e.target.value;
-  //   setContent(newContent);
-    
-  //   // Show preview after user stops typing for 2 seconds
-  //   if (newContent.trim().length > 10) {
-  //     clearTimeout(window.previewTimeout);
-  //     window.previewTimeout = setTimeout(async () => {
-  //       try {
-  //         const response = await axios.post('/api/entries', { content: newContent });
-  //         setPreview(response.data.emotion_analysis);
-  //       } catch (error) {
-  //         console.error('Error getting preview:', error);
-  //       }
-  //     }, 2000);
-  //   } else {
-  //     setPreview(null);
-  //   }
-  // };
+  const navigate = useNavigate();
 
   return (
     <div className="entry-form">
       <div className="form-header">
-        <button>
+        <button onClick={() => navigate('/')}>
           Back to Journal
         </button>
         <h2>New Journal Entry</h2>
