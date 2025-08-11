@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { Save, ArrowLeft, Sparkles } from 'lucide-react';
 // import axios from 'axios';
+import '../styling/entryform.css';
 
 const EntryForm = () => {
   // const [content, setContent] = useState('');
@@ -60,6 +61,10 @@ const EntryForm = () => {
           <textarea/>
         </div>
       </form>
+      <button className="publish-button">
+        <Sparkles />
+        Publish Entry
+      </button>
     </div>
   );
 };
