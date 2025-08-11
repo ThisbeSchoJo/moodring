@@ -4,3 +4,5 @@ python-dotenv==1.0.0
 openai==0.28.1
 Flask-SQLAlchemy==3.0.5
 Flask-Migrate==4.0.5
+bcrypt==4.0.1
+sqlalchemy-serializer==1.4.1
