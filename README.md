@@ -1,6 +1,6 @@
 # MoodRing - AI-Powered Journal App
 
-A beautiful journal application that uses AI to analyze emotions and assign colors to your entries. Built with React (frontend) and Flask (backend).
+A journal application that uses AI to analyze emotions and assign colors to your entries. Built with React (frontend) and Flask (backend).
 
 ## Features
 
