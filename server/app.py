@@ -38,5 +38,19 @@ class AllEntries(Resource):
 
 api.add_resource(AllEntries, '/entries')
 
+class EntryById(Resource):
+    def get(self, id):
+        entry = db.session.get(Entry, id)
+        if entry:
+            response_body = entry.to_dict()
+            return make_response(response_body, 200)
+        else:
+            response_body = {"error": "Entry not found"}
+            return make_response(response_body, 404)
+    
+    def patch(self, id):
+        entry = db.session.get(Entry, id)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
