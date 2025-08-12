@@ -20,4 +20,9 @@ class Entry(db.Model, SerializerMixin):
     content = db.Column(db.String, nullable = False)
     created_at = db.Column(db.DateTime, default = datetime.now)
     updated_at = db.Column(db.DateTime, default = datetime.now)
-    
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates = 'entries')
+
+    def __repr__(self):
+        return f'<Entry {self.title}>'
