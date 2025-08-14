@@ -33,6 +33,9 @@ const Journal = () => {
           <div className="entry-date">{entry.created_at}</div>
         </div>
       ))}
+      <Link to="/entry/new" className="new-entry-button">
+        New Entry
+      </Link>
     </div>
   );
 };
