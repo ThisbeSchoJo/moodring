@@ -27,15 +27,20 @@ class AllUsers(Resource):
         return make_response(response_body, 200)
     
     def post(self):
-        data = request.get_json()
-        new_user = User(
-            username = data['username'],
-            email = data['email'],
-            password = data['password']
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        return make_response(new_user.to_dict(), 201)
+        try:
+            data = request.get_json()
+            new_user = User(
+                username = data['username']
+            )
+            new_user.set_password(data['password'])
+            db.session.add(new_user)
+            db.session.commit()
+            return make_response(new_user.to_dict(), 201)
+        except KeyError as e:
+            return make_response({"error": f"Missing required field: {str(e)}"}, 400)
+        except Exception as e:
+            db.session.rollback()
+            return make_response({"error": "Failed to create user"}, 500)
 
 api.add_resource(AllUsers, '/users')
 
@@ -78,14 +83,20 @@ class AllEntries(Resource):
         return make_response(response_body, 200)
     
     def post(self):
-        data = request.get_json()
-        new_entry = Entry(
-            title = data['title'],
-            content = data['content']
-        )
-        db.session.add(new_entry)
-        db.session.commit()
-        return make_response(new_entry.to_dict(), 201)
+        try:
+            data = request.get_json()
+            new_entry = Entry(
+                title = data['title'],
+                content = data['content']
+            )
+            db.session.add(new_entry)
+            db.session.commit()
+            return make_response(new_entry.to_dict(), 201)
+        except KeyError as e:
+            return make_response({"error": f"Missing required field: {str(e)}"}, 400)
+        except Exception as e:
+            db.session.rollback()
+            return make_response({"error": "Failed to create entry"}, 500)
 
 api.add_resource(AllEntries, '/entries')
 
@@ -93,32 +104,37 @@ class EntryById(Resource):
     def get(self, id):
         entry = db.session.get(Entry, id)
         if entry:
-            response_body = entry.to_dict()
-            return make_response(response_body, 200)
+            return make_response(entry.to_dict(), 200)
         else:
-            response_body = {"error": "Entry not found"}
-            return make_response(response_body, 404)
+            return make_response({"error": "Entry not found"}, 404)
     def patch(self, id):
         entry = db.session.get(Entry, id)
         if entry:
-            data = request.get_json()
-            for key, value in data.items():
-                setattr(entry, key, value)
-            db.session.commit()
-            return make_response(entry.to_dict(), 200)
+            try:
+                data = request.get_json()
+                for key, value in data.items():
+                    if hasattr(entry, key):
+                        setattr(entry, key, value)
+                db.session.commit()
+                return make_response(entry.to_dict(), 200)
+            except Exception as e:
+                db.session.rollback()
+                return make_response({"error": "Failed to update entry"}, 500)
         else:
-            response_body = {"error": "Entry not found"}
-            return make_response(response_body, 404)
+            return make_response({"error": "Entry not found"}, 404)
     
     def delete(self, id):
         entry = db.session.get(Entry, id)
         if entry:
-            db.session.delete(entry)
-            db.session.commit()
-            return make_response({}, 204)
+            try:
+                db.session.delete(entry)
+                db.session.commit()
+                return make_response({}, 204)
+            except Exception as e:
+                db.session.rollback()
+                return make_response({"error": "Failed to delete entry"}, 500)
         else:
-            response_body = {"error": "Entry not found"}
-            return make_response(response_body, 404)
+            return make_response({"error": "Entry not found"}, 404)
 
 api.add_resource(EntryById, '/entries/<int:id>')
 
