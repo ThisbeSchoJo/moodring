@@ -23,6 +23,9 @@ const Journal = () => {
   return (
     <div>
       <h1>Journal</h1>
+      <Link to="/new" className="new-entry-button">
+        New Entry
+      </Link>
       <p>{entries.length} entries loaded</p>
       {entries.map((entry) => (
         <div key={entry.id} className="entry-container">
@@ -33,9 +36,6 @@ const Journal = () => {
           <div className="entry-date">{entry.created_at}</div>
         </div>
       ))}
-      <Link to="/entry/new" className="new-entry-button">
-        New Entry
-      </Link>
     </div>
   );
 };

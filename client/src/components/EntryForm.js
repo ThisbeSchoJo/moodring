@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Save, ArrowLeft, Sparkles } from 'lucide-react';
-import '../styling/entryform.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Save, ArrowLeft, Sparkles } from "lucide-react";
+import "../styling/entryform.css";
 
 const EntryForm = () => {
   const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   return (
     <div className="entry-form">
       <div className="form-header">
-        <button className="back-button" onClick={() => navigate('/')}>
+        <button className="back-button" onClick={() => navigate("/")}>
           Back to Journal
         </button>
         <h2>New Journal Entry</h2>
@@ -18,7 +20,7 @@ const EntryForm = () => {
       <form>
         <div className="form-group">
           <label htmlFor="content">How are you feeling today?</label>
-          <textarea/>
+          <textarea />
         </div>
       </form>
       <button className="publish-button">
@@ -30,5 +32,3 @@ const EntryForm = () => {
 };
 
 export default EntryForm;
-
-
