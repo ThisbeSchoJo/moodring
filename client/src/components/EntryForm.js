@@ -19,8 +19,23 @@ const EntryForm = () => {
 
       <form>
         <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Give your entry a title..."
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="content">How are you feeling today?</label>
-          <textarea />
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Write about your day, thoughts, feelings..."
+          />
         </div>
       </form>
       <button className="publish-button">
