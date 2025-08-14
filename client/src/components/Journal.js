@@ -10,6 +10,7 @@ const Journal = () => {
       try {
         const response = await axios.get("http://localhost:5555/entries");
         setEntries(response.data);
+        console.log("Fetched entries:", response.data);
       } catch (error) {
         console.error("Error fetching entries:", error);
       }
@@ -21,6 +22,12 @@ const Journal = () => {
   return (
     <div>
       <h1>Journal</h1>
+      <p>{entries.length} entries loaded</p>
+      {entries.map((entry) => (
+        <div key={entry.id} className="entry-title">
+          {entry.title}
+        </div>
+      ))}
     </div>
   );
 };
