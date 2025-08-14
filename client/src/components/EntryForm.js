@@ -8,6 +8,37 @@ const EntryForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  const handleSubmit = async () => {
+    // check if title and content are not empty (trim will remove whitespace from beginning and end)
+    if (!title.trim() || !content.trim()) {
+      alert("Please fill in both title and content");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5555/entries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title.trim(),
+          content: content.trim(),
+          user_id: 1, // For now, hardcoded to user 1
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Entry created successfully!");
+        navigate("/"); // Go back to journal
+      } else {
+        console.error("Failed to create entry");
+      }
+    } catch (error) {
+      console.error("Error creating entry:", error);
+    }
+  };
+
   return (
     <div className="entry-form">
       <div className="form-header">
@@ -38,7 +69,7 @@ const EntryForm = () => {
           />
         </div>
       </form>
-      <button className="publish-button">
+      <button className="publish-button" onClick={handleSubmit}>
         <Sparkles />
         Publish Entry
       </button>
