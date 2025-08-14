@@ -47,9 +47,29 @@ class EntryById(Resource):
         else:
             response_body = {"error": "Entry not found"}
             return make_response(response_body, 404)
-    
     def patch(self, id):
         entry = db.session.get(Entry, id)
+        if entry:
+            data = request.get_json()
+            for key, value in data.items():
+                setattr(entry, key, value)
+            db.session.commit()
+            return make_response(entry.to_dict(), 200)
+        else:
+            response_body = {"error": "Entry not found"}
+            return make_response(response_body, 404)
+    
+    def delete(self, id):
+        entry = db.session.get(Entry, id)
+        if entry:
+            db.session.delete(entry)
+            db.session.commit()
+            return make_response({}, 204)
+        else:
+            response_body = {"error": "Entry not found"}
+            return make_response(response_body, 404)
+    
+api.add_resource(EntryById, '/entries/<int:id>')
 
 
 if __name__ == '__main__':
