@@ -20,6 +20,25 @@ from models import Entry, User
 def home():
     return jsonify({"message": "MoodRing API is running!"})
 
+class AllUsers(Resource):
+    def get(self):
+        users = User.query.all()
+        response_body = [user.to_dict() for user in users]
+        return make_response(response_body, 200)
+    
+    def post(self):
+        data = request.get_json()
+        new_user = User(
+            username = data['username'],
+            email = data['email'],
+            password = data['password']
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        return make_response(new_user.to_dict(), 201)
+    
+api.add_resource(AllUsers, '/users')
+
 class AllEntries(Resource):
     def get(self):
         entries = Entry.query.all()
@@ -68,7 +87,7 @@ class EntryById(Resource):
         else:
             response_body = {"error": "Entry not found"}
             return make_response(response_body, 404)
-    
+
 api.add_resource(EntryById, '/entries/<int:id>')
 
 
