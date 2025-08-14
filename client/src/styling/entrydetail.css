@@ -60,4 +60,58 @@
     cursor: not-allowed;
     opacity: 0.7;
 }
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+  
+.delete-button:hover {
+    background-color: #c82333;
+}
+  
+.entry-content {
+    margin-top: 20px;
+}
+  
+.entry-meta {
+    margin-bottom: 30px;
+}
+  
+.entry-meta h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+  
+.entry-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6c757d;
+    font-size: 14px;
+    font-style: italic;
+}
+  
+.entry-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    white-space: pre-wrap;
+}
+
+  
   
