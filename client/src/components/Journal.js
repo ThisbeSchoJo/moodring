@@ -25,13 +25,13 @@ const Journal = () => {
       <h1>Journal</h1>
       <p>{entries.length} entries loaded</p>
       {entries.map((entry) => (
-        <>
-          <div key={entry.id} className="entry-title">
+        <div key={entry.id} className="entry-container">
+          <Link to={`/entry/${entry.id}`} className="entry-title">
             {entry.title}
-          </div>
+          </Link>
           <div className="entry-content">{entry.content}</div>
           <div className="entry-date">{entry.created_at}</div>
-        </>
+        </div>
       ))}
     </div>
   );
