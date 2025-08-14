@@ -8,13 +8,16 @@ const EntryForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async () => {
     // check if title and content are not empty (trim will remove whitespace from beginning and end)
     if (!title.trim() || !content.trim()) {
-      alert("Please fill in both title and content");
+      setMessage("Please fill in both title and content");
       return;
     }
+
+    setMessage(""); // Clear any previous messages
 
     setIsSubmitting(true);
 
@@ -32,13 +35,19 @@ const EntryForm = () => {
       });
 
       if (response.ok) {
-        console.log("Entry created successfully!");
-        navigate("/"); // Go back to journal
+        setMessage("Entry created successfully! Redirecting...");
+        setTimeout(() => {
+          navigate("/"); // Go back to journal after showing success message
+        }, 1500);
       } else {
-        console.error("Failed to create entry");
+        const errorData = await response.json().catch(() => ({}));
+        setMessage(
+          `Failed to create entry: ${errorData.message || "Unknown error"}`
+        );
       }
     } catch (error) {
       console.error("Error creating entry:", error);
+      setMessage("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -52,6 +61,16 @@ const EntryForm = () => {
         </button>
         <h2>New Journal Entry</h2>
       </div>
+
+      {message && (
+        <div
+          className={`message ${
+            message.includes("successfully") ? "success" : "error"
+          }`}
+        >
+          {message}
+        </div>
+      )}
 
       <form>
         <div className="form-group">
