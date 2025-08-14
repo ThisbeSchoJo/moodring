@@ -7,6 +7,7 @@ const EntryForm = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     // check if title and content are not empty (trim will remove whitespace from beginning and end)
@@ -14,6 +15,8 @@ const EntryForm = () => {
       alert("Please fill in both title and content");
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("http://localhost:5555/entries", {
@@ -36,6 +39,8 @@ const EntryForm = () => {
       }
     } catch (error) {
       console.error("Error creating entry:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -69,9 +74,13 @@ const EntryForm = () => {
           />
         </div>
       </form>
-      <button className="publish-button" onClick={handleSubmit}>
+      <button
+        className="publish-button"
+        onClick={handleSubmit}
+        disabled={isSubmitting}
+      >
         <Sparkles />
-        Publish Entry
+        {isSubmitting ? "Publishing..." : "Publish Entry"}
       </button>
     </div>
   );
