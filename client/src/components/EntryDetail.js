@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Edit, Trash2, Calendar, Heart } from "lucide-react";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
+import "../styling/entrydetail.css";
 
 const EntryDetail = () => {
   const { id } = useParams();
