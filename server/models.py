@@ -11,6 +11,22 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String, unique = True, nullable = False)
     _password_hash = db.Column(db.String)
+    
+    # Relationships
+    entries = db.relationship('Entry', back_populates='user', cascade='all, delete-orphan')
+    
+    # Serialization rules to prevent circular references
+    serialize_rules = ('-_password_hash', '-entries.user')
+    
+    # Password methods
+    def set_password(self, password):
+        """Hash and set the user's password"""
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        """Verify the user's password"""
+        return bcrypt.checkpw(password.encode('utf-8'), self._password_hash.encode('utf-8'))
 
 class Entry(db.Model, SerializerMixin):
     __tablename__ = 'entries'
@@ -23,6 +39,9 @@ class Entry(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', back_populates = 'entries')
+    
+    # Serialization rules to prevent circular references
+    serialize_rules = ('-user.entries',)
 
     def __repr__(self):
         return f'<Entry {self.title}>'
