@@ -36,8 +36,40 @@ class AllUsers(Resource):
         db.session.add(new_user)
         db.session.commit()
         return make_response(new_user.to_dict(), 201)
-    
+
 api.add_resource(AllUsers, '/users')
+
+class UserById(Resource):
+    def get(self, id):
+        user = db.session.get(User, id)
+        if user:
+            return make_response(user.to_dict(), 200)
+        else:
+            return make_response({"error": "User not found"}, 404)
+    
+    def patch(self, id):
+        user = db.session.get(User, id)
+        if user:
+            data = request.get_json()
+            for key, value in data.items():
+                setattr(user, key, value)
+            db.session.commit()
+            return make_response(user.to_dict(), 200)
+        else:
+            return make_response({"error": "User not found"}, 404)  
+    
+    def delete(self, id):
+        user = db.session.get(User, id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return make_response({}, 204)
+        else:
+            return make_response({"error": "User not found"}, 404)
+
+api.add_resource(UserById, '/users/<int:id>')
+
+
 
 class AllEntries(Resource):
     def get(self):
