@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, Heart, TrendingUp } from 'lucide-react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Journal = () => {
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      try {
+        const response = await axios.get("http://localhost:5555/entries");
+        setEntries(response.data);
+      } catch (error) {
+        console.error("Error fetching entries:", error);
+      }
+    };
+
+    fetchEntries();
+  }, []);
+
   return (
     <div>
       <h1>Journal</h1>
@@ -12,4 +26,3 @@ const Journal = () => {
 };
 
 export default Journal;
-
