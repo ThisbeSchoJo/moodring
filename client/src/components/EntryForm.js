@@ -11,7 +11,37 @@ const EntryForm = () => {
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("neutral");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [message, setMessage] = useState("");
+
+  const analyzeMood = async (content) => {
+    if (!content.trim()) return;
+
+    setIsAnalyzing(true);
+    try {
+      const response = await fetch("http://localhost:5555/analyze-mood", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: content.trim() }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMood(data.mood);
+        setMessage("AI suggested mood: " + data.mood);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Failed to analyze mood:", errorData);
+        setMessage("AI analysis failed: " + (errorData.error || "Unknown error"));
+      }
+    } catch (error) {
+      console.error("Error analyzing mood:", error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const handleSubmit = async () => {
     // check if title and content are not empty (trim will remove whitespace from beginning and end)
@@ -89,21 +119,31 @@ const EntryForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="mood">Mood</label>
-          <select
-            id="mood"
-            value={mood}
-            onChange={(e) => setMood(e.target.value)}
-          >
-            <option value="neutral">😐 Neutral</option>
-            <option value="happy">😊 Happy</option>
-            <option value="excited">🤩 Excited</option>
-            <option value="calm">😌 Calm</option>
-            <option value="sad">😢 Sad</option>
-            <option value="angry">😠 Angry</option>
-            <option value="anxious">😰 Anxious</option>
-          </select>
+          <div className="mood-section">
+            <select
+              id="mood"
+              value={mood}
+              onChange={(e) => setMood(e.target.value)}
+            >
+              <option value="neutral">😐 Neutral</option>
+              <option value="happy">😊 Happy</option>
+              <option value="excited">🤩 Excited</option>
+              <option value="calm">😌 Calm</option>
+              <option value="sad">😢 Sad</option>
+              <option value="angry">😠 Angry</option>
+              <option value="anxious">😰 Anxious</option>
+            </select>
+            <button
+              type="button"
+              className="analyze-button"
+              onClick={() => analyzeMood(content)}
+              disabled={isAnalyzing || !content.trim()}
+            >
+              {isAnalyzing ? "🤖 Analyzing..." : "🤖 AI Suggest"}
+            </button>
+          </div>
         </div>
-        <div className="form-group" >
+        <div className="form-group">
           <label htmlFor="content">How are you feeling today?</label>
           <textarea
             id="content"

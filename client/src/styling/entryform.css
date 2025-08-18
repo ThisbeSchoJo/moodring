@@ -71,6 +71,37 @@
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+.mood-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.mood-section select {
+  flex: 1;
+}
+
+.analyze-button {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.analyze-button:hover {
+  background-color: #5a32a3;
+}
+
+.analyze-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .publish-button:disabled {
   background-color: #6c757d;
   cursor: not-allowed;

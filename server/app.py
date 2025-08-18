@@ -2,6 +2,10 @@
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Remote library imports
 from flask import request, make_response, current_app, send_from_directory, jsonify
@@ -9,6 +13,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from flask_restful import Resource
 from flask_jwt_extended.exceptions import JWTExtendedException
 from werkzeug.utils import secure_filename
+import openai
 
 # Local imports
 from config import app, db, api
@@ -18,7 +23,11 @@ from models import Entry, User
 # Basic route for testing
 @app.route('/')
 def home():
-    return jsonify({"message": "MoodRing API is running!"})
+    api_key = os.getenv('OPENAI_API_KEY')
+    return jsonify({
+        "message": "MoodRing API is running!",
+        "openai_key_configured": bool(api_key and api_key != 'your_openai_api_key_here')
+    })
 
 class AllUsers(Resource):
     def get(self):
@@ -104,6 +113,7 @@ class AllEntries(Resource):
             new_entry = Entry(
                 title = data['title'],
                 content = data['content'],
+                mood = data.get('mood', 'neutral'),  # Default to neutral if not provided
                 user_id = data.get('user_id', 1)  # Default to user 1 if not provided
             )
             db.session.add(new_entry)
@@ -135,8 +145,8 @@ class EntryById(Resource):
                 if entry.user_id != user_id:
                     return make_response({"error": "You can only edit your own entries"}, 403)
                 
-                # Only allow updating title and content
-                allowed_fields = ['title', 'content']
+                # Only allow updating title, content, and mood
+                allowed_fields = ['title', 'content', 'mood']
                 for key, value in data.items():
                     if key in allowed_fields and hasattr(entry, key):
                         setattr(entry, key, value)
@@ -171,6 +181,66 @@ class EntryById(Resource):
 
 api.add_resource(EntryById, '/entries/<int:id>')
 
+class AnalyzeMood(Resource):
+    def post(self):
+        try:
+            data = request.get_json()
+            content = data.get('content', '')
+            
+            if not content:
+                return make_response({"error": "Content is required"}, 400)
+            
+            # Set up OpenAI client
+            api_key = os.getenv('OPENAI_API_KEY')
+            
+            if not api_key or api_key == 'your_openai_api_key_here':
+                return make_response({"error": "OpenAI API key not configured. Please set OPENAI_API_KEY in your .env file."}, 500)
+            
+            # Create the prompt for mood analysis
+            prompt = f"""
+            Analyze the emotional tone of this journal entry and classify it into one of these categories:
+            - happy: positive, joyful, excited feelings
+            - excited: enthusiastic, energetic, thrilled feelings  
+            - calm: peaceful, relaxed, content feelings
+            - neutral: balanced, neither positive nor negative
+            - sad: unhappy, down, disappointed feelings
+            - angry: frustrated, irritated, mad feelings
+            - anxious: worried, nervous, stressed feelings
+            
+            Journal entry: "{content}"
+            
+            Respond with only the mood category (e.g., "happy", "sad", "neutral"). Be concise and accurate.
+            """
+            
+            # Call OpenAI API
+            openai.api_key = api_key
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are an emotion analysis expert. Respond with only the mood category."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=10,
+                temperature=0.3
+            )
+            
+            # Extract the mood from the response
+            mood = response.choices[0].message.content.strip().lower()
+            
+            # Validate the mood is one of our expected values
+            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious']
+            if mood not in valid_moods:
+                mood = 'neutral'  # Default to neutral if AI response is unexpected
+            
+            return make_response({"mood": mood}, 200)
+            
+        except Exception as e:
+            print(f"Error in mood analysis: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return make_response({"error": f"Failed to analyze mood: {str(e)}", "mood": "neutral"}, 500)
+
+api.add_resource(AnalyzeMood, '/analyze-mood')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5555)
