@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import "../styling/login.css";
 
 const Login = () => {
@@ -9,28 +9,22 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
-    try {
-      const response = await axios.post("http://localhost:5555/login", {
-        username,
-        password,
-      });
+    const result = await login(username, password);
 
-      // Store user data in localStorage (simple session management)
-      localStorage.setItem("user", JSON.stringify(response.data));
-
-      // Redirect to journal
+    if (result.success) {
       navigate("/");
-    } catch (error) {
-      setError(error.response?.data?.error || "Login failed");
-    } finally {
-      setIsLoading(false);
+    } else {
+      setError(result.error);
     }
+
+    setIsLoading(false);
   };
 
   return (
