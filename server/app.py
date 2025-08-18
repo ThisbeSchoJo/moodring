@@ -74,7 +74,20 @@ class UserById(Resource):
 
 api.add_resource(UserById, '/users/<int:id>')
 
+class Login(Resource):
+    def post(self):
+        try:
+            data = request.get_json()
+            user = User.query.filter_by(username=data['username']).first()
+            
+            if user and user.authenticate(data['password']):
+                return make_response(user.to_dict(), 200)
+            else:
+                return make_response({"error": "Invalid username or password"}, 401)
+        except Exception as e:
+            return make_response({"error": "Login failed"}, 500)
 
+api.add_resource(Login, '/login')
 
 class AllEntries(Resource):
     def get(self):
