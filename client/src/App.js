@@ -10,6 +10,7 @@ import Journal from "./components/Journal";
 import EntryForm from "./components/EntryForm";
 import EntryDetail from "./components/EntryDetail";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./App.css";
 
@@ -28,6 +29,10 @@ function AppRoutes() {
           <Route
             path="/login"
             element={user ? <Navigate to="/" replace /> : <Login />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" replace /> : <Signup />}
           />
           <Route
             path="/"
