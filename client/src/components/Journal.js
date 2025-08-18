@@ -55,7 +55,6 @@ const Journal = () => {
           </Link>
         </div>
       </div>
-      <p>{entries.length} entries loaded</p>
       <div style={{ minHeight: "100vh" }}>
         {entries.map((entry, index) => {
           const moodColors = getMoodColors(entry.mood);
