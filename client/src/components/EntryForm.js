@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, ArrowLeft, Sparkles } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import "../styling/entryform.css";
 
 const EntryForm = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,7 +32,7 @@ const EntryForm = () => {
         body: JSON.stringify({
           title: title.trim(),
           content: content.trim(),
-          user_id: 1, // For now, hardcoded to user 1
+          user_id: user.id, // Use the logged-in user's ID
         }),
       });
 
