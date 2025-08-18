@@ -102,6 +102,8 @@ const EntryDetail = () => {
     return <div>Entry not found</div>;
   }
 
+  const moodColors = getMoodColors(entry.mood);
+
   return (
     <div className="entry-detail">
       <div className="detail-header">
@@ -129,25 +131,48 @@ const EntryDetail = () => {
         </div>
       </div>
 
-      <div className="entry-content">
-        <div className="entry-meta">
-          <h1>{entry.title}</h1>
-          <div className="entry-info">
-            <div className="entry-date">
-              <Calendar />
+      <div
+        className="entry-content"
+        style={{
+          background: moodColors.gradient,
+          borderRadius: "16px",
+          overflow: "hidden",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+          color: "#fff",
+          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+        }}
+      >
+        <div className="entry-meta" style={{ padding: "24px 24px 16px 24px" }}>
+          <h1 style={{ color: "#fff", marginBottom: "16px" }}>{entry.title}</h1>
+          <div
+            className="entry-info"
+            style={{ display: "flex", gap: "16px", alignItems: "center" }}
+          >
+            <div
+              className="entry-date"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                opacity: "0.9",
+                fontSize: "0.95rem",
+              }}
+            >
+              <Calendar size={18} />
               {formatDate(entry.created_at)}
             </div>
             <div
               className="entry-mood-display"
               style={{
-                background: getMoodColors(entry.mood).gradient,
+                background: "rgba(255,255,255,0.2)",
                 padding: "8px 16px",
                 borderRadius: "20px",
                 color: "#fff",
-                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.3)",
               }}
             >
               <Heart size={16} />
@@ -158,13 +183,33 @@ const EntryDetail = () => {
         </div>
 
         {isEditing ? (
-          <div className="edit-form">
-            <div className="edit-mood">
-              <label htmlFor="mood">Mood:</label>
+          <div className="edit-form" style={{ padding: "0 24px 24px 24px" }}>
+            <div className="edit-mood" style={{ marginBottom: "16px" }}>
+              <label
+                htmlFor="mood"
+                style={{
+                  color: "#fff",
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: "500",
+                }}
+              >
+                Mood:
+              </label>
               <select
                 id="mood"
                 value={editedMood}
                 onChange={(e) => setEditedMood(e.target.value)}
+                style={{
+                  background: getMoodColors(editedMood).gradient,
+                  color: "#fff",
+                  textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "10px 14px",
+                  fontWeight: "500",
+                  fontSize: "1rem",
+                }}
               >
                 <option value="neutral">😐 Neutral</option>
                 <option value="happy">😊 Happy</option>
@@ -182,17 +227,53 @@ const EntryDetail = () => {
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
               placeholder="Write your entry content..."
+              style={{
+                width: "100%",
+                minHeight: "200px",
+                padding: "16px",
+                border: "none",
+                borderRadius: "8px",
+                background: "rgba(255,255,255,0.1)",
+                color: "#fff",
+                fontSize: "1rem",
+                lineHeight: "1.6",
+                resize: "vertical",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
             />
             <button
               className="save-button"
               onClick={handleSave}
               disabled={isSaving}
+              style={{
+                marginTop: "16px",
+                padding: "12px 24px",
+                background: "rgba(255,255,255,0.2)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.3)",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontWeight: "500",
+                backdropFilter: "blur(10px)",
+                transition: "all 0.2s",
+              }}
             >
               {isSaving ? "Saving..." : "Save Changes"}
             </button>
           </div>
         ) : (
-          <div className="entry-text">{entry.content}</div>
+          <div
+            className="entry-text"
+            style={{
+              padding: "0 24px 24px 24px",
+              fontSize: "1.1rem",
+              lineHeight: "1.8",
+              color: "#fff",
+            }}
+          >
+            {entry.content}
+          </div>
         )}
       </div>
     </div>

@@ -54,21 +54,29 @@ const Journal = () => {
         const moods = parseMoods(entry.mood);
 
         return (
-          <div key={entry.id} className="entry-container">
-            <div
-              className="entry-header"
-              style={{
-                background: moodColors.gradient,
-                borderRadius: "8px 8px 0 0",
-                padding: "12px 16px",
-                color: "#fff",
-                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-              }}
-            >
+          <div
+            key={entry.id}
+            className="entry-container"
+            style={{
+              background: moodColors.gradient,
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+              border: "none",
+              color: "#fff",
+              textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+            }}
+          >
+            <div className="entry-header" style={{ padding: "16px 20px" }}>
               <Link
                 to={`/entry/${entry.id}`}
                 className="entry-title"
-                style={{ color: "#fff", textDecoration: "none" }}
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontSize: "1.3rem",
+                  fontWeight: "600",
+                }}
               >
                 {entry.title}
               </Link>
@@ -81,8 +89,27 @@ const Journal = () => {
                 </span>
               </div>
             </div>
-            <div className="entry-content">{entry.content}</div>
-            <div className="entry-date">
+            <div
+              className="entry-content"
+              style={{
+                padding: "0 20px 16px 20px",
+                color: "#fff",
+                lineHeight: "1.7",
+                fontSize: "1rem",
+              }}
+            >
+              {entry.content}
+            </div>
+            <div
+              className="entry-date"
+              style={{
+                padding: "12px 20px",
+                background: "rgba(255,255,255,0.1)",
+                borderTop: "1px solid rgba(255,255,255,0.2)",
+                fontSize: "0.9rem",
+                opacity: "0.9",
+              }}
+            >
               {new Date(entry.created_at).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",

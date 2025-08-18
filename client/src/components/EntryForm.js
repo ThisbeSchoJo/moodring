@@ -14,6 +14,7 @@ const EntryForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [message, setMessage] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
 
   const analyzeMood = async (content) => {
     if (!content.trim()) return;
@@ -168,6 +169,59 @@ const EntryForm = () => {
           />
         </div>
       </form>
+
+      {title && content && (
+        <div className="preview-section">
+          <button
+            className="preview-toggle"
+            onClick={() => setShowPreview(!showPreview)}
+            style={{
+              background: "rgba(102, 126, 234, 0.1)",
+              border: "1px solid rgba(102, 126, 234, 0.3)",
+              color: "#667eea",
+              padding: "8px 16px",
+              borderRadius: "6px",
+              cursor: "pointer",
+              marginBottom: "16px",
+            }}
+          >
+            {showPreview ? "Hide Preview" : "Show Preview"}
+          </button>
+
+          {showPreview && (
+            <div
+              className="entry-preview"
+              style={{
+                background: getMoodColors(mood).gradient,
+                borderRadius: "12px",
+                padding: "20px",
+                color: "#fff",
+                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                marginBottom: "20px",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+              }}
+            >
+              <h3 style={{ margin: "0 0 12px 0", fontSize: "1.3rem" }}>
+                {title}
+              </h3>
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.2)",
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  display: "inline-block",
+                  marginBottom: "12px",
+                  fontSize: "0.9rem",
+                }}
+              >
+                {getMoodEmoji(mood)} {mood}
+              </div>
+              <p style={{ margin: "0", lineHeight: "1.6" }}>{content}</p>
+            </div>
+          )}
+        </div>
+      )}
+
       <button
         className="publish-button"
         onClick={handleSubmit}
