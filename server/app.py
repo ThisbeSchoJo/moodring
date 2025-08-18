@@ -87,7 +87,8 @@ class AllEntries(Resource):
             data = request.get_json()
             new_entry = Entry(
                 title = data['title'],
-                content = data['content']
+                content = data['content'],
+                user_id = data.get('user_id', 1)  # Default to user 1 if not provided
             )
             db.session.add(new_entry)
             db.session.commit()

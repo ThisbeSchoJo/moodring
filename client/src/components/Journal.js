@@ -33,7 +33,15 @@ const Journal = () => {
             {entry.title}
           </Link>
           <div className="entry-content">{entry.content}</div>
-          <div className="entry-date">{entry.created_at}</div>
+          <div className="entry-date">
+            {new Date(entry.created_at).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
         </div>
       ))}
     </div>
