@@ -198,18 +198,23 @@ class AnalyzeMood(Resource):
             
             # Create the prompt for mood analysis
             prompt = f"""
-            Analyze the emotional tone of this journal entry and classify it into one of these categories:
-            - happy: positive, joyful, excited feelings
+            Analyze the emotional tone of this journal entry and identify ALL the emotions present. 
+            Choose from these categories:
+            - happy: positive, joyful, content feelings
             - excited: enthusiastic, energetic, thrilled feelings  
-            - calm: peaceful, relaxed, content feelings
+            - calm: peaceful, relaxed, serene feelings
             - neutral: balanced, neither positive nor negative
             - sad: unhappy, down, disappointed feelings
             - angry: frustrated, irritated, mad feelings
             - anxious: worried, nervous, stressed feelings
+            - grateful: thankful, appreciative feelings
+            - hopeful: optimistic, looking forward feelings
+            - confused: uncertain, unclear feelings
             
             Journal entry: "{content}"
             
-            Respond with only the mood category (e.g., "happy", "sad", "neutral"). Be concise and accurate.
+            Respond with ONLY the mood categories separated by commas (e.g., "happy,excited" or "sad,anxious" or "neutral"). 
+            If multiple emotions are present, include all of them. Be accurate and comprehensive.
             """
             
             # Call OpenAI API
@@ -217,20 +222,31 @@ class AnalyzeMood(Resource):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are an emotion analysis expert. Respond with only the mood category."},
+                    {"role": "system", "content": "You are an emotion analysis expert. Respond with only the mood categories separated by commas."},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=10,
+                max_tokens=50,
                 temperature=0.3
             )
             
-            # Extract the mood from the response
-            mood = response.choices[0].message.content.strip().lower()
+            # Extract the moods from the response
+            mood_response = response.choices[0].message.content.strip().lower()
             
-            # Validate the mood is one of our expected values
-            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious']
-            if mood not in valid_moods:
-                mood = 'neutral'  # Default to neutral if AI response is unexpected
+            # Parse and validate the moods
+            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused']
+            
+            # Split by comma and clean up each mood
+            detected_moods = [mood.strip() for mood in mood_response.split(',')]
+            
+            # Filter to only include valid moods
+            validated_moods = [mood for mood in detected_moods if mood in valid_moods]
+            
+            # If no valid moods found, default to neutral
+            if not validated_moods:
+                validated_moods = ['neutral']
+            
+            # Join back into comma-separated string
+            mood = ','.join(validated_moods)
             
             return make_response({"mood": mood}, 200)
             

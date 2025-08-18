@@ -30,18 +30,21 @@ def seed_database():
     entry1 = Entry(
         title="My First Journal Entry",
         content="Today I'm feeling grateful for the beautiful weather and the opportunity to reflect on my day.",
+        mood="grateful,happy",
         user_id=user1.id
     )
     
     entry2 = Entry(
         title="A Peaceful Moment",
         content="Spent some time in nature today. The sound of birds and rustling leaves was so calming.",
+        mood="calm,neutral",
         user_id=user1.id
     )
     
     entry3 = Entry(
         title="New Beginnings",
         content="Starting this journal journey to track my emotional well-being and personal growth.",
+        mood="excited,hopeful",
         user_id=user2.id
     )
     

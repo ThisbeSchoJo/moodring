@@ -34,7 +34,7 @@ class Entry(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String, nullable = False)
     content = db.Column(db.String, nullable = False)
-    mood = db.Column(db.String, default = 'neutral')  # happy, sad, angry, anxious, excited, calm, neutral
+    mood = db.Column(db.String, default = 'neutral')  # comma-separated moods: "happy,excited" or "sad,anxious"
     created_at = db.Column(db.DateTime, default = datetime.now)
     updated_at = db.Column(db.DateTime, default = datetime.now)
 
@@ -44,5 +44,13 @@ class Entry(db.Model, SerializerMixin):
     # Serialization rules to prevent circular references
     serialize_rules = ('-user.entries',)
 
+    def get_moods_list(self):
+        """Return moods as a list"""
+        return [mood.strip() for mood in self.mood.split(',') if mood.strip()]
+    
+    def set_moods_list(self, moods_list):
+        """Set moods from a list"""
+        self.mood = ','.join(moods_list)
+    
     def __repr__(self):
         return f'<Entry {self.title}>'

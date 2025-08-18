@@ -34,7 +34,9 @@ const EntryForm = () => {
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error("Failed to analyze mood:", errorData);
-        setMessage("AI analysis failed: " + (errorData.error || "Unknown error"));
+        setMessage(
+          "AI analysis failed: " + (errorData.error || "Unknown error")
+        );
       }
     } catch (error) {
       console.error("Error analyzing mood:", error);
