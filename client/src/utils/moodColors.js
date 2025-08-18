@@ -1,68 +1,68 @@
 // Color mapping for different moods/emotions
 export const MOOD_COLORS = {
-  // Positive emotions - warm and bright colors
+  // Positive emotions - vibrant and energetic colors
   happy: {
     primary: "#FFD700", // Bright gold
-    secondary: "#FFA500", // Orange
-    gradient: "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)",
+    secondary: "#FF8C00", // Dark orange
+    gradient: "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
     emoji: "😊",
   },
   excited: {
-    primary: "#FF6B6B", // Vibrant red-orange
-    secondary: "#FF8E53", // Coral
-    gradient: "linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)",
+    primary: "#FF4500", // Orange red
+    secondary: "#DC143C", // Crimson
+    gradient: "linear-gradient(135deg, #FF4500 0%, #DC143C 100%)",
     emoji: "🤩",
   },
   grateful: {
-    primary: "#FFB347", // Warm orange
-    secondary: "#FFD700", // Gold
-    gradient: "linear-gradient(135deg, #FFB347 0%, #FFD700 100%)",
+    primary: "#FFA500", // Orange
+    secondary: "#FF6347", // Tomato
+    gradient: "linear-gradient(135deg, #FFA500 0%, #FF6347 100%)",
     emoji: "🙏",
   },
   hopeful: {
-    primary: "#87CEEB", // Sky blue
-    secondary: "#98FB98", // Pale green
-    gradient: "linear-gradient(135deg, #87CEEB 0%, #98FB98 100%)",
+    primary: "#00CED1", // Dark turquoise
+    secondary: "#20B2AA", // Light sea green
+    gradient: "linear-gradient(135deg, #00CED1 0%, #20B2AA 100%)",
     emoji: "✨",
   },
 
   // Calm emotions - cool and soothing colors
   calm: {
-    primary: "#98D8C8", // Soft teal
-    secondary: "#B8E6B8", // Mint green
-    gradient: "linear-gradient(135deg, #98D8C8 0%, #B8E6B8 100%)",
+    primary: "#4682B4", // Steel blue
+    secondary: "#5F9EA0", // Cadet blue
+    gradient: "linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%)",
     emoji: "😌",
   },
   neutral: {
-    primary: "#E0E0E0", // Light gray
-    secondary: "#F5F5F5", // Off white
-    gradient: "linear-gradient(135deg, #E0E0E0 0%, #F5F5F5 100%)",
+    primary: "#808080", // Gray
+    secondary: "#A9A9A9", // Dark gray
+    gradient: "linear-gradient(135deg, #808080 0%, #A9A9A9 100%)",
     emoji: "😐",
   },
 
-  // Negative emotions - darker and cooler colors
+  // Negative emotions - deep and intense colors
   sad: {
-    primary: "#6B7A8F", // Muted blue-gray
-    secondary: "#8B9DC3", // Periwinkle
-    gradient: "linear-gradient(135deg, #6B7A8F 0%, #8B9DC3 100%)",
+    primary: "#2F4F4F", // Dark slate gray
+    secondary: "#483D8B", // Dark slate blue
+    gradient: "linear-gradient(135deg, #2F4F4F 0%, #483D8B 100%)",
     emoji: "😢",
   },
   angry: {
-    primary: "#DC143C", // Crimson red
-    secondary: "#8B0000", // Dark red
-    gradient: "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)",
+    primary: "#8B0000", // Dark red
+    secondary: "#B22222", // Fire brick
+    gradient: "linear-gradient(135deg, #8B0000 0%, #B22222 100%)",
     emoji: "😠",
   },
   anxious: {
-    primary: "#9370DB", // Medium purple
-    secondary: "#8A2BE2", // Blue violet
-    gradient: "linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%)",
+    primary: "#4B0082", // Indigo
+    secondary: "#800080", // Purple
+    gradient: "linear-gradient(135deg, #4B0082 0%, #800080 100%)",
     emoji: "😰",
   },
   confused: {
-    primary: "#DDA0DD", // Plum
-    secondary: "#E6E6FA", // Lavender
-    gradient: "linear-gradient(135deg, #DDA0DD 0%, #E6E6FA 100%)",
+    primary: "#708090", // Slate gray
+    secondary: "#778899", // Light slate gray
+    gradient: "linear-gradient(135deg, #708090 0%, #778899 100%)",
     emoji: "😕",
   },
 };
@@ -293,33 +293,14 @@ export const getMoodColors = (moodString) => {
 
 // Function to determine if text should be dark or light based on background color
 export const getTextColor = (moodString) => {
-  const moodColors = getMoodColors(moodString);
-  const primaryColor = moodColors.primary;
-
-  // Convert hex to RGB to calculate brightness
-  const hex = primaryColor.replace("#", "");
-  const r = parseInt(hex.substr(0, 2), 16);
-  const g = parseInt(hex.substr(2, 2), 16);
-  const b = parseInt(hex.substr(4, 2), 16);
-
-  // Calculate relative luminance (brightness)
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-
-  // Use dark text for light backgrounds, light text for dark backgrounds
-  return brightness > 128 ? "#2c3e50" : "#ffffff";
+  // Always use dark text for better readability
+  return "#2c3e50";
 };
 
 // Function to get enhanced text shadow for better readability
 export const getTextShadow = (moodString) => {
-  const textColor = getTextColor(moodString);
-
-  if (textColor === "#ffffff") {
-    // White text needs dark shadow
-    return "0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3)";
-  } else {
-    // Dark text needs light shadow
-    return "0 2px 4px rgba(255,255,255,0.4), 0 1px 2px rgba(255,255,255,0.3)";
-  }
+  // Dark text needs light shadow for better readability on colored backgrounds
+  return "0 2px 4px rgba(255,255,255,0.4), 0 1px 2px rgba(255,255,255,0.3)";
 };
 
 // Function to get a simple color for single moods
