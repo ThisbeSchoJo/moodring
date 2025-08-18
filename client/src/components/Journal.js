@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import "../styling/journal.css";
 
 const Journal = () => {
   const [entries, setEntries] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await axios.get("http://localhost:5555/entries");
+        const response = await axios.get(
+          `http://localhost:5555/entries?user_id=${user.id}`
+        );
         setEntries(response.data);
         console.log("Fetched entries:", response.data);
       } catch (error) {
@@ -17,8 +21,10 @@ const Journal = () => {
       }
     };
 
-    fetchEntries();
-  }, []);
+    if (user) {
+      fetchEntries();
+    }
+  }, [user]);
 
   return (
     <div>

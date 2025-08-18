@@ -91,7 +91,10 @@ api.add_resource(Login, '/login')
 
 class AllEntries(Resource):
     def get(self):
-        entries = Entry.query.all()
+        # For now, we'll get user_id from query params
+        # In a real app, this would come from JWT token
+        user_id = request.args.get('user_id', 1)  # Default to user 1 for now
+        entries = Entry.query.filter_by(user_id=user_id).all()
         response_body = [entry.to_dict() for entry in entries]
         return make_response(response_body, 200)
     
