@@ -11,13 +11,19 @@ def seed_database():
     print("🌱 Seeding database...")
     
     # Create test users
-    user1 = User(username="testuser1")
+    user1 = User(username="alice")
     user1.set_password("password123")
     
-    user2 = User(username="testuser2") 
+    user2 = User(username="bob") 
     user2.set_password("password123")
     
-    db.session.add_all([user1, user2])
+    user3 = User(username="charlie")
+    user3.set_password("password123")
+    
+    user4 = User(username="demo")
+    user4.set_password("demo123")
+    
+    db.session.add_all([user1, user2, user3, user4])
     db.session.commit()
     
     # Create test entries
@@ -44,6 +50,11 @@ def seed_database():
     
     print("✅ Database seeded successfully!")
     print(f"Created {User.query.count()} users and {Entry.query.count()} entries")
+    print("\n🧪 Test Users:")
+    print("Username: alice, Password: password123")
+    print("Username: bob, Password: password123")
+    print("Username: charlie, Password: password123")
+    print("Username: demo, Password: demo123")
 
 if __name__ == "__main__":
     with app.app_context():
