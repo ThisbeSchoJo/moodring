@@ -177,6 +177,37 @@ export const getMoodColors = (moodString) => {
   return blendColors(moods);
 };
 
+// Function to determine if text should be dark or light based on background color
+export const getTextColor = (moodString) => {
+  const moodColors = getMoodColors(moodString);
+  const primaryColor = moodColors.primary;
+
+  // Convert hex to RGB to calculate brightness
+  const hex = primaryColor.replace("#", "");
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+
+  // Calculate relative luminance (brightness)
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+  // Use dark text for light backgrounds, light text for dark backgrounds
+  return brightness > 128 ? "#2c3e50" : "#ffffff";
+};
+
+// Function to get enhanced text shadow for better readability
+export const getTextShadow = (moodString) => {
+  const textColor = getTextColor(moodString);
+
+  if (textColor === "#ffffff") {
+    // White text needs dark shadow
+    return "0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3)";
+  } else {
+    // Dark text needs light shadow
+    return "0 2px 4px rgba(255,255,255,0.4), 0 1px 2px rgba(255,255,255,0.3)";
+  }
+};
+
 // Function to get a simple color for single moods
 export const getSimpleMoodColor = (moodString) => {
   const moods = parseMoods(moodString);

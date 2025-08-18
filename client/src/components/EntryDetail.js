@@ -4,7 +4,13 @@ import { ArrowLeft, Edit, Trash2, Calendar, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
-import { getMoodColors, getMoodEmoji, parseMoods } from "../utils/moodColors";
+import {
+  getMoodColors,
+  getMoodEmoji,
+  parseMoods,
+  getTextColor,
+  getTextShadow,
+} from "../utils/moodColors";
 import "../styling/entrydetail.css";
 
 const EntryDetail = () => {
@@ -103,6 +109,8 @@ const EntryDetail = () => {
   }
 
   const moodColors = getMoodColors(entry.mood);
+  const textColor = getTextColor(entry.mood);
+  const textShadow = getTextShadow(entry.mood);
 
   return (
     <div className="entry-detail">
@@ -138,12 +146,20 @@ const EntryDetail = () => {
           borderRadius: "16px",
           overflow: "hidden",
           boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-          color: "#fff",
-          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+          color: textColor,
+          textShadow: textShadow,
         }}
       >
         <div className="entry-meta" style={{ padding: "24px 24px 16px 24px" }}>
-          <h1 style={{ color: "#fff", marginBottom: "16px" }}>{entry.title}</h1>
+          <h1
+            style={{
+              color: textColor,
+              marginBottom: "16px",
+              textShadow: textShadow,
+            }}
+          >
+            {entry.title}
+          </h1>
           <div
             className="entry-info"
             style={{ display: "flex", gap: "16px", alignItems: "center" }}
@@ -156,6 +172,8 @@ const EntryDetail = () => {
                 gap: "8px",
                 opacity: "0.9",
                 fontSize: "0.95rem",
+                color: textColor,
+                textShadow: textShadow,
               }}
             >
               <Calendar size={18} />
@@ -164,15 +182,16 @@ const EntryDetail = () => {
             <div
               className="entry-mood-display"
               style={{
-                background: "rgba(255,255,255,0.2)",
+                background: "transparent",
                 padding: "8px 16px",
                 borderRadius: "20px",
-                color: "#fff",
+                color: textColor,
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",
                 backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.3)",
+                border: "none",
+                textShadow: textShadow,
               }}
             >
               <Heart size={16} />
@@ -188,10 +207,11 @@ const EntryDetail = () => {
               <label
                 htmlFor="mood"
                 style={{
-                  color: "#fff",
+                  color: textColor,
                   display: "block",
                   marginBottom: "8px",
                   fontWeight: "500",
+                  textShadow: textShadow,
                 }}
               >
                 Mood:
@@ -269,7 +289,8 @@ const EntryDetail = () => {
               padding: "0 24px 24px 24px",
               fontSize: "1.1rem",
               lineHeight: "1.8",
-              color: "#fff",
+              color: textColor,
+              textShadow: textShadow,
             }}
           >
             {entry.content}

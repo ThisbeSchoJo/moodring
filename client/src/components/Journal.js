@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-import { getMoodColors, getMoodEmoji, parseMoods } from "../utils/moodColors";
+import {
+  getMoodColors,
+  getMoodEmoji,
+  parseMoods,
+  getTextColor,
+  getTextShadow,
+} from "../utils/moodColors";
 import MoodLegend from "./MoodLegend";
 import { Palette } from "lucide-react";
 import "../styling/journal.css";
@@ -53,6 +59,9 @@ const Journal = () => {
         const moodColors = getMoodColors(entry.mood);
         const moods = parseMoods(entry.mood);
 
+        const textColor = getTextColor(entry.mood);
+        const textShadow = getTextShadow(entry.mood);
+
         return (
           <div
             key={entry.id}
@@ -63,8 +72,8 @@ const Journal = () => {
               overflow: "hidden",
               boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
               border: "none",
-              color: "#fff",
-              textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              color: textColor,
+              textShadow: textShadow,
             }}
           >
             <div className="entry-header" style={{ padding: "16px 20px" }}>
@@ -72,15 +81,24 @@ const Journal = () => {
                 to={`/entry/${entry.id}`}
                 className="entry-title"
                 style={{
-                  color: "#fff",
+                  color: textColor,
                   textDecoration: "none",
                   fontSize: "1.3rem",
                   fontWeight: "600",
+                  textShadow: textShadow,
                 }}
               >
                 {entry.title}
               </Link>
-              <div className="entry-mood-info">
+              <div
+                className="entry-mood-info"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: textColor,
+                  textShadow: textShadow,
+                }}
+              >
                 <span className="entry-mood-emoji">
                   {getMoodEmoji(entry.mood)}
                 </span>
@@ -93,9 +111,10 @@ const Journal = () => {
               className="entry-content"
               style={{
                 padding: "0 20px 16px 20px",
-                color: "#fff",
+                color: textColor,
                 lineHeight: "1.7",
                 fontSize: "1rem",
+                textShadow: textShadow,
               }}
             >
               {entry.content}
@@ -104,10 +123,18 @@ const Journal = () => {
               className="entry-date"
               style={{
                 padding: "12px 20px",
-                background: "rgba(255,255,255,0.1)",
-                borderTop: "1px solid rgba(255,255,255,0.2)",
+                background:
+                  textColor === "#ffffff"
+                    ? "rgba(255,255,255,0.1)"
+                    : "rgba(0,0,0,0.1)",
+                borderTop:
+                  textColor === "#ffffff"
+                    ? "1px solid rgba(255,255,255,0.2)"
+                    : "1px solid rgba(0,0,0,0.2)",
                 fontSize: "0.9rem",
                 opacity: "0.9",
+                color: textColor,
+                textShadow: textShadow,
               }}
             >
               {new Date(entry.created_at).toLocaleDateString("en-US", {

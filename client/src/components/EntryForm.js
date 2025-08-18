@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, ArrowLeft, Sparkles } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import { getMoodColors, getMoodEmoji } from "../utils/moodColors";
+import {
+  getMoodColors,
+  getMoodEmoji,
+  getTextColor,
+  getTextShadow,
+} from "../utils/moodColors";
 import "../styling/entryform.css";
 
 const EntryForm = () => {
@@ -130,8 +135,8 @@ const EntryForm = () => {
               onChange={(e) => setMood(e.target.value)}
               style={{
                 background: getMoodColors(mood).gradient,
-                color: "#fff",
-                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                color: getTextColor(mood),
+                textShadow: getTextShadow(mood),
                 border: "none",
                 borderRadius: "6px",
                 padding: "8px 12px",
@@ -195,28 +200,47 @@ const EntryForm = () => {
                 background: getMoodColors(mood).gradient,
                 borderRadius: "12px",
                 padding: "20px",
-                color: "#fff",
-                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                color: getTextColor(mood),
+                textShadow: getTextShadow(mood),
                 marginBottom: "20px",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
               }}
             >
-              <h3 style={{ margin: "0 0 12px 0", fontSize: "1.3rem" }}>
+              <h3
+                style={{
+                  margin: "0 0 12px 0",
+                  fontSize: "1.3rem",
+                  color: getTextColor(mood),
+                  textShadow: getTextShadow(mood),
+                }}
+              >
                 {title}
               </h3>
               <div
                 style={{
-                  background: "rgba(255,255,255,0.2)",
+                  background: "transparent",
                   padding: "6px 12px",
                   borderRadius: "20px",
                   display: "inline-block",
                   marginBottom: "12px",
                   fontSize: "0.9rem",
+                  color: getTextColor(mood),
+                  textShadow: getTextShadow(mood),
+                  border: "none",
                 }}
               >
                 {getMoodEmoji(mood)} {mood}
               </div>
-              <p style={{ margin: "0", lineHeight: "1.6" }}>{content}</p>
+              <p
+                style={{
+                  margin: "0",
+                  lineHeight: "1.6",
+                  color: getTextColor(mood),
+                  textShadow: getTextShadow(mood),
+                }}
+              >
+                {content}
+              </p>
             </div>
           )}
         </div>
