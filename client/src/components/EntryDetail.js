@@ -4,21 +4,8 @@ import { ArrowLeft, Edit, Trash2, Calendar, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
+import { getMoodColors, getMoodEmoji, parseMoods } from "../utils/moodColors";
 import "../styling/entrydetail.css";
-
-// Helper function to get mood emoji
-const getMoodEmoji = (mood) => {
-  const moodEmojis = {
-    happy: "😊",
-    excited: "🤩",
-    calm: "😌",
-    neutral: "😐",
-    sad: "😢",
-    angry: "😠",
-    anxious: "😰",
-  };
-  return moodEmojis[mood] || "😐";
-};
 
 const EntryDetail = () => {
   const { id } = useParams();
@@ -150,9 +137,22 @@ const EntryDetail = () => {
               <Calendar />
               {formatDate(entry.created_at)}
             </div>
-            <div className="entry-mood-display">
-              <Heart />
-              {getMoodEmoji(entry.mood)} {entry.mood}
+            <div
+              className="entry-mood-display"
+              style={{
+                background: getMoodColors(entry.mood).gradient,
+                padding: "8px 16px",
+                borderRadius: "20px",
+                color: "#fff",
+                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Heart size={16} />
+              <span>{getMoodEmoji(entry.mood)}</span>
+              <span>{parseMoods(entry.mood).join(", ")}</span>
             </div>
           </div>
         </div>
@@ -169,10 +169,13 @@ const EntryDetail = () => {
                 <option value="neutral">😐 Neutral</option>
                 <option value="happy">😊 Happy</option>
                 <option value="excited">🤩 Excited</option>
+                <option value="grateful">🙏 Grateful</option>
+                <option value="hopeful">✨ Hopeful</option>
                 <option value="calm">😌 Calm</option>
                 <option value="sad">😢 Sad</option>
                 <option value="angry">😠 Angry</option>
                 <option value="anxious">😰 Anxious</option>
+                <option value="confused">😕 Confused</option>
               </select>
             </div>
             <textarea

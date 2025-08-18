@@ -1,16 +1,73 @@
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.journal-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.legend-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.legend-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
 .entry-container {
   margin: 20px 0;
-  padding: 15px;
   background-color: #f8f9fa;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.entry-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .entry-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+}
+
+.entry-mood-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.entry-mood-emoji {
+  font-size: 1.2rem;
+}
+
+.entry-mood-text {
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 .entry-title {
@@ -31,14 +88,19 @@
 }
 
 .entry-content {
-  margin: 10px 0;
+  margin: 0;
+  padding: 16px;
   color: #333;
+  line-height: 1.6;
 }
 
 .entry-date {
   font-size: 0.9em;
   color: #666;
   font-style: italic;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
 }
 
 .new-entry-button {

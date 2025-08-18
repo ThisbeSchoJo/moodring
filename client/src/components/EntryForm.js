@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, ArrowLeft, Sparkles } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { getMoodColors, getMoodEmoji } from "../utils/moodColors";
 import "../styling/entryform.css";
 
 const EntryForm = () => {
@@ -126,14 +127,26 @@ const EntryForm = () => {
               id="mood"
               value={mood}
               onChange={(e) => setMood(e.target.value)}
+              style={{
+                background: getMoodColors(mood).gradient,
+                color: "#fff",
+                textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                border: "none",
+                borderRadius: "6px",
+                padding: "8px 12px",
+                fontWeight: "500",
+              }}
             >
               <option value="neutral">😐 Neutral</option>
               <option value="happy">😊 Happy</option>
               <option value="excited">🤩 Excited</option>
+              <option value="grateful">🙏 Grateful</option>
+              <option value="hopeful">✨ Hopeful</option>
               <option value="calm">😌 Calm</option>
               <option value="sad">😢 Sad</option>
               <option value="angry">😠 Angry</option>
               <option value="anxious">😰 Anxious</option>
+              <option value="confused">😕 Confused</option>
             </select>
             <button
               type="button"
