@@ -4,6 +4,20 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import "../styling/journal.css";
 
+// Helper function to get mood emoji
+const getMoodEmoji = (mood) => {
+  const moodEmojis = {
+    happy: "😊",
+    excited: "🤩",
+    calm: "😌",
+    neutral: "😐",
+    sad: "😢",
+    angry: "😠",
+    anxious: "😰",
+  };
+  return moodEmojis[mood] || "😐";
+};
+
 const Journal = () => {
   const [entries, setEntries] = useState([]);
   const { user } = useAuth();
@@ -35,9 +49,12 @@ const Journal = () => {
       <p>{entries.length} entries loaded</p>
       {entries.map((entry) => (
         <div key={entry.id} className="entry-container">
-          <Link to={`/entry/${entry.id}`} className="entry-title">
-            {entry.title}
-          </Link>
+          <div className="entry-header">
+            <Link to={`/entry/${entry.id}`} className="entry-title">
+              {entry.title}
+            </Link>
+            <span className="entry-mood">{getMoodEmoji(entry.mood)}</span>
+          </div>
           <div className="entry-content">{entry.content}</div>
           <div className="entry-date">
             {new Date(entry.created_at).toLocaleDateString("en-US", {

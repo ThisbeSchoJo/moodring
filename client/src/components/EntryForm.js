@@ -9,6 +9,7 @@ const EntryForm = () => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [mood, setMood] = useState("neutral");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -32,6 +33,7 @@ const EntryForm = () => {
         body: JSON.stringify({
           title: title.trim(),
           content: content.trim(),
+          mood: mood,
           user_id: user.id, // Use the logged-in user's ID
         }),
       });
@@ -86,6 +88,22 @@ const EntryForm = () => {
           />
         </div>
         <div className="form-group">
+          <label htmlFor="mood">Mood</label>
+          <select
+            id="mood"
+            value={mood}
+            onChange={(e) => setMood(e.target.value)}
+          >
+            <option value="neutral">😐 Neutral</option>
+            <option value="happy">😊 Happy</option>
+            <option value="excited">🤩 Excited</option>
+            <option value="calm">😌 Calm</option>
+            <option value="sad">😢 Sad</option>
+            <option value="angry">😠 Angry</option>
+            <option value="anxious">😰 Anxious</option>
+          </select>
+        </div>
+        <div className="form-group" >
           <label htmlFor="content">How are you feeling today?</label>
           <textarea
             id="content"

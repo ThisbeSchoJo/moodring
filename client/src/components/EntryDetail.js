@@ -6,6 +6,20 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import "../styling/entrydetail.css";
 
+// Helper function to get mood emoji
+const getMoodEmoji = (mood) => {
+  const moodEmojis = {
+    happy: "😊",
+    excited: "🤩",
+    calm: "😌",
+    neutral: "😐",
+    sad: "😢",
+    angry: "😠",
+    anxious: "😰",
+  };
+  return moodEmojis[mood] || "😐";
+};
+
 const EntryDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,6 +28,7 @@ const EntryDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState("");
+  const [editedMood, setEditedMood] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
@@ -25,6 +40,7 @@ const EntryDetail = () => {
       const response = await axios.get(`http://localhost:5555/entries/${id}`);
       setEntry(response.data);
       setEditedContent(response.data.content);
+      setEditedMood(response.data.mood || "neutral");
     } catch (error) {
       console.error("Error fetching entry:", error);
       alert("Entry not found");
@@ -41,6 +57,7 @@ const EntryDetail = () => {
     try {
       const response = await axios.put(`http://localhost:5555/entries/${id}`, {
         content: editedContent,
+        mood: editedMood,
         user_id: user.id, // Pass user_id for verification
       });
       setEntry(response.data);
@@ -128,14 +145,36 @@ const EntryDetail = () => {
       <div className="entry-content">
         <div className="entry-meta">
           <h1>{entry.title}</h1>
-          <div className="entry-date">
-            <Calendar />
-            {formatDate(entry.created_at)}
+          <div className="entry-info">
+            <div className="entry-date">
+              <Calendar />
+              {formatDate(entry.created_at)}
+            </div>
+            <div className="entry-mood-display">
+              <Heart />
+              {getMoodEmoji(entry.mood)} {entry.mood}
+            </div>
           </div>
         </div>
 
         {isEditing ? (
           <div className="edit-form">
+            <div className="edit-mood">
+              <label htmlFor="mood">Mood:</label>
+              <select
+                id="mood"
+                value={editedMood}
+                onChange={(e) => setEditedMood(e.target.value)}
+              >
+                <option value="neutral">😐 Neutral</option>
+                <option value="happy">😊 Happy</option>
+                <option value="excited">🤩 Excited</option>
+                <option value="calm">😌 Calm</option>
+                <option value="sad">😢 Sad</option>
+                <option value="angry">😠 Angry</option>
+                <option value="anxious">😰 Anxious</option>
+              </select>
+            </div>
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
