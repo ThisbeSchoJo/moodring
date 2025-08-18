@@ -129,9 +129,18 @@ class EntryById(Resource):
         if entry:
             try:
                 data = request.get_json()
+                user_id = data.get('user_id')
+                
+                # Verify that the user owns this entry
+                if entry.user_id != user_id:
+                    return make_response({"error": "You can only edit your own entries"}, 403)
+                
+                # Only allow updating title and content
+                allowed_fields = ['title', 'content']
                 for key, value in data.items():
-                    if hasattr(entry, key):
+                    if key in allowed_fields and hasattr(entry, key):
                         setattr(entry, key, value)
+                
                 db.session.commit()
                 return make_response(entry.to_dict(), 200)
             except Exception as e:
@@ -144,6 +153,13 @@ class EntryById(Resource):
         entry = db.session.get(Entry, id)
         if entry:
             try:
+                # Get user_id from query params for delete
+                user_id = request.args.get('user_id')
+                
+                # Verify that the user owns this entry
+                if entry.user_id != int(user_id):
+                    return make_response({"error": "You can only delete your own entries"}, 403)
+                
                 db.session.delete(entry)
                 db.session.commit()
                 return make_response({}, 204)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Edit, Trash2, Calendar, Heart } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
 import "../styling/entrydetail.css";
@@ -8,6 +9,7 @@ import "../styling/entrydetail.css";
 const EntryDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [entry, setEntry] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,12 +41,17 @@ const EntryDetail = () => {
     try {
       const response = await axios.put(`http://localhost:5555/entries/${id}`, {
         content: editedContent,
+        user_id: user.id, // Pass user_id for verification
       });
       setEntry(response.data);
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating entry:", error);
-      alert("Failed to update entry");
+      if (error.response?.status === 403) {
+        alert("You can only edit your own entries");
+      } else {
+        alert("Failed to update entry");
+      }
     } finally {
       setIsSaving(false);
     }
@@ -54,11 +61,17 @@ const EntryDetail = () => {
     if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
     try {
-      await axios.delete(`http://localhost:5555/entries/${id}`);
+      await axios.delete(
+        `http://localhost:5555/entries/${id}?user_id=${user.id}`
+      );
       navigate("/");
     } catch (error) {
       console.error("Error deleting entry:", error);
-      alert("Failed to delete entry");
+      if (error.response?.status === 403) {
+        alert("You can only delete your own entries");
+      } else {
+        alert("Failed to delete entry");
+      }
     }
   };
 
@@ -93,18 +106,22 @@ const EntryDetail = () => {
           Back to Journal
         </button>
         <div className="header-actions">
-          <button
-            className="edit-button"
-            onClick={() => setIsEditing(!isEditing)}
-            disabled={isSaving}
-          >
-            <Edit />
-            {isEditing ? "Cancel" : "Edit"}
-          </button>
-          <button className="delete-button" onClick={handleDelete}>
-            <Trash2 />
-            Delete
-          </button>
+          {entry && entry.user_id === user.id && (
+            <>
+              <button
+                className="edit-button"
+                onClick={() => setIsEditing(!isEditing)}
+                disabled={isSaving}
+              >
+                <Edit />
+                {isEditing ? "Cancel" : "Edit"}
+              </button>
+              <button className="delete-button" onClick={handleDelete}>
+                <Trash2 />
+                Delete
+              </button>
+            </>
+          )}
         </div>
       </div>
 
