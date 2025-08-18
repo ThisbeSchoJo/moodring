@@ -34,6 +34,7 @@ class Entry(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String, nullable = False)
     content = db.Column(db.String, nullable = False)
+    mood = db.Column(db.String, default = 'neutral')  # happy, sad, angry, anxious, excited, calm, neutral
     created_at = db.Column(db.DateTime, default = datetime.now)
     updated_at = db.Column(db.DateTime, default = datetime.now)
 
