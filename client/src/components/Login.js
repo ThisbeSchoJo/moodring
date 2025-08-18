@@ -37,6 +37,9 @@ const Login = () => {
         <h2>Welcome to MoodRing</h2>
         <p>Sign in to access your journal</p>
 
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -70,7 +73,9 @@ const Login = () => {
         <div className="login-footer">
           <p>
             Don't have an account?{" "}
-            <button className="link-button">Sign up</button>
+            <Link to="/signup" className="link-button">
+              Sign up
+            </Link>
           </p>
         </div>
       </div>

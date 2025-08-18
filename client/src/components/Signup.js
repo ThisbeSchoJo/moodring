@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import "../styling/signup.css";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -36,8 +37,8 @@ const Signup = () => {
       });
 
       // Registration successful - redirect to login
-      navigate("/login", { 
-        state: { message: "Account created successfully! Please log in." }
+      navigate("/login", {
+        state: { message: "Account created successfully! Please log in." },
       });
     } catch (error) {
       setError(error.response?.data?.error || "Failed to create account");
@@ -51,9 +52,9 @@ const Signup = () => {
       <div className="signup-form">
         <h2>Create Your Account</h2>
         <p>Join MoodRing to start your journaling journey</p>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -66,7 +67,7 @@ const Signup = () => {
               minLength="3"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -89,12 +90,12 @@ const Signup = () => {
               required
             />
           </div>
-          
+
           <button type="submit" className="signup-button" disabled={isLoading}>
             {isLoading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
-        
+
         <div className="signup-footer">
           <p>
             Already have an account?{" "}
