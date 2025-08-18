@@ -8,6 +8,7 @@ import {
   parseMoods,
   getTextColor,
   getTextShadow,
+  createEntryGradient,
 } from "../utils/moodColors";
 import MoodLegend from "./MoodLegend";
 import { Palette } from "lucide-react";
@@ -37,7 +38,7 @@ const Journal = () => {
   }, [user]);
 
   return (
-    <div>
+    <div style={{ width: "100%", maxWidth: "none", margin: 0, padding: 0 }}>
       <div className="journal-header">
         <h1>Journal</h1>
         <div className="journal-actions">
@@ -55,99 +56,113 @@ const Journal = () => {
         </div>
       </div>
       <p>{entries.length} entries loaded</p>
-      {entries.map((entry) => {
-        const moodColors = getMoodColors(entry.mood);
-        const moods = parseMoods(entry.mood);
+      <div style={{ minHeight: "100vh" }}>
+        {entries.map((entry, index) => {
+          const moodColors = getMoodColors(entry.mood);
+          const moods = parseMoods(entry.mood);
+          const textColor = getTextColor(entry.mood);
+          const entryGradient = createEntryGradient(
+            entry.mood,
+            index,
+            entries.length,
+            entries
+          );
 
-        const textColor = getTextColor(entry.mood);
-        const textShadow = getTextShadow(entry.mood);
-
-        return (
-          <div
-            key={entry.id}
-            className="entry-container"
-            style={{
-              background: moodColors.gradient,
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-              border: "none",
-              color: textColor,
-              textShadow: textShadow,
-            }}
-          >
-            <div className="entry-header" style={{ padding: "16px 20px" }}>
-              <Link
-                to={`/entry/${entry.id}`}
-                className="entry-title"
-                style={{
-                  color: textColor,
-                  textDecoration: "none",
-                  fontSize: "1.3rem",
-                  fontWeight: "600",
-                  textShadow: textShadow,
-                }}
-              >
-                {entry.title}
-              </Link>
+          return (
+            <div
+              key={entry.id}
+              style={{
+                background: entryGradient,
+                color: textColor,
+                textShadow: "none",
+              }}
+            >
+              <div style={{ padding: "32px 48px 16px 48px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: "16px",
+                  }}
+                >
+                  <Link
+                    to={`/entry/${entry.id}`}
+                    style={{
+                      color: textColor,
+                      textDecoration: "none",
+                      fontSize: "1.3rem",
+                      fontWeight: "600",
+                      textShadow: "none",
+                      flex: "1",
+                    }}
+                  >
+                    {entry.title}
+                  </Link>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
+                      gap: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        color: textColor,
+                        textShadow: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      <span>{getMoodEmoji(entry.mood)}</span>
+                      <span
+                        style={{
+                          fontWeight: "500",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {moods.length > 1 ? moods.join(", ") : moods[0]}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "0.8rem",
+                        opacity: "0.7",
+                        color: textColor,
+                        textShadow: "none",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {new Date(entry.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
-                className="entry-mood-info"
                 style={{
-                  background: "transparent",
-                  border: "none",
+                  padding: "0 48px 32px 48px",
                   color: textColor,
-                  textShadow: textShadow,
+                  lineHeight: "1.7",
+                  fontSize: "1rem",
+                  textShadow: "none",
                 }}
               >
-                <span className="entry-mood-emoji">
-                  {getMoodEmoji(entry.mood)}
-                </span>
-                <span className="entry-mood-text">
-                  {moods.length > 1 ? moods.join(", ") : moods[0]}
-                </span>
+                {entry.content}
               </div>
             </div>
-            <div
-              className="entry-content"
-              style={{
-                padding: "0 20px 16px 20px",
-                color: textColor,
-                lineHeight: "1.7",
-                fontSize: "1rem",
-                textShadow: textShadow,
-              }}
-            >
-              {entry.content}
-            </div>
-            <div
-              className="entry-date"
-              style={{
-                padding: "12px 20px",
-                background:
-                  textColor === "#ffffff"
-                    ? "rgba(255,255,255,0.1)"
-                    : "rgba(0,0,0,0.1)",
-                borderTop:
-                  textColor === "#ffffff"
-                    ? "1px solid rgba(255,255,255,0.2)"
-                    : "1px solid rgba(0,0,0,0.2)",
-                fontSize: "0.9rem",
-                opacity: "0.9",
-                color: textColor,
-                textShadow: textShadow,
-              }}
-            >
-              {new Date(entry.created_at).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
 
       <MoodLegend
         isVisible={showLegend}

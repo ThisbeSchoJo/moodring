@@ -24,30 +24,48 @@ function AppRoutes() {
   return (
     <div className="App">
       <Header />
-      <main className="container">
-        <Routes>
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/" replace /> : <Login />}
-          />
-          <Route
-            path="/signup"
-            element={user ? <Navigate to="/" replace /> : <Signup />}
-          />
-          <Route
-            path="/"
-            element={user ? <Journal /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/new"
-            element={user ? <EntryForm /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/entry/:id"
-            element={user ? <EntryDetail /> : <Navigate to="/login" replace />}
-          />
-        </Routes>
-      </main>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <main className="container">
+              {user ? <Navigate to="/" replace /> : <Login />}
+            </main>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <main className="container">
+              {user ? <Navigate to="/" replace /> : <Signup />}
+            </main>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <main className="container full-width">
+              {user ? <Journal /> : <Navigate to="/login" replace />}
+            </main>
+          }
+        />
+        <Route
+          path="/new"
+          element={
+            <main className="container">
+              {user ? <EntryForm /> : <Navigate to="/login" replace />}
+            </main>
+          }
+        />
+        <Route
+          path="/entry/:id"
+          element={
+            <main className="container">
+              {user ? <EntryDetail /> : <Navigate to="/login" replace />}
+            </main>
+          }
+        />
+      </Routes>
     </div>
   );
 }

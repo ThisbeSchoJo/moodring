@@ -2,9 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   flex-wrap: wrap;
   gap: 16px;
+  padding: 32px 48px;
+  background: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .journal-actions {
@@ -28,18 +32,21 @@
 }
 
 .legend-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  opacity: 0.9;
+}
+
+/* Ensure the journal itself is full-width */
+.journal {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 .entry-container {
-  margin: 20px 0;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.entry-container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  margin: 0;
+  border-radius: 0;
+  width: 100%;
 }
 
 .entry-header {
