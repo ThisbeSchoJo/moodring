@@ -124,8 +124,9 @@ const Journal = () => {
                   style={{
                     padding:
                       index === 0
-                        ? "32px 48px 16px 48px"
-                        : "32px 48px 16px 48px",
+                        ? "32px 48px 32px 48px"
+                        : "32px 48px 32px 48px",
+                    margin: "0 48px 16px 48px",
                   }}
                 >
                   <div
@@ -134,6 +135,7 @@ const Journal = () => {
                       justifyContent: "space-between",
                       alignItems: "flex-start",
                       gap: "16px",
+                      marginBottom: "16px",
                     }}
                   >
                     <div
@@ -146,11 +148,10 @@ const Journal = () => {
                     >
                       <div
                         style={{
-                          color: textColor,
+                          color: "#1a252f",
                           textDecoration: "none",
                           fontSize: "1.5rem",
-                          fontWeight: "600",
-                          textShadow: "none",
+                          fontWeight: "800",
                           textTransform: "uppercase",
                         }}
                       >
@@ -159,15 +160,9 @@ const Journal = () => {
                       <div
                         style={{
                           fontSize: "1rem",
-                          color: "#ffffff",
-                          textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                          fontWeight: "500",
+                          color: "#1a252f",
+                          fontWeight: "700",
                           opacity: "0.9",
-                          backgroundColor: "rgba(0,0,0,0.2)",
-                          padding: "4px 8px",
-                          borderRadius: "6px",
-                          backdropFilter: "blur(4px)",
-                          border: "1px solid rgba(255,255,255,0.1)",
                         }}
                       >
                         {new Date(entry.created_at).toLocaleDateString(
@@ -215,18 +210,16 @@ const Journal = () => {
                       ))}
                     </div>
                   </div>
-                </div>
-                <div
-                  style={{
-                    padding: "0 48px 32px 48px",
-                    color: textColor,
-                    lineHeight: "1.6",
-                    fontSize: "1.3rem",
-                    textShadow: "none",
-                    fontWeight: "400",
-                  }}
-                >
-                  {entry.content}
+                  <div
+                    style={{
+                      color: "#1a252f",
+                      lineHeight: "1.6",
+                      fontSize: "1.3rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {entry.content}
+                  </div>
                 </div>
               </div>
             </Link>
