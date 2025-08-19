@@ -141,52 +141,44 @@ export const createEntryGradient = (entry, index, totalEntries, allEntries) => {
     return currentColors.gradient;
   }
 
-  // Much larger transition zones for seamless blending
-  const transitionZone = 0.5; // 50% of the entry height for transitions
-  const mainZone = 1 - 2 * transitionZone; // 0% for the main color (all transitions)
+  // Shorter transition zones for subtle blending
+  const transitionZone = 0.15; // 15% of the entry height for transitions
+  const mainZone = 1 - 2 * transitionZone; // 70% for the main color
 
   if (index === 0) {
-    // First entry: blend at bottom with next entry
+    // First entry: starts with its own color, transitions to next entry's color
     const nextEntry = allEntries[index + 1];
     const nextColors = getMoodColors(nextEntry.mood);
 
     return `linear-gradient(to bottom, 
       ${currentColors.primary} 0%, 
-      ${currentColors.secondary} 25%, 
+      ${currentColors.secondary} 50%, 
       ${blendHexColors(
         [currentColors.secondary, nextColors.primary],
-        [0.8, 0.2]
-      )} 50%, 
-      ${blendHexColors(
-        [currentColors.secondary, nextColors.primary],
-        [0.6, 0.4]
+        [0.7, 0.3]
       )} 75%, 
       ${blendHexColors(
         [currentColors.secondary, nextColors.primary],
-        [0.4, 0.6]
+        [0.3, 0.7]
       )} 100%)`;
   } else if (index === totalEntries - 1) {
-    // Last entry: blend at top with previous entry
+    // Last entry: starts with previous entry's color, transitions to its own color
     const prevEntry = allEntries[index - 1];
     const prevColors = getMoodColors(prevEntry.mood);
 
     return `linear-gradient(to bottom, 
       ${blendHexColors(
         [prevColors.secondary, currentColors.primary],
-        [0.4, 0.6]
+        [0.7, 0.3]
       )} 0%, 
       ${blendHexColors(
         [prevColors.secondary, currentColors.primary],
-        [0.6, 0.4]
+        [0.3, 0.7]
       )} 25%, 
-      ${blendHexColors(
-        [prevColors.secondary, currentColors.primary],
-        [0.8, 0.2]
-      )} 50%, 
-      ${currentColors.secondary} 75%, 
-      ${currentColors.primary} 100%)`;
+      ${currentColors.primary} 50%, 
+      ${currentColors.secondary} 100%)`;
   } else {
-    // Middle entries: blend with both previous and next entries
+    // Middle entries: starts with previous entry's color, transitions to current color, then to next entry's color
     const prevEntry = allEntries[index - 1];
     const nextEntry = allEntries[index + 1];
     const prevColors = getMoodColors(prevEntry.mood);
@@ -195,20 +187,17 @@ export const createEntryGradient = (entry, index, totalEntries, allEntries) => {
     return `linear-gradient(to bottom, 
       ${blendHexColors(
         [prevColors.secondary, currentColors.primary],
-        [0.4, 0.6]
+        [0.7, 0.3]
       )} 0%, 
       ${blendHexColors(
         [prevColors.secondary, currentColors.primary],
-        [0.6, 0.4]
+        [0.3, 0.7]
       )} 25%, 
-      ${currentColors.secondary} 50%, 
+      ${currentColors.primary} 50%, 
+      ${currentColors.secondary} 75%, 
       ${blendHexColors(
         [currentColors.secondary, nextColors.primary],
-        [0.6, 0.4]
-      )} 75%, 
-      ${blendHexColors(
-        [currentColors.secondary, nextColors.primary],
-        [0.4, 0.6]
+        [0.7, 0.3]
       )} 100%)`;
   }
 };

@@ -10,179 +10,147 @@ def seed_database():
     
     print("🌱 Seeding database...")
     
-    # Create test users
-    user1 = User(username="alice")
+    # Create test users - famous diarists and writers
+    user1 = User(username="Franz Kafka")
     user1.set_password("password123")
     
-    user2 = User(username="bob") 
+    user2 = User(username="Virginia Woolf")
     user2.set_password("password123")
     
-    user3 = User(username="charlie")
+    user3 = User(username="Anne Frank")
     user3.set_password("password123")
     
-    user4 = User(username="demo")
-    user4.set_password("demo123")
+    user4 = User(username="Sylvia Plath")
+    user4.set_password("password123")
+
+    user5 = User(username="Frida Kahlo")
+    user5.set_password("password123")
+
+    user6 = User(username="Marcus Aurelius")
+    user6.set_password("password123")
+
+    user7 = User(username="Anaïs Nin")
+    user7.set_password("password123")
+
+    user8 = User(username="John Cheever")
+    user8.set_password("password123")
     
-    db.session.add_all([user1, user2, user3, user4])
+    
+    db.session.add_all([user1, user2, user3, user4, user5, user6, user7, user8])
     db.session.commit()
     
-    # Create test entries with diverse moods and content
+    # Create test entries inspired by famous diarists
     entries = [
+        # Kafka-inspired entries (introspective, anxious, existential)
         Entry(
-            title="My First Journal Entry",
-            content="Today I'm feeling grateful for the beautiful weather and the opportunity to reflect on my day. The sun was shining, and I had a wonderful conversation with an old friend. Sometimes it's the simple moments that bring the most joy. We sat in the park for hours, talking about everything and nothing. She told me about her new job and how she's finally feeling fulfilled in her career. It reminded me that change is possible and that sometimes the best things happen when you least expect them. We laughed about old memories and made plans for the future. It's amazing how a single conversation can shift your entire perspective on life. I realized that I've been so focused on what I don't have that I've forgotten to appreciate what I do have. My friend reminded me that happiness isn't about having everything perfect, but about finding joy in the imperfect moments. As we watched the sunset together, I felt this overwhelming sense of gratitude for the people in my life who make it better just by being in it.",
-            mood="grateful,happy",
-            user_id=user1.id
-        ),
-        Entry(
-            title="A Peaceful Moment",
-            content="Spent some time in nature today. The sound of birds and rustling leaves was so calming. Found a quiet spot by the lake and just sat there for an hour, watching the water ripple and feeling completely at peace.",
-            mood="calm,neutral",
-            user_id=user1.id
-        ),
-        Entry(
-            title="New Beginnings",
-            content="Starting this journal journey to track my emotional well-being and personal growth. I'm excited about this new chapter and hopeful about what lies ahead. Time to be more mindful about my feelings.",
-            mood="excited,hopeful",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Frustrating Day at Work",
-            content="Today was incredibly frustrating. My computer crashed three times, I missed an important deadline, and my boss was not understanding at all. I feel so angry and stressed about everything that went wrong.",
-            mood="angry,anxious",
-            user_id=user1.id
-        ),
-        Entry(
-            title="Missing Someone",
-            content="I've been thinking about my grandmother a lot lately. She passed away last year, and I miss her so much. Her wisdom, her laugh, the way she always knew exactly what to say. I'm feeling really sad today.",
-            mood="sad",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Confused About Life Direction",
-            content="I'm not sure what I want to do with my life anymore. Everyone seems to have it figured out except me. Should I change careers? Move to a new city? I feel so lost and confused about my next steps. I've been working in the same job for five years now, and while it pays the bills, it doesn't fulfill me anymore. I see my friends posting about their exciting new opportunities, their promotions, their travels, and I can't help but feel like I'm falling behind. But then I think about starting over, and the thought terrifies me. What if I make the wrong choice? What if I end up even more miserable? I've been reading self-help books, talking to career counselors, even taking personality tests to figure out what I'm supposed to do. But the more I research, the more confused I become. There are so many options, so many paths I could take. How do I know which one is right for me? I'm afraid of making a mistake, of wasting more time on something that won't make me happy. But I'm also afraid of staying stuck in this rut forever. Maybe the problem isn't that I don't know what I want, but that I'm too afraid to go after it. I need to find the courage to take a risk, to trust that I'll figure it out as I go along.",
-            mood="confused,anxious",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Amazing Concert Experience",
-            content="Went to see my favorite band tonight and it was absolutely incredible! The energy in the crowd was electric, the music was perfect, and I felt so alive and connected to everyone around me. Best night ever! I've been waiting for this concert for months, and it exceeded all my expectations. The venue was packed with thousands of people, all singing along to every song. When the band came on stage, the entire crowd erupted in cheers and applause. The lead singer's voice was even more powerful live than on the recordings, and the guitar solos were absolutely mind-blowing. I found myself dancing and singing along with complete strangers, feeling this incredible sense of unity and joy. During the encore, they played my favorite song, and I was moved to tears. It was one of those moments where you feel completely present, completely alive, and completely grateful to be experiencing something so beautiful. The band seemed to feed off the crowd's energy, and the crowd fed off theirs. It was this perfect symbiotic relationship that created something magical. I made friends with the people standing next to me, and we exchanged contact information, promising to meet up at future concerts. The whole experience reminded me of the power of music to bring people together, to create moments of pure joy and connection. I'm still buzzing with excitement hours later, and I know this memory will stay with me for a long time.",
-            mood="excited,happy",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Meditation Breakthrough",
-            content="Had a really deep meditation session today. For the first time in weeks, I felt truly calm and centered. My mind was quiet, and I could feel this sense of inner peace that I've been searching for.",
-            mood="calm",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Anxiety About Tomorrow",
-            content="I have a big presentation tomorrow and I'm feeling really anxious about it. What if I mess up? What if people think I'm not qualified? I can't stop worrying about all the things that could go wrong.",
-            mood="anxious",
-            user_id=user1.id
-        ),
-        Entry(
-            title="Grateful for My Friends",
-            content="Had dinner with my closest friends tonight and I'm feeling so grateful for them. They've been there for me through everything - the good times and the bad. I don't know what I'd do without their support and love. We've been friends for over a decade now, and they've seen me at my best and my worst. They were there when I got my first job, when I went through my first heartbreak, when I lost my father, when I finally found love again. They've celebrated my victories and comforted me in my defeats. Tonight, as we sat around the table sharing stories and laughing until our sides hurt, I realized how lucky I am to have these people in my life. They know me better than anyone else, and they love me anyway. They accept my flaws, encourage my dreams, and push me to be the best version of myself. When I'm feeling down, they know exactly what to say to lift my spirits. When I'm being too hard on myself, they remind me to be kinder. They've taught me what true friendship means - it's not about being perfect or always agreeing, but about showing up, being honest, and loving each other through the messiness of life. I'm grateful for their wisdom, their humor, their patience, and their unwavering support. They've made my life richer and more meaningful than I could have ever imagined.",
-            mood="grateful,happy",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Feeling Overwhelmed",
-            content="There's just so much to do and I don't know where to start. Work is piling up, I have bills to pay, appointments to schedule, and I feel like I'm drowning in responsibilities. I need to take a step back and breathe.",
+            title="The Weight of Existence",
+            content="Another night of sleeplessness. The walls of my room seem to press closer with each passing hour. I write these words not because I believe anyone will read them, but because the act of writing itself is the only thing that keeps me from disappearing entirely. The world outside my window continues its indifferent rotation, while I remain trapped in this endless cycle of thought and doubt. What is the purpose of all this? Why do I continue to exist when my existence brings nothing but confusion and pain? The words I write tonight will be forgotten tomorrow, just as I will be forgotten when I am gone. And yet, I continue to write.",
             mood="anxious,confused",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Beautiful Sunset",
-            content="Watched the most incredible sunset tonight. The sky was painted in shades of pink, orange, and purple. It reminded me that even on difficult days, there's still beauty in the world. Sometimes you just need to look up.",
-            mood="calm,happy",
             user_id=user1.id
         ),
         Entry(
-            title="Angry About Injustice",
-            content="I'm so angry about the unfair treatment I witnessed today. Someone was being discriminated against and it made me furious. Why do people have to be so cruel to each other? I want to do something to make things better.",
-            mood="angry",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Feeling Lost",
-            content="I don't know who I am anymore. Everything I thought I wanted doesn't seem right anymore. I feel like I'm just going through the motions without any real purpose or direction. I need to figure out what truly matters to me. I used to have such clear goals and dreams, but somewhere along the way, I lost sight of them. Maybe it was the pressure to conform, to follow the path that everyone else was taking. I got a degree, found a stable job, moved into a nice apartment, and checked off all the boxes that society told me I should check. But now I'm sitting here, looking at my life, and wondering if this is really what I want. I feel like I'm living someone else's life, following someone else's script. The things that used to excite me don't excite me anymore. The people I used to admire seem to have lost their luster. I'm questioning everything - my relationships, my career, my values, my beliefs. It's like I'm having an identity crisis, but I'm too old for that, aren't I? I should have this figured out by now. But maybe that's the problem - maybe I've been so focused on what I should be that I've forgotten who I actually am. I need to take some time to rediscover myself, to figure out what brings me joy, what makes me feel alive, what gives my life meaning. I need to stop living for other people's expectations and start living for myself. It's scary to think about starting over, but it's even scarier to think about continuing down this path that doesn't feel right.",
+            title="The Office as Prison",
+            content="Today at work, I felt like a character in one of my own stories. The fluorescent lights hummed their mechanical song, and my colleagues moved about like automatons, performing their assigned tasks with practiced efficiency. I sat at my desk, staring at the papers before me, and realized that I have become exactly what I feared most: a cog in a machine that cares nothing for my thoughts or dreams. The clock on the wall ticked away the hours of my life, and I could do nothing but watch as another day slipped through my fingers like sand. I am not living; I am merely existing, waiting for something that may never come.",
             mood="sad,confused",
+            user_id=user1.id
+        ),
+        
+        # Virginia Woolf-inspired entries (stream of consciousness, emotional depth)
+        Entry(
+            title="The Waves of Memory",
+            content="The afternoon light falls through the window in golden shafts, and I find myself thinking of childhood summers by the sea. The way the waves would crash against the shore, each one different from the last, yet somehow the same. My thoughts flow like those waves now, rising and falling, carrying me to places I had forgotten existed. I remember the feel of sand between my toes, the taste of salt on my lips, the sound of seagulls crying overhead. These memories are more real to me than the room I sit in now. They are the threads that connect me to who I was, who I am, and who I might yet become. The past is not dead; it lives within us, shaping every moment of our present.",
+            mood="calm,hopeful",
+            user_id=user2.id
+        ),
+        Entry(
+            title="A Room of One's Own",
+            content="I have finally found it—a space that is entirely my own. Not just a physical room, though that too, but a mental space where my thoughts can roam freely without fear of interruption or judgment. Here, in this quiet corner of the world, I can be whoever I choose to be. I can write without worrying about what others will think, dream without fearing that my dreams are too small or too large. This room is my sanctuary, my refuge from the chaos of the outside world. Within these walls, I am free to explore the depths of my own mind, to discover truths that have been hidden from me until now. This is where I will find my voice, my purpose, my self.",
+            mood="hopeful,calm",
+            user_id=user2.id
+        ),
+        
+        # Anne Frank-inspired entries (hopeful yet realistic, coming-of-age)
+        Entry(
+            title="The Light Through the Curtain",
+            content="Even in the darkest moments, I can see a sliver of light through the curtain. It reminds me that the world is still out there, waiting for me to return to it. I know that things are difficult now, that the future is uncertain, but I refuse to give up hope. I believe that people are truly good at heart, that love will triumph over hatred, that this darkness will not last forever. I write these words as a promise to myself: I will survive this, and I will emerge stronger than before. The world may be cruel, but it is also beautiful, and I will not let the cruelty blind me to the beauty. I will hold onto hope with both hands, because hope is the only thing stronger than fear.",
+            mood="hopeful,calm",
             user_id=user3.id
         ),
         Entry(
-            title="Excited About New Project",
-            content="Started working on a new creative project today and I'm so excited about it! I have so many ideas and I can't wait to see where this leads. It feels like the beginning of something really special.",
+            title="Growing Up in Strange Times",
+            content="Sometimes I feel like I'm growing up too fast, forced to understand things that no child should have to understand. But other times, I feel like I'm not growing up fast enough, that the world is changing around me while I remain the same. I want to be brave and strong, but I also want to be allowed to be young and carefree. I want to believe in the goodness of people, but I also want to be realistic about the world we live in. I am caught between childhood and adulthood, between innocence and experience, between hope and despair. But maybe that's what growing up means—learning to hold these contradictions within yourself without being torn apart by them.",
+            mood="confused,hopeful",
+            user_id=user3.id
+        ),
+        
+        # Sylvia Plath-inspired entries (intense, emotional, often dark)
+        Entry(
+            title="The Bell Jar",
+            content="I feel like I'm living under a bell jar, watching the world through glass that distorts everything I see. The people around me move in slow motion, their voices reaching me as if through water. I want to break free, to feel the air on my skin, to connect with the world around me, but the glass is too thick, too strong. I am trapped in my own mind, a prisoner of my own thoughts. The world outside is beautiful and terrible, and I want to experience it fully, but I can't seem to break through this barrier that separates me from everything else. I am alone, even when I'm surrounded by people who love me.",
+            mood="sad,confused",
+            user_id=user4.id
+        ),
+        Entry(
+            title="The Fig Tree",
+            content="I see my life as a fig tree, with branches reaching in every direction, each fig representing a different possibility, a different future. I want to choose one, to pluck it and make it mine, but I'm paralyzed by the fear of making the wrong choice. What if I choose the wrong fig? What if I spend my life wondering about the ones I didn't choose? I want to be a writer, a mother, a traveler, a lover, a friend, a daughter, a sister—I want to be everything, but I can only be one thing at a time. The figs are ripening, and soon they will fall to the ground, wasted. I must choose, but how?",
+            mood="anxious,confused",
+            user_id=user4.id
+        ),
+        
+        # Frida Kahlo-inspired entries (passionate, artistic, dealing with pain and love)
+        Entry(
+            title="The Pain and the Passion",
+            content="My body is a battlefield, scarred and broken, but my soul is a garden, wild and beautiful. The pain is always there, a constant companion, but so is the passion—for life, for art, for love. I paint my pain onto canvas, transforming suffering into something beautiful, something that speaks to others who are also hurting. My body may be broken, but my spirit is unbreakable. I will not let pain define me, limit me, or destroy me. Instead, I will use it as fuel for my art, my love, my life. I am not a victim; I am a warrior, fighting for beauty in a world that often seems ugly and cruel.",
+            mood="hopeful,excited",
+            user_id=user5.id
+        ),
+        Entry(
+            title="Love Like a Hurricane",
+            content="When I love, I love with the intensity of a hurricane, with the power to destroy and create in equal measure. My heart is not a gentle thing—it is wild and untamed, capable of both great joy and great sorrow. I have loved and been loved, hurt and been hurt, and I would not change any of it. Love is not safe, not gentle, not predictable. It is dangerous and beautiful, like a storm that clears the air and leaves everything fresh and new. I am not afraid of love, even though it has broken me and rebuilt me more times than I can count. I will love again, fiercely and completely, because that is who I am.",
+            mood="in love,excited",
+            user_id=user5.id
+        ),
+        
+        # Marcus Aurelius-inspired entries (stoic, philosophical, reflective)
+        Entry(
+            title="The Discipline of the Mind",
+            content="Today I remind myself that I am not my thoughts, not my emotions, not my circumstances. I am the observer of these things, the one who chooses how to respond to them. When I feel anger rising within me, I can choose to let it pass like a cloud across the sky. When I feel fear gripping my heart, I can choose to face it with courage. When I feel joy bubbling up, I can choose to savor it without clinging to it. I am not a slave to my emotions; I am their master. This is the discipline of the mind, the practice of choosing my responses rather than being controlled by my reactions. It is not easy, but it is necessary.",
+            mood="calm,hopeful",
+            user_id=user6.id
+        ),
+        Entry(
+            title="The Art of Living",
+            content="I am learning that life is not about avoiding pain or seeking pleasure, but about living with wisdom and virtue. The challenges I face are not obstacles to my happiness, but opportunities to practice patience, courage, and compassion. The people who frustrate me are not enemies, but teachers showing me where I need to grow. The losses I experience are not punishments, but reminders of what truly matters. I am not perfect, and I do not expect to be. I am simply trying to live each day with intention, with awareness, with love. This is the art of living, and I am still learning.",
+            mood="hopeful,calm",
+            user_id=user6.id
+        ),
+        
+        # Anaïs Nin-inspired entries (sensual, artistic, deeply personal)
+        Entry(
+            title="The Garden of Sensuality",
+            content="I am discovering that my body is not just a vessel for my mind, but a source of wisdom and pleasure in its own right. The way the sun feels on my skin, the taste of ripe fruit, the sound of music that makes me want to move—these are not distractions from spiritual growth, but pathways to it. I am learning to trust my senses, to honor my desires, to celebrate the physical world without shame or guilt. My body is a garden, and I am learning to tend it with love and care. I am not afraid of my own sensuality anymore; I am embracing it as part of who I am.",
             mood="excited,hopeful",
-            user_id=user1.id
+            user_id=user7.id
         ),
         Entry(
-            title="Neutral Day",
-            content="Today was just... fine. Nothing particularly good or bad happened. I went to work, came home, watched some TV, and now I'm here. Sometimes it's okay to have days that are just neutral.",
-            mood="neutral",
-            user_id=user2.id
+            title="The Labyrinth of the Heart",
+            content="My heart is a labyrinth, with winding paths that lead to hidden chambers of memory and desire. I am exploring these depths, not to escape from the world, but to understand myself better so I can love the world more fully. Each turn reveals something new about who I am, what I want, what I fear, what I love. I am not afraid of getting lost in this labyrinth, because I know that every path leads somewhere, and every discovery brings me closer to the center of my own being. I am learning to trust the journey, to embrace the uncertainty, to find beauty in the darkness.",
+            mood="hopeful,calm",
+            user_id=user7.id
+        ),
+        
+        # John Cheever-inspired entries (American suburban life, often conflicted)
+        Entry(
+            title="The Perfect Lawn",
+            content="I spent the morning mowing the lawn, trying to make it as perfect as the ones on either side of mine. The neighbors wave as they drive by, and I wave back, but I wonder if they can see the emptiness behind my smile. My house looks perfect from the outside—clean, well-maintained, respectable. But inside, I feel like I'm suffocating. I have everything I'm supposed to want: a good job, a nice house, a loving family. So why do I feel so restless, so unsatisfied? Maybe the problem isn't with my life, but with the expectations I've placed on it. Maybe perfection is the enemy of happiness.",
+            mood="confused,anxious",
+            user_id=user8.id
         ),
         Entry(
-            title="Hopeful About the Future",
-            content="Despite all the challenges, I'm feeling really hopeful about the future. I believe that good things are coming and that I have the strength to handle whatever comes my way. The best is yet to come.",
-            mood="hopeful",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Mixed Emotions",
-            content="Today has been a rollercoaster of emotions. I'm happy about some things, sad about others, and confused about everything in between. Sometimes it's hard to make sense of all these feelings.",
-            mood="happy,sad,confused",
-            user_id=user1.id
-        ),
-        Entry(
-            title="Feeling Accomplished",
-            content="Finally finished that project I've been working on for months! It turned out even better than I expected, and I'm so proud of myself. Hard work really does pay off.",
-            mood="excited,happy",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Missing Home",
-            content="I've been away from home for a while now, and I'm really starting to miss it. The familiar sights, sounds, and people. Sometimes I wonder if I made the right choice by leaving.",
-            mood="sad",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Feeling Inspired",
-            content="Read an amazing book today that completely changed my perspective on life. I feel so inspired and motivated to make positive changes. Sometimes all you need is the right words at the right time.",
-            mood="excited,hopeful",
-            user_id=user1.id
-        ),
-        Entry(
-            title="Stressed About Money",
-            content="Money is really tight right now and I'm feeling so stressed about it. Bills are piling up, and I don't know how I'm going to make ends meet. I need to figure out a better financial plan.",
-            mood="anxious",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Grateful for Simple Pleasures",
-            content="Today I'm grateful for the simple things - a hot cup of coffee in the morning, the sound of rain on the window, and the comfort of my favorite blanket. Sometimes the smallest things bring the most joy.",
-            mood="grateful,calm",
-            user_id=user3.id
-        ),
-        Entry(
-            title="Falling in Love",
-            content="I can't believe how much my heart is racing. Every time I think about them, I feel this incredible warmth spreading through my chest. The way they smile, the sound of their laugh, everything about them makes me feel so alive and happy. I think I'm falling in love.",
-            mood="in love,excited,happy",
-            user_id=user1.id
-        ),
-        Entry(
-            title="Romantic Evening",
-            content="Tonight was absolutely magical. We had dinner by candlelight, talked for hours, and I felt so connected to them. The way they looked at me made me feel like the most special person in the world. I'm completely in love with this feeling.",
-            mood="in love,hopeful",
-            user_id=user2.id
-        ),
-        Entry(
-            title="Missing My Love",
-            content="I miss them so much it hurts. Every little thing reminds me of them - the way they would laugh at my jokes, how they always knew exactly what to say to make me feel better. Being in love is beautiful but being apart is so difficult.",
-            mood="in love,sad",
-            user_id=user3.id
+            title="The Commute",
+            content="Every morning, I join the river of cars flowing toward the city, each of us in our own little metal boxes, pretending we're not all going to the same place to do the same things. We stop at the same red lights, merge into the same lanes, park in the same garages. We are a community of strangers, united by our shared routine and our shared silence. I wonder what the others are thinking about as they drive. Are they happy? Are they worried? Are they, like me, wondering if this is all there is? The commute is a metaphor for life itself—we're all going somewhere, but most of us aren't sure where, or why.",
+            mood="neutral,confused",
+            user_id=user8.id
         )
     ]
     
@@ -191,11 +159,15 @@ def seed_database():
     
     print("✅ Database seeded successfully!")
     print(f"Created {User.query.count()} users and {Entry.query.count()} entries")
-    print("\n🧪 Test Users:")
-    print("Username: alice, Password: password123")
-    print("Username: bob, Password: password123")
-    print("Username: charlie, Password: password123")
-    print("Username: demo, Password: demo123")
+    print("\n🧪 Test Users (Famous Diarists):")
+    print("Username: Franz Kafka, Password: password123")
+    print("Username: Virginia Woolf, Password: password123")
+    print("Username: Anne Frank, Password: password123")
+    print("Username: Sylvia Plath, Password: password123")
+    print("Username: Frida Kahlo, Password: password123")
+    print("Username: Marcus Aurelius, Password: password123")
+    print("Username: Anaïs Nin, Password: password123")
+    print("Username: John Cheever, Password: password123")
 
 if __name__ == "__main__":
     with app.app_context():
