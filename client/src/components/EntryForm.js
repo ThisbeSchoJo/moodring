@@ -99,8 +99,12 @@ const EntryForm = () => {
   return (
     <div className="entry-form">
       <div className="form-header">
-        <button className="back-button" onClick={() => navigate("/")}>
-          Back to Journal
+        <button
+          className="back-button"
+          onClick={() => navigate("/")}
+          title="Back to Journal"
+        >
+          <ArrowLeft size={20} />
         </button>
         <h2>New Journal Entry</h2>
       </div>

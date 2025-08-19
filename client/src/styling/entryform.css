@@ -20,14 +20,18 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 50%;
   cursor: pointer;
-  font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
 }
 
 .back-button::before {
@@ -53,6 +57,20 @@
 .back-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+@media (min-width: 768px) {
+  .back-button {
+    padding: 16px;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4.854px 19.416px rgba(102, 126, 234, 0.4); /* 3 * 1.618 ≈ 4.854, 12 * 1.618 ≈ 19.416 */
+  }
+
+  .back-button svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .publish-button {
