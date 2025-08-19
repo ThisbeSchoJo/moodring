@@ -182,21 +182,34 @@ const EntryDetail = () => {
             <div
               className="entry-mood-display"
               style={{
-                background: "transparent",
-                padding: "8px 16px",
-                borderRadius: "20px",
-                color: textColor,
                 display: "flex",
+                flexWrap: "wrap",
+                gap: "6px",
                 alignItems: "center",
-                gap: "8px",
-                backdropFilter: "blur(10px)",
-                border: "none",
-                textShadow: textShadow,
               }}
             >
-              <Heart size={16} />
-              <span>{getMoodEmoji(entry.mood)}</span>
-              <span>{parseMoods(entry.mood).join(", ")}</span>
+              {parseMoods(entry.mood).map((mood, moodIndex) => (
+                <div
+                  key={moodIndex}
+                  style={{
+                    background: getMoodColors(mood).gradient,
+                    color: "#ffffff",
+                    padding: "8px 12px",
+                    borderRadius: "12px",
+                    fontSize: "1.2rem",
+                    fontWeight: "600",
+                    display: "flex",
+                    alignItems: "center",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                    border: "1px solid rgba(255,255,255,0.3)",
+                    textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {mood}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -229,18 +242,19 @@ const EntryDetail = () => {
                   padding: "10px 14px",
                   fontWeight: "500",
                   fontSize: "1rem",
+                  textTransform: "uppercase",
                 }}
               >
-                <option value="neutral">😐 Neutral</option>
-                <option value="happy">😊 Happy</option>
-                <option value="excited">🤩 Excited</option>
-                <option value="grateful">🙏 Grateful</option>
-                <option value="hopeful">✨ Hopeful</option>
-                <option value="calm">😌 Calm</option>
-                <option value="sad">😢 Sad</option>
-                <option value="angry">😠 Angry</option>
-                <option value="anxious">😰 Anxious</option>
-                <option value="confused">😕 Confused</option>
+                <option value="neutral">NEUTRAL</option>
+                <option value="happy">HAPPY</option>
+                <option value="excited">EXCITED</option>
+                <option value="grateful">GRATEFUL</option>
+                <option value="hopeful">HOPEFUL</option>
+                <option value="calm">CALM</option>
+                <option value="sad">SAD</option>
+                <option value="angry">ANGRY</option>
+                <option value="anxious">ANXIOUS</option>
+                <option value="confused">CONFUSED</option>
               </select>
             </div>
             <textarea

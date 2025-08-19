@@ -115,7 +115,7 @@ const Journal = () => {
               <div
                 style={{
                   padding:
-                    index === 0 ? "0 48px 16px 48px" : "32px 48px 16px 48px",
+                    index === 0 ? "32px 48px 16px 48px" : "32px 48px 16px 48px",
                 }}
               >
                 <div
