@@ -11,6 +11,18 @@
   box-shadow: none;
 }
 
+.journal-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+}
+
 .journal-actions {
   display: flex;
   gap: 12px;
@@ -101,16 +113,47 @@
 }
 
 .new-entry-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #007bff;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff9ff3 100%);
   color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
   text-decoration: none;
-  border-radius: 5px;
+  display: inline-block;
   margin: 10px 0;
-  font-weight: bold;
+}
+
+.new-entry-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .new-entry-button:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+  background: linear-gradient(135deg, #ff5252 0%, #d63031 50%, #fd79a8 100%);
+}
+
+.new-entry-button:hover::before {
+  left: 100%;
 }
