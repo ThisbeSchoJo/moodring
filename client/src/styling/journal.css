@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0;
+  margin: 0;
   flex-wrap: wrap;
   gap: 16px;
-  padding: 32px 48px;
-  background: #ffffff;
+  padding: 32px 48px 0 48px;
+  background: transparent;
   border-bottom: none;
   box-shadow: none;
 }
@@ -26,6 +26,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
+  padding: 0;
+  line-height: 1;
   letter-spacing: -0.02em;
   text-shadow: none;
   text-transform: uppercase;
@@ -61,6 +63,8 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .legend-button {
@@ -191,7 +195,7 @@
   overflow: hidden;
   text-decoration: none;
   display: inline-block;
-  margin: 10px 0;
+  margin: 0;
 }
 
 .new-entry-button::before {

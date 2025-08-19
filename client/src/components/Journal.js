@@ -38,7 +38,14 @@ const Journal = () => {
   }, [user]);
 
   return (
-    <div style={{ width: "100%", maxWidth: "none", margin: 0, padding: 0 }}>
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "none",
+        margin: 0,
+        padding: 0,
+      }}
+    >
       <div className="journal-header">
         <h1>Journal</h1>
         <div className="journal-actions">
@@ -55,7 +62,7 @@ const Journal = () => {
           </Link>
         </div>
       </div>
-      <div style={{ minHeight: "100vh" }}>
+      <div>
         {entries.map((entry, index) => {
           const moodColors = getMoodColors(entry.mood);
           const moods = parseMoods(entry.mood);
@@ -76,7 +83,12 @@ const Journal = () => {
                 textShadow: "none",
               }}
             >
-              <div style={{ padding: "32px 48px 16px 48px" }}>
+              <div
+                style={{
+                  padding:
+                    index === 0 ? "0 48px 16px 48px" : "32px 48px 16px 48px",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
