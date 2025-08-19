@@ -4,15 +4,15 @@
   align-items: center;
   margin: 0;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 32px 48px 0 48px;
+  gap: 26px; /* 16 * 1.618 ≈ 26 */
+  padding: 52px 78px 0 78px; /* 32 * 1.618 ≈ 52, 48 * 1.618 ≈ 78 */
   background: transparent;
   border-bottom: none;
   box-shadow: none;
 }
 
 .journal-header h1 {
-  font-size: 3rem;
+  font-size: 4.85rem; /* 3 * 1.618 ≈ 4.85 */
   font-weight: 800;
   background: linear-gradient(
     135deg,
@@ -61,7 +61,7 @@
 
 .journal-actions {
   display: flex;
-  gap: 12px;
+  gap: 19px; /* 12 * 1.618 ≈ 19 */
   align-items: center;
   margin: 0;
   padding: 0;
