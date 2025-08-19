@@ -74,6 +74,7 @@ const EntryDetail = () => {
       const response = await axios.patch(
         `http://localhost:5555/entries/${id}`,
         {
+          title: entry.title,
           content: editedContent,
           mood: updatedMood,
           user_id: user.id, // Pass user_id for verification
@@ -193,25 +194,54 @@ const EntryDetail = () => {
               marginBottom: "16px",
             }}
           >
-            <h1
-              style={{
-                margin: "0",
-                fontSize: "2rem",
-                fontWeight: "800",
-                background:
-                  "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                letterSpacing: "-0.02em",
-                textShadow: "none",
-                textTransform: "uppercase",
-                position: "relative",
-                transition: "all 0.3s ease",
-              }}
-            >
-              {entry.title}
-            </h1>
+            {!isEditing ? (
+              <h1
+                style={{
+                  margin: "0",
+                  fontSize: "2rem",
+                  fontWeight: "800",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  letterSpacing: "-0.02em",
+                  textShadow: "none",
+                  textTransform: "uppercase",
+                  position: "relative",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                {entry.title}
+              </h1>
+            ) : (
+              <input
+                type="text"
+                value={entry.title}
+                onChange={(e) => setEntry({ ...entry, title: e.target.value })}
+                placeholder="Entry title..."
+                className="title-input"
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "800",
+                  border: "none",
+                  borderRadius: "0",
+                  padding: "16px 0",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  letterSpacing: "-0.02em",
+                  textShadow: "none",
+                  textTransform: "uppercase",
+                  position: "relative",
+                  transition: "all 0.3s ease",
+                  width: "100%",
+                  color: textColor,
+                }}
+              />
+            )}
             <div
               className="entry-date"
               style={{
@@ -265,28 +295,6 @@ const EntryDetail = () => {
 
         {isEditing ? (
           <div className="edit-form" style={{ padding: "0 24px 24px 24px" }}>
-            <div className="form-group">
-              <input
-                type="text"
-                value={entry.title}
-                readOnly
-                placeholder="Entry title..."
-                className="title-input"
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "500",
-                  border: "none",
-                  borderBottom: "2px solid rgba(255,255,255,0.3)",
-                  borderRadius: "0",
-                  padding: "16px 0",
-                  background: "transparent",
-                  color: textColor,
-                  textShadow: textShadow,
-                  marginBottom: "32px",
-                }}
-              />
-            </div>
-
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}

@@ -142,6 +142,7 @@ const Journal = () => {
                         fontSize: "1.5rem",
                         fontWeight: "600",
                         textShadow: "none",
+                        textTransform: "uppercase",
                       }}
                     >
                       {entry.title}
