@@ -48,15 +48,43 @@ const EntryDetail = () => {
 
     setIsSaving(true);
     try {
-      const response = await axios.put(`http://localhost:5555/entries/${id}`, {
-        content: editedContent,
-        mood: editedMood,
-        user_id: user.id, // Pass user_id for verification
-      });
+      // First, re-analyze the mood with AI
+      let updatedMood = editedMood;
+      try {
+        console.log("Analyzing mood for content:", editedContent.trim());
+        const moodResponse = await axios.post(
+          "http://localhost:5555/analyze-mood",
+          {
+            content: editedContent.trim(),
+          }
+        );
+        console.log("Mood analysis response:", moodResponse.data);
+        if (moodResponse.data && moodResponse.data.mood) {
+          updatedMood = moodResponse.data.mood;
+          setEditedMood(updatedMood);
+          console.log("Updated mood to:", updatedMood);
+        }
+      } catch (moodError) {
+        console.error("Error analyzing mood:", moodError);
+        // Continue with current mood if analysis fails
+      }
+
+      // Then save the entry with the updated mood
+      console.log("Saving entry with mood:", updatedMood);
+      const response = await axios.patch(
+        `http://localhost:5555/entries/${id}`,
+        {
+          content: editedContent,
+          mood: updatedMood,
+          user_id: user.id, // Pass user_id for verification
+        }
+      );
+      console.log("Save response:", response.data);
       setEntry(response.data);
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating entry:", error);
+      console.error("Error response:", error.response?.data);
       if (error.response?.status === 403) {
         alert("You can only edit your own entries");
       } else {
@@ -157,29 +185,33 @@ const EntryDetail = () => {
         }}
       >
         <div className="entry-meta" style={{ padding: "24px 24px 16px 24px" }}>
-          <h1
+          <div
             style={{
-              margin: "0 0 16px 0",
-              fontSize: "2rem",
-              fontWeight: "800",
-              background:
-                "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              letterSpacing: "-0.02em",
-              textShadow: "none",
-              textTransform: "uppercase",
-              position: "relative",
-              transition: "all 0.3s ease",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              marginBottom: "16px",
             }}
           >
-            {entry.title}
-          </h1>
-          <div
-            className="entry-info"
-            style={{ display: "flex", gap: "16px", alignItems: "center" }}
-          >
+            <h1
+              style={{
+                margin: "0",
+                fontSize: "2rem",
+                fontWeight: "800",
+                background:
+                  "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.02em",
+                textShadow: "none",
+                textTransform: "uppercase",
+                position: "relative",
+                transition: "all 0.3s ease",
+              }}
+            >
+              {entry.title}
+            </h1>
             <div
               className="entry-date"
               style={{
@@ -187,46 +219,47 @@ const EntryDetail = () => {
                 alignItems: "center",
                 gap: "8px",
                 opacity: "0.9",
-                fontSize: "0.95rem",
+                fontSize: "1rem",
                 color: textColor,
                 textShadow: textShadow,
+                fontWeight: "500",
               }}
             >
               <Calendar size={18} />
               {formatDate(entry.created_at)}
             </div>
-            <div
-              className="entry-mood-display"
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "6px",
-                alignItems: "center",
-              }}
-            >
-              {parseMoods(entry.mood).map((mood, moodIndex) => (
-                <div
-                  key={moodIndex}
-                  style={{
-                    background: getMoodColors(mood).gradient,
-                    color: "#ffffff",
-                    padding: "8px 12px",
-                    borderRadius: "12px",
-                    fontSize: "1.2rem",
-                    fontWeight: "600",
-                    display: "flex",
-                    alignItems: "center",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    border: "1px solid rgba(255,255,255,0.3)",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {mood}
-                </div>
-              ))}
-            </div>
+          </div>
+          <div
+            className="entry-mood-display"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "6px",
+              alignItems: "center",
+            }}
+          >
+            {parseMoods(entry.mood).map((mood, moodIndex) => (
+              <div
+                key={moodIndex}
+                style={{
+                  background: getMoodColors(mood).gradient,
+                  color: "#ffffff",
+                  padding: "8px 12px",
+                  borderRadius: "12px",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  display: "flex",
+                  alignItems: "center",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                  textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                }}
+              >
+                {mood}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -253,47 +286,7 @@ const EntryDetail = () => {
                 }}
               />
             </div>
-            <div className="edit-mood" style={{ marginBottom: "16px" }}>
-              <label
-                htmlFor="mood"
-                style={{
-                  color: textColor,
-                  display: "block",
-                  marginBottom: "8px",
-                  fontWeight: "500",
-                  textShadow: textShadow,
-                }}
-              >
-                Mood:
-              </label>
-              <select
-                id="mood"
-                value={editedMood}
-                onChange={(e) => setEditedMood(e.target.value)}
-                style={{
-                  background: getMoodColors(editedMood).gradient,
-                  color: "#fff",
-                  textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                  border: "none",
-                  borderRadius: "8px",
-                  padding: "10px 14px",
-                  fontWeight: "500",
-                  fontSize: "1rem",
-                  textTransform: "uppercase",
-                }}
-              >
-                <option value="neutral">NEUTRAL</option>
-                <option value="happy">HAPPY</option>
-                <option value="excited">EXCITED</option>
-                <option value="grateful">GRATEFUL</option>
-                <option value="hopeful">HOPEFUL</option>
-                <option value="calm">CALM</option>
-                <option value="sad">SAD</option>
-                <option value="angry">ANGRY</option>
-                <option value="anxious">ANXIOUS</option>
-                <option value="confused">CONFUSED</option>
-              </select>
-            </div>
+
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
@@ -304,13 +297,15 @@ const EntryDetail = () => {
                 padding: "16px",
                 border: "none",
                 borderRadius: "8px",
-                background: "rgba(255,255,255,0.1)",
-                color: "#fff",
-                fontSize: "1rem",
+                background: "rgba(255,255,255,0.15)",
+                color: textColor,
+                fontSize: "1.1rem",
                 lineHeight: "1.6",
                 resize: "vertical",
                 backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.2)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                fontWeight: "400",
+                textShadow: textShadow,
               }}
             />
             <button
@@ -318,16 +313,25 @@ const EntryDetail = () => {
               onClick={handleSave}
               disabled={isSaving}
               style={{
-                marginTop: "16px",
-                padding: "12px 24px",
-                background: "rgba(255,255,255,0.2)",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.3)",
-                borderRadius: "8px",
+                background:
+                  "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
+                color: "#667eea",
+                border: "1px solid rgba(102, 126, 234, 0.2)",
+                padding: "0.75rem 1.25rem",
+                borderRadius: "10px",
                 cursor: "pointer",
-                fontWeight: "500",
-                backdropFilter: "blur(10px)",
-                transition: "all 0.2s",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginTop: "20px",
+                fontWeight: "600",
+                fontSize: "0.95rem",
+                transition: "all 0.4s ease",
+                textTransform: "uppercase",
+                letterSpacing: "0.3px",
+                position: "relative",
+                overflow: "hidden",
+                textDecoration: "none",
               }}
             >
               {isSaving ? "Saving..." : "Save Changes"}
