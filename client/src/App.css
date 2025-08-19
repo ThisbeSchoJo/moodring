@@ -55,10 +55,19 @@ html {
 .header-content {
   max-width: 1941.6px; /* 1200 * 1.618 ≈ 1941.6 */
   margin: 0 auto;
-  padding: 1.618rem 3.236rem; /* 1 * 1.618 ≈ 1.618, 2 * 1.618 ≈ 3.236 */
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .header-content {
+    padding: 1.618rem 3.236rem; /* 1 * 1.618 ≈ 1.618, 2 * 1.618 ≈ 3.236 */
+    gap: 0;
+  }
 }
 
 .logo {
@@ -113,23 +122,32 @@ html {
 
 .nav {
   display: flex;
-  gap: 1.618rem; /* 1 * 1.618 ≈ 1.618 */
+  gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    gap: 1.618rem; /* 1 * 1.618 ≈ 1.618 */
+  }
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 0.809rem; /* 0.5 * 1.618 ≈ 0.809 */
-  padding: 1.214rem 2.023rem; /* 0.75 * 1.618 ≈ 1.214, 1.25 * 1.618 ≈ 2.023 */
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
   text-decoration: none;
   color: #667eea;
-  border-radius: 16.18px; /* 10 * 1.618 ≈ 16.18 */
+  border-radius: 10px;
   transition: all 0.4s ease;
   font-weight: 600;
-  font-size: 1.537rem; /* 0.95 * 1.618 ≈ 1.537 */
+  font-size: 0.95rem;
   text-transform: uppercase;
-  letter-spacing: 0.485px; /* 0.3 * 1.618 ≈ 0.485 */
+  letter-spacing: 0.3px;
   position: relative;
   overflow: hidden;
   background: linear-gradient(
@@ -138,6 +156,18 @@ html {
     rgba(118, 75, 162, 0.1) 100%
   );
   border: 1px solid rgba(102, 126, 234, 0.2);
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+@media (min-width: 768px) {
+  .nav-link {
+    gap: 0.809rem; /* 0.5 * 1.618 ≈ 0.809 */
+    padding: 1.214rem 2.023rem; /* 0.75 * 1.618 ≈ 1.214, 1.25 * 1.618 ≈ 2.023 */
+    border-radius: 16.18px; /* 10 * 1.618 ≈ 16.18 */
+    font-size: 1.537rem; /* 0.95 * 1.618 ≈ 1.537 */
+    letter-spacing: 0.485px; /* 0.3 * 1.618 ≈ 0.485 */
+  }
 }
 
 .nav-link::before {
@@ -159,9 +189,16 @@ html {
 .nav-link:hover {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   color: white;
-  transform: translateY(-1.618px); /* 1 * 1.618 ≈ 1.618 */
-  box-shadow: 0 6.472px 24.27px rgba(102, 126, 234, 0.4); /* 4 * 1.618 ≈ 6.472, 15 * 1.618 ≈ 24.27 */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
   border: 1px solid transparent;
+}
+
+@media (min-width: 768px) {
+  .nav-link:hover {
+    transform: translateY(-1.618px); /* 1 * 1.618 ≈ 1.618 */
+    box-shadow: 0 6.472px 24.27px rgba(102, 126, 234, 0.4); /* 4 * 1.618 ≈ 6.472, 15 * 1.618 ≈ 24.27 */
+  }
 }
 
 .nav-link:hover::before {
