@@ -149,25 +149,38 @@ const Journal = () => {
                   >
                     <div
                       style={{
-                        background: "transparent",
-                        border: "none",
-                        color: textColor,
-                        textShadow: "none",
                         display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        fontSize: "0.9rem",
+                        flexWrap: "wrap",
+                        gap: "6px",
+                        justifyContent: "flex-end",
+                        maxWidth: "200px",
                       }}
                     >
-                      <span>{getMoodEmoji(entry.mood)}</span>
-                      <span
-                        style={{
-                          fontWeight: "500",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {moods.length > 1 ? moods.join(", ") : moods[0]}
-                      </span>
+                      {moods.map((mood, moodIndex) => (
+                        <div
+                          key={moodIndex}
+                          style={{
+                            background: getMoodColors(mood).gradient,
+                            color: "#2c3e50",
+                            padding: "4px 8px",
+                            borderRadius: "12px",
+                            fontSize: "0.75rem",
+                            fontWeight: "500",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            border: "1px solid rgba(255,255,255,0.3)",
+                            textTransform: "capitalize",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <span style={{ fontSize: "0.8rem" }}>
+                            {getMoodEmoji(mood)}
+                          </span>
+                          <span>{mood}</span>
+                        </div>
+                      ))}
                     </div>
                     <div
                       style={{
