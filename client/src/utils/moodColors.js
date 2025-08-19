@@ -146,20 +146,24 @@ export const createEntryGradient = (entry, index, totalEntries, allEntries) => {
   const mainZone = 1 - 2 * transitionZone; // 70% for the main color
 
   if (index === 0) {
-    // First entry: starts with its own color, transitions to next entry's color
+    // First entry: starts with a subtle blend from its own color, transitions to next entry's color
     const nextEntry = allEntries[index + 1];
     const nextColors = getMoodColors(nextEntry.mood);
 
     return `linear-gradient(to bottom, 
-      ${currentColors.primary} 0%, 
-      ${currentColors.secondary} 50%, 
+      ${blendHexColors(
+        [currentColors.secondary, currentColors.primary],
+        [0.7, 0.3]
+      )} 0%, 
+      ${blendHexColors(
+        [currentColors.secondary, currentColors.primary],
+        [0.3, 0.7]
+      )} 25%, 
+      ${currentColors.primary} 50%, 
+      ${currentColors.secondary} 75%, 
       ${blendHexColors(
         [currentColors.secondary, nextColors.primary],
         [0.7, 0.3]
-      )} 75%, 
-      ${blendHexColors(
-        [currentColors.secondary, nextColors.primary],
-        [0.3, 0.7]
       )} 100%)`;
   } else if (index === totalEntries - 1) {
     // Last entry: starts with previous entry's color, transitions to its own color

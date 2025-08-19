@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, ArrowLeft, Sparkles } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import {
-  getMoodColors,
-  getMoodEmoji,
-  getTextColor,
-  getTextShadow,
-} from "../utils/moodColors";
+
 import "../styling/entryform.css";
 
 const EntryForm = () => {
@@ -18,7 +13,6 @@ const EntryForm = () => {
   const [mood, setMood] = useState("neutral");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
 
   const handleSubmit = async () => {
     // check if title and content are not empty (trim will remove whitespace from beginning and end)
@@ -130,77 +124,6 @@ const EntryForm = () => {
           />
         </div>
       </form>
-
-      {title && content && (
-        <div className="preview-section">
-          <button
-            className="preview-toggle"
-            onClick={() => setShowPreview(!showPreview)}
-            style={{
-              background: "rgba(102, 126, 234, 0.1)",
-              border: "1px solid rgba(102, 126, 234, 0.3)",
-              color: "#667eea",
-              padding: "8px 16px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              marginBottom: "16px",
-            }}
-          >
-            {showPreview ? "Hide Preview" : "Show Preview"}
-          </button>
-
-          {showPreview && (
-            <div
-              className="entry-preview"
-              style={{
-                background: getMoodColors(mood).gradient,
-                borderRadius: "12px",
-                padding: "20px",
-                color: getTextColor(mood),
-                textShadow: getTextShadow(mood),
-                marginBottom: "20px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-              }}
-            >
-              <h3
-                style={{
-                  margin: "0 0 12px 0",
-                  fontSize: "1.3rem",
-                  color: getTextColor(mood),
-                  textShadow: getTextShadow(mood),
-                }}
-              >
-                {title}
-              </h3>
-              <div
-                style={{
-                  background: "transparent",
-                  padding: "6px 12px",
-                  borderRadius: "20px",
-                  display: "inline-block",
-                  marginBottom: "12px",
-                  fontSize: "0.9rem",
-                  color: getTextColor(mood),
-                  textShadow: getTextShadow(mood),
-                  border: "none",
-                }}
-              >
-                {getMoodEmoji(mood)} {mood}
-              </div>
-              <p
-                style={{
-                  margin: "0",
-                  lineHeight: "1.6",
-                  color: getTextColor(mood),
-                  textShadow: getTextShadow(mood),
-                }}
-              >
-                {content}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
 
       <button
         className="publish-button"

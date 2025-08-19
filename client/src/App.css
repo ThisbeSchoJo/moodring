@@ -676,7 +676,6 @@ html {
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
 }
 
 .entry-text p {
@@ -688,7 +687,6 @@ html {
 .edit-textarea {
   width: 100%;
   padding: 1rem;
-  border: 2px solid #e1e5e9;
   border-radius: 12px;
   font-size: 1rem;
   line-height: 1.6;
