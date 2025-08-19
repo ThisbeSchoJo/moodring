@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import MoodLegend from "./MoodLegend";
+import { Palette } from "lucide-react";
 import "../styling/header.css";
 
 const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showLegend, setShowLegend] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -27,6 +30,14 @@ const Header = () => {
               <Link to="/new" className="nav-link">
                 <span>New Entry</span>
               </Link>
+              <button
+                className="legend-button"
+                onClick={() => setShowLegend(true)}
+                title="View Mood Color Guide"
+              >
+                <Palette size={20} />
+                Color Guide
+              </button>
               <div className="user-section">
                 <span className="username">Welcome, {user.username}!</span>
                 <button
@@ -58,6 +69,7 @@ const Header = () => {
           )}
         </nav>
       </div>
+      {showLegend && <MoodLegend onClose={() => setShowLegend(false)} />}
     </header>
   );
 };

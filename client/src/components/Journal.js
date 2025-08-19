@@ -10,13 +10,10 @@ import {
   getTextShadow,
   createEntryGradient,
 } from "../utils/moodColors";
-import MoodLegend from "./MoodLegend";
-import { Palette } from "lucide-react";
 import "../styling/journal.css";
 
 const Journal = () => {
   const [entries, setEntries] = useState([]);
-  const [showLegend, setShowLegend] = useState(false);
   const [hoveredEntry, setHoveredEntry] = useState(null);
   const { user } = useAuth();
 
@@ -69,22 +66,6 @@ const Journal = () => {
         padding: 0,
       }}
     >
-      <div className="journal-header">
-        <h1>Journal</h1>
-        <div className="journal-actions">
-          <button
-            className="legend-button"
-            onClick={() => setShowLegend(true)}
-            title="View Mood Color Guide"
-          >
-            <Palette size={20} />
-            Color Guide
-          </button>
-          <Link to="/new" className="new-entry-button">
-            New Entry
-          </Link>
-        </div>
-      </div>
       <div>
         {entries.map((entry, index) => {
           const moodColors = getMoodColors(entry.mood);
@@ -222,11 +203,6 @@ const Journal = () => {
           );
         })}
       </div>
-
-      <MoodLegend
-        isVisible={showLegend}
-        onToggle={() => setShowLegend(false)}
-      />
     </div>
   );
 };
