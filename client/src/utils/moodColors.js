@@ -25,6 +25,12 @@ export const MOOD_COLORS = {
     gradient: "linear-gradient(135deg, #00CED1 0%, #20B2AA 100%)",
     emoji: "✨",
   },
+  "in love": {
+    primary: "#FF69B4", // Hot pink
+    secondary: "#FF1493", // Deep pink
+    gradient: "linear-gradient(135deg, #FF69B4 0%, #FF1493 100%)",
+    emoji: "💕",
+  },
 
   // Calm emotions - cool and soothing colors
   calm: {
@@ -288,7 +294,41 @@ const getDominantEmoji = (moods) => {
 // Main function to get mood colors
 export const getMoodColors = (moodString) => {
   const moods = parseMoods(moodString);
-  return blendColors(moods);
+
+  // If only one mood, return it directly
+  if (moods.length === 1) {
+    return MOOD_COLORS[moods[0]] || MOOD_COLORS.neutral;
+  }
+
+  // For multiple moods, use the dominant mood's colors
+  const dominantMood = getDominantMood(moods);
+  return MOOD_COLORS[dominantMood] || MOOD_COLORS.neutral;
+};
+
+// Function to get the dominant mood from multiple moods
+const getDominantMood = (moods) => {
+  // Priority order for moods when multiple are present
+  const priorityOrder = [
+    "excited",
+    "happy",
+    "grateful",
+    "hopeful",
+    "in love",
+    "calm",
+    "neutral",
+    "sad",
+    "anxious",
+    "angry",
+    "confused",
+  ];
+
+  for (const priorityMood of priorityOrder) {
+    if (moods.includes(priorityMood)) {
+      return priorityMood;
+    }
+  }
+
+  return "neutral"; // Default mood
 };
 
 // Function to determine if text should be dark or light based on background color

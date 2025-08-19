@@ -165,6 +165,24 @@ def seed_database():
             content="Today I'm grateful for the simple things - a hot cup of coffee in the morning, the sound of rain on the window, and the comfort of my favorite blanket. Sometimes the smallest things bring the most joy.",
             mood="grateful,calm",
             user_id=user3.id
+        ),
+        Entry(
+            title="Falling in Love",
+            content="I can't believe how much my heart is racing. Every time I think about them, I feel this incredible warmth spreading through my chest. The way they smile, the sound of their laugh, everything about them makes me feel so alive and happy. I think I'm falling in love.",
+            mood="in love,excited,happy",
+            user_id=user1.id
+        ),
+        Entry(
+            title="Romantic Evening",
+            content="Tonight was absolutely magical. We had dinner by candlelight, talked for hours, and I felt so connected to them. The way they looked at me made me feel like the most special person in the world. I'm completely in love with this feeling.",
+            mood="in love,hopeful",
+            user_id=user2.id
+        ),
+        Entry(
+            title="Missing My Love",
+            content="I miss them so much it hurts. Every little thing reminds me of them - the way they would laugh at my jokes, how they always knew exactly what to say to make me feel better. Being in love is beautiful but being apart is so difficult.",
+            mood="in love,sad",
+            user_id=user3.id
         )
     ]
     
