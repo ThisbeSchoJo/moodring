@@ -126,75 +126,75 @@ const Journal = () => {
                     gap: "16px",
                   }}
                 >
-                  <Link
-                    to={`/entry/${entry.id}`}
-                    style={{
-                      color: textColor,
-                      textDecoration: "none",
-                      fontSize: "1.5rem",
-                      fontWeight: "600",
-                      textShadow: "none",
-                      flex: "1",
-                    }}
-                  >
-                    {entry.title}
-                  </Link>
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      alignItems: "flex-end",
                       gap: "8px",
+                      flex: "1",
                     }}
                   >
-                    <div
+                    <Link
+                      to={`/entry/${entry.id}`}
                       style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "6px",
-                        justifyContent: "flex-end",
-                        maxWidth: "400px",
+                        color: textColor,
+                        textDecoration: "none",
+                        fontSize: "1.5rem",
+                        fontWeight: "600",
+                        textShadow: "none",
                       }}
                     >
-                      {moods.map((mood, moodIndex) => (
-                        <div
-                          key={moodIndex}
-                          style={{
-                            background: getMoodColors(mood).gradient,
-                            color: "#ffffff",
-                            padding: "8px 12px",
-                            borderRadius: "12px",
-                            fontSize: "1.2rem",
-                            fontWeight: "600",
-                            display: "flex",
-                            alignItems: "center",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                            border: "1px solid rgba(255,255,255,0.3)",
-                            textTransform: "uppercase",
-                            whiteSpace: "nowrap",
-                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                          }}
-                        >
-                          {mood}
-                        </div>
-                      ))}
-                    </div>
+                      {entry.title}
+                    </Link>
                     <div
                       style={{
-                        fontSize: "0.8rem",
-                        opacity: "0.7",
+                        fontSize: "1rem",
                         color: textColor,
                         textShadow: "none",
-                        fontStyle: "italic",
+                        fontWeight: "500",
+                        opacity: "0.8",
                       }}
                     >
                       {new Date(entry.created_at).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
+                        year: "numeric",
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
                     </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "6px",
+                      justifyContent: "flex-end",
+                      maxWidth: "400px",
+                    }}
+                  >
+                    {moods.map((mood, moodIndex) => (
+                      <div
+                        key={moodIndex}
+                        style={{
+                          background: getMoodColors(mood).gradient,
+                          color: "#ffffff",
+                          padding: "8px 12px",
+                          borderRadius: "12px",
+                          fontSize: "1.2rem",
+                          fontWeight: "600",
+                          display: "flex",
+                          alignItems: "center",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                          border: "1px solid rgba(255,255,255,0.3)",
+                          textTransform: "uppercase",
+                          whiteSpace: "nowrap",
+                          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                        }}
+                      >
+                        {mood}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
