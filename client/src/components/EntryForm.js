@@ -17,40 +17,8 @@ const EntryForm = () => {
   const [content, setContent] = useState("");
   const [mood, setMood] = useState("neutral");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [message, setMessage] = useState("");
   const [showPreview, setShowPreview] = useState(false);
-
-  const analyzeMood = async (content) => {
-    if (!content.trim()) return;
-
-    setIsAnalyzing(true);
-    try {
-      const response = await fetch("http://localhost:5555/analyze-mood", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: content.trim() }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setMood(data.mood);
-        setMessage("AI suggested mood: " + data.mood);
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("Failed to analyze mood:", errorData);
-        setMessage(
-          "AI analysis failed: " + (errorData.error || "Unknown error")
-        );
-      }
-    } catch (error) {
-      console.error("Error analyzing mood:", error);
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
 
   const handleSubmit = async () => {
     // check if title and content are not empty (trim will remove whitespace from beginning and end)
@@ -63,6 +31,27 @@ const EntryForm = () => {
 
     setIsSubmitting(true);
 
+    // If mood hasn't been analyzed yet, analyze it automatically
+    if (mood === "neutral" && content.trim()) {
+      try {
+        const response = await fetch("http://localhost:5555/analyze-mood", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: content.trim() }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setMood(data.mood);
+        }
+      } catch (error) {
+        console.error("Error auto-analyzing mood:", error);
+        // Continue with neutral mood if analysis fails
+      }
+    }
+
     try {
       const response = await fetch("http://localhost:5555/entries", {
         method: "POST",
@@ -72,7 +61,7 @@ const EntryForm = () => {
         body: JSON.stringify({
           title: title.trim(),
           content: content.trim(),
-          mood: mood,
+          mood: mood, // This will be the AI-analyzed mood
           user_id: user.id, // Use the logged-in user's ID
         }),
       });
@@ -121,60 +110,23 @@ const EntryForm = () => {
 
       <form>
         <div className="form-group">
-          <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Give your entry a title..."
+            placeholder="Entry title..."
+            className="title-input"
           />
         </div>
+
         <div className="form-group">
-          <label htmlFor="mood">Mood</label>
-          <div className="mood-section">
-            <select
-              id="mood"
-              value={mood}
-              onChange={(e) => setMood(e.target.value)}
-              style={{
-                background: getMoodColors(mood).gradient,
-                color: getTextColor(mood),
-                textShadow: getTextShadow(mood),
-                border: "none",
-                borderRadius: "6px",
-                padding: "8px 12px",
-                fontWeight: "500",
-              }}
-            >
-              <option value="neutral">😐 Neutral</option>
-              <option value="happy">😊 Happy</option>
-              <option value="excited">🤩 Excited</option>
-              <option value="grateful">🙏 Grateful</option>
-              <option value="hopeful">✨ Hopeful</option>
-              <option value="calm">😌 Calm</option>
-              <option value="sad">😢 Sad</option>
-              <option value="angry">😠 Angry</option>
-              <option value="anxious">😰 Anxious</option>
-              <option value="confused">😕 Confused</option>
-            </select>
-            <button
-              type="button"
-              className="analyze-button"
-              onClick={() => analyzeMood(content)}
-              disabled={isAnalyzing || !content.trim()}
-            >
-              {isAnalyzing ? "🤖 Analyzing..." : "🤖 AI Suggest"}
-            </button>
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="content">How are you feeling today?</label>
           <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write about your day, thoughts, feelings..."
+            placeholder="What's on your mind?"
+            className="content-textarea"
           />
         </div>
       </form>
@@ -255,7 +207,6 @@ const EntryForm = () => {
         onClick={handleSubmit}
         disabled={isSubmitting}
       >
-        <Sparkles />
         {isSubmitting ? "Publishing..." : "Publish Entry"}
       </button>
     </div>

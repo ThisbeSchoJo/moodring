@@ -181,6 +181,54 @@
   transform: translateY(-1.618px); /* 1 * 1.618 ≈ 1.618 */
 }
 
+/* Minimalistic input styling */
+.title-input {
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 0;
+  padding: 16px 0;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.title-input:focus {
+  border-bottom-color: #667eea;
+  box-shadow: none;
+  transform: none;
+  background: transparent;
+}
+
+.title-input::placeholder {
+  color: rgba(102, 126, 234, 0.6);
+  font-weight: 400;
+}
+
+.content-textarea {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: none;
+  border-radius: 0;
+  padding: 20px 0;
+  background: transparent;
+  min-height: 200px;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.content-textarea:focus {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+  background: transparent;
+}
+
+.content-textarea::placeholder {
+  color: rgba(102, 126, 234, 0.6);
+  font-weight: 400;
+}
+
 .mood-section {
   display: flex;
   gap: 10px;
