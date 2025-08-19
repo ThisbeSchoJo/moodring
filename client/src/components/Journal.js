@@ -79,139 +79,157 @@ const Journal = () => {
           );
 
           return (
-            <div
+            <Link
               key={entry.id}
+              to={`/entry/${entry.id}`}
               style={{
-                background:
-                  hoveredEntry === entry.id
-                    ? createHoverGradient(entry)
-                    : entryGradient,
-                color: textColor,
-                textShadow: "none",
-                transition: "all 0.4s ease",
-                cursor: "pointer",
-                transform:
-                  hoveredEntry === entry.id ? "scale(1.02)" : "scale(1)",
-                position: "relative",
-                overflow: "hidden",
+                display: "block",
+                textDecoration: "none",
+                color: "inherit",
               }}
-              onMouseEnter={() => setHoveredEntry(entry.id)}
-              onMouseLeave={() => setHoveredEntry(null)}
             >
-              {/* Shimmer effect overlay */}
               <div
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: hoveredEntry === entry.id ? "100%" : "-100%",
-                  width: "100%",
-                  height: "100%",
                   background:
-                    "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)",
-                  transition: "left 0.5s ease",
-                  pointerEvents: "none",
+                    hoveredEntry === entry.id
+                      ? createHoverGradient(entry)
+                      : entryGradient,
+                  color: textColor,
+                  textShadow: "none",
+                  transition: "all 0.4s ease",
+                  cursor: "pointer",
+                  transform:
+                    hoveredEntry === entry.id ? "scale(1.02)" : "scale(1)",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
-              />
-              <div
-                style={{
-                  padding:
-                    index === 0 ? "32px 48px 16px 48px" : "32px 48px 16px 48px",
-                }}
+                onMouseEnter={() => setHoveredEntry(entry.id)}
+                onMouseLeave={() => setHoveredEntry(null)}
               >
+                {/* Shimmer effect overlay */}
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    gap: "16px",
+                    position: "absolute",
+                    top: 0,
+                    left: hoveredEntry === entry.id ? "100%" : "-100%",
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)",
+                    transition: "left 0.5s ease",
+                    pointerEvents: "none",
+                  }}
+                />
+                <div
+                  style={{
+                    padding:
+                      index === 0
+                        ? "32px 48px 16px 48px"
+                        : "32px 48px 16px 48px",
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
-                      flexDirection: "column",
-                      gap: "8px",
-                      flex: "1",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      gap: "16px",
                     }}
                   >
-                    <Link
-                      to={`/entry/${entry.id}`}
-                      style={{
-                        color: textColor,
-                        textDecoration: "none",
-                        fontSize: "1.5rem",
-                        fontWeight: "600",
-                        textShadow: "none",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {entry.title}
-                    </Link>
                     <div
                       style={{
-                        fontSize: "1rem",
-                        color: textColor,
-                        textShadow: "none",
-                        fontWeight: "500",
-                        opacity: "0.8",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "8px",
+                        flex: "1",
                       }}
                     >
-                      {new Date(entry.created_at).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "6px",
-                      justifyContent: "flex-end",
-                      maxWidth: "400px",
-                    }}
-                  >
-                    {moods.map((mood, moodIndex) => (
                       <div
-                        key={moodIndex}
                         style={{
-                          background: getMoodColors(mood).gradient,
-                          color: "#ffffff",
-                          padding: "8px 12px",
-                          borderRadius: "12px",
-                          fontSize: "1.2rem",
+                          color: textColor,
+                          textDecoration: "none",
+                          fontSize: "1.5rem",
                           fontWeight: "600",
-                          display: "flex",
-                          alignItems: "center",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                          border: "1px solid rgba(255,255,255,0.3)",
+                          textShadow: "none",
                           textTransform: "uppercase",
-                          whiteSpace: "nowrap",
-                          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                         }}
                       >
-                        {mood}
+                        {entry.title}
                       </div>
-                    ))}
+                      <div
+                        style={{
+                          fontSize: "1rem",
+                          color: "#ffffff",
+                          textShadow: "0 1px 3px rgba(0,0,0,0.5)",
+                          fontWeight: "500",
+                          opacity: "0.9",
+                          backgroundColor: "rgba(0,0,0,0.2)",
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                          backdropFilter: "blur(4px)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                        }}
+                      >
+                        {new Date(entry.created_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "6px",
+                        justifyContent: "flex-end",
+                        maxWidth: "400px",
+                      }}
+                    >
+                      {moods.map((mood, moodIndex) => (
+                        <div
+                          key={moodIndex}
+                          style={{
+                            background: getMoodColors(mood).gradient,
+                            color: "#ffffff",
+                            padding: "8px 12px",
+                            borderRadius: "12px",
+                            fontSize: "1.2rem",
+                            fontWeight: "600",
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            border: "1px solid rgba(255,255,255,0.3)",
+                            textTransform: "uppercase",
+                            whiteSpace: "nowrap",
+                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                          }}
+                        >
+                          {mood}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <div
+                  style={{
+                    padding: "0 48px 32px 48px",
+                    color: textColor,
+                    lineHeight: "1.6",
+                    fontSize: "1.3rem",
+                    textShadow: "none",
+                    fontWeight: "400",
+                  }}
+                >
+                  {entry.content}
+                </div>
               </div>
-              <div
-                style={{
-                  padding: "0 48px 32px 48px",
-                  color: textColor,
-                  lineHeight: "1.6",
-                  fontSize: "1.3rem",
-                  textShadow: "none",
-                  fontWeight: "400",
-                }}
-              >
-                {entry.content}
-              </div>
-            </div>
+            </Link>
           );
         })}
       </div>

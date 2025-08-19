@@ -248,11 +248,16 @@ const EntryDetail = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",
-                opacity: "0.9",
                 fontSize: "1rem",
-                color: textColor,
-                textShadow: textShadow,
+                color: "#ffffff",
+                textShadow: "0 1px 3px rgba(0,0,0,0.5)",
                 fontWeight: "500",
+                opacity: "0.9",
+                backgroundColor: "rgba(0,0,0,0.2)",
+                padding: "4px 8px",
+                borderRadius: "6px",
+                backdropFilter: "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.1)",
               }}
             >
               <Calendar size={18} />
