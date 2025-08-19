@@ -124,9 +124,10 @@ const Journal = () => {
                   style={{
                     padding:
                       index === 0
-                        ? "32px 48px 32px 48px"
-                        : "32px 48px 32px 48px",
-                    margin: "0 48px 16px 48px",
+                        ? "38.832px 58.248px 38.832px 58.248px" /* 24 * 1.618 ≈ 38.832, 36 * 1.618 ≈ 58.248 */
+                        : "38.832px 58.248px 38.832px 58.248px",
+                    margin:
+                      "0 58.248px 19.416px 58.248px" /* 36 * 1.618 ≈ 58.248, 12 * 1.618 ≈ 19.416 */,
                   }}
                 >
                   <div
@@ -134,15 +135,15 @@ const Journal = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "flex-start",
-                      gap: "16px",
-                      marginBottom: "16px",
+                      gap: "20.225px" /* 12.5 * 1.618 ≈ 20.225 */,
+                      marginBottom: "20.225px" /* 12.5 * 1.618 ≈ 20.225 */,
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: "8px",
+                        gap: "10.113px" /* 6.25 * 1.618 ≈ 10.113 */,
                         flex: "1",
                       }}
                     >
@@ -150,7 +151,7 @@ const Journal = () => {
                         style={{
                           color: "#1a252f",
                           textDecoration: "none",
-                          fontSize: "1.5rem",
+                          fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
                           fontWeight: "800",
                           textTransform: "uppercase",
                         }}
@@ -159,7 +160,7 @@ const Journal = () => {
                       </div>
                       <div
                         style={{
-                          fontSize: "1rem",
+                          fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
                           color: "#1a252f",
                           fontWeight: "700",
                           opacity: "0.9",
@@ -181,9 +182,9 @@ const Journal = () => {
                       style={{
                         display: "flex",
                         flexWrap: "wrap",
-                        gap: "6px",
+                        gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
                         justifyContent: "flex-end",
-                        maxWidth: "400px",
+                        maxWidth: "485.4px" /* 300 * 1.618 ≈ 485.4 */,
                       }}
                     >
                       {moods.map((mood, moodIndex) => (
@@ -192,17 +193,18 @@ const Journal = () => {
                           style={{
                             background: getMoodColors(mood).gradient,
                             color: "#ffffff",
-                            padding: "8px 12px",
-                            borderRadius: "12px",
-                            fontSize: "1.2rem",
+                            padding:
+                              "10.113px 15.17px" /* 6.25 * 1.618 ≈ 10.113, 9.375 * 1.618 ≈ 15.17 */,
+                            borderRadius: "15.17px" /* 9.375 * 1.618 ≈ 15.17 */,
+                            fontSize: "1.571rem" /* 0.971 * 1.618 ≈ 1.571 */,
                             fontWeight: "600",
                             display: "flex",
                             alignItems: "center",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                            boxShadow: "0 2.5px 10px rgba(0,0,0,0.1)",
                             border: "1px solid rgba(255,255,255,0.3)",
                             textTransform: "uppercase",
                             whiteSpace: "nowrap",
-                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                            textShadow: "0 1.25px 2.5px rgba(0,0,0,0.3)",
                           }}
                         >
                           {mood}
@@ -214,7 +216,7 @@ const Journal = () => {
                     style={{
                       color: "#1a252f",
                       lineHeight: "1.6",
-                      fontSize: "1.3rem",
+                      fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
                       fontWeight: "600",
                     }}
                   >

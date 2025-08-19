@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import MoodLegend from "./MoodLegend";
-import { Palette } from "lucide-react";
+import { Palette, BookOpen, Plus } from "lucide-react";
 import "../styling/header.css";
 
 const Header = () => {
@@ -18,18 +18,15 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/" className="logo">
-          <h1>MoodRing</h1>
-        </Link>
+        <div className="logo-section">
+          <Link to="/" className="logo">
+            <h1>MoodRing</h1>
+          </Link>
+          {user && <span className="username">Welcome, {user.username}!</span>}
+        </div>
         <nav className="nav">
           {user ? (
             <>
-              <Link to="/" className="nav-link">
-                <span>Journal</span>
-              </Link>
-              <Link to="/new" className="nav-link">
-                <span>New Entry</span>
-              </Link>
               <button
                 className="legend-button"
                 onClick={() => setShowLegend(true)}
@@ -38,8 +35,13 @@ const Header = () => {
                 <Palette size={20} />
                 Color Guide
               </button>
+              <Link to="/" className="nav-icon-button" title="Journal">
+                <BookOpen size={20} />
+              </Link>
+              <Link to="/new" className="nav-icon-button" title="New Entry">
+                <Plus size={20} />
+              </Link>
               <div className="user-section">
-                <span className="username">Welcome, {user.username}!</span>
                 <button
                   onClick={handleLogout}
                   className="logout-button"

@@ -71,20 +71,20 @@
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
+  padding: 12px 20px; /* 7.5 * 1.618 ≈ 12, 12.5 * 1.618 ≈ 20 */
+  border-radius: 10px; /* 6 * 1.618 ≈ 10 */
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1rem; /* 0.618 * 1.618 ≈ 1 */
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4); /* 2.5 * 1.618 ≈ 4, 9 * 1.618 ≈ 15 */
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.3px; /* 0.185 * 1.618 ≈ 0.3 */
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px; /* 5 * 1.618 ≈ 8 */
 }
 
 .legend-button::before {

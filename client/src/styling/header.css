@@ -1,13 +1,92 @@
 .user-section {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 24.27px; /* 15 * 1.618 ≈ 24.27 */
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 32.36px; /* 20 * 1.618 ≈ 32.36 */
 }
 
 .username {
   color: #667eea;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 1px 2px rgba(102, 126, 234, 0.1);
+}
+
+.nav-icon-button {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 3px 12px rgba(240, 147, 251, 0.4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .nav-icon-button {
+    padding: 16px;
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4.854px 19.416px rgba(240, 147, 251, 0.4); /* 3 * 1.618 ≈ 4.854, 12 * 1.618 ≈ 19.416 */
+  }
+
+  .nav-icon-button svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.nav-icon-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.nav-icon-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(240, 147, 251, 0.6);
+  background: linear-gradient(135deg, #e91e63 0%, #f06292 50%, #64b5f6 100%);
+}
+
+@media (min-width: 768px) {
+  .nav-icon-button:hover {
+    transform: translateY(-1.618px); /* 1 * 1.618 ≈ 1.618 */
+    box-shadow: 0 8.09px 24.27px rgba(240, 147, 251, 0.6); /* 5 * 1.618 ≈ 8.09, 15 * 1.618 ≈ 24.27 */
+  }
+}
+
+.nav-icon-button:hover::before {
+  left: 100%;
 }
 
 .logout-button {
