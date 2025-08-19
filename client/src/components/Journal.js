@@ -17,6 +17,7 @@ import "../styling/journal.css";
 const Journal = () => {
   const [entries, setEntries] = useState([]);
   const [showLegend, setShowLegend] = useState(false);
+  const [hoveredEntry, setHoveredEntry] = useState(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -36,6 +37,28 @@ const Journal = () => {
       fetchEntries();
     }
   }, [user]);
+
+  // Function to create hover gradient based on entry's mood colors
+  const createHoverGradient = (entry) => {
+    const moodColors = getMoodColors(entry.mood);
+    const moods = parseMoods(entry.mood);
+
+    if (moods.length === 1) {
+      // Single mood - intensify the colors
+      return `linear-gradient(135deg, ${moodColors.primary} 0%, ${moodColors.secondary} 50%, ${moodColors.primary} 100%)`;
+    } else {
+      // Multiple moods - create a more vibrant blend
+      const colors = moods.map((mood) => getMoodColors(mood));
+      const primaryColors = colors.map((c) => c.primary);
+      const secondaryColors = colors.map((c) => c.secondary);
+
+      return `linear-gradient(135deg, ${primaryColors[0]} 0%, ${
+        secondaryColors[0]
+      } 25%, ${primaryColors[1] || primaryColors[0]} 50%, ${
+        secondaryColors[1] || secondaryColors[0]
+      } 75%, ${primaryColors[0]} 100%)`;
+    }
+  };
 
   return (
     <div
@@ -78,11 +101,36 @@ const Journal = () => {
             <div
               key={entry.id}
               style={{
-                background: entryGradient,
+                background:
+                  hoveredEntry === entry.id
+                    ? createHoverGradient(entry)
+                    : entryGradient,
                 color: textColor,
                 textShadow: "none",
+                transition: "all 0.4s ease",
+                cursor: "pointer",
+                transform:
+                  hoveredEntry === entry.id ? "scale(1.02)" : "scale(1)",
+                position: "relative",
+                overflow: "hidden",
               }}
+              onMouseEnter={() => setHoveredEntry(entry.id)}
+              onMouseLeave={() => setHoveredEntry(null)}
             >
+              {/* Shimmer effect overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: hoveredEntry === entry.id ? "100%" : "-100%",
+                  width: "100%",
+                  height: "100%",
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)",
+                  transition: "left 0.5s ease",
+                  pointerEvents: "none",
+                }}
+              />
               <div
                 style={{
                   padding:
