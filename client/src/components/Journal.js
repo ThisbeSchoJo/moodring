@@ -131,7 +131,7 @@ const Journal = () => {
                     style={{
                       color: textColor,
                       textDecoration: "none",
-                      fontSize: "1.3rem",
+                      fontSize: "1.5rem",
                       fontWeight: "600",
                       textShadow: "none",
                       flex: "1",
@@ -153,7 +153,7 @@ const Journal = () => {
                         flexWrap: "wrap",
                         gap: "6px",
                         justifyContent: "flex-end",
-                        maxWidth: "200px",
+                        maxWidth: "400px",
                       }}
                     >
                       {moods.map((mood, moodIndex) => (
@@ -161,24 +161,21 @@ const Journal = () => {
                           key={moodIndex}
                           style={{
                             background: getMoodColors(mood).gradient,
-                            color: "#2c3e50",
-                            padding: "4px 8px",
+                            color: "#ffffff",
+                            padding: "8px 12px",
                             borderRadius: "12px",
-                            fontSize: "0.75rem",
-                            fontWeight: "500",
+                            fontSize: "1.2rem",
+                            fontWeight: "600",
                             display: "flex",
                             alignItems: "center",
-                            gap: "4px",
                             boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                             border: "1px solid rgba(255,255,255,0.3)",
-                            textTransform: "capitalize",
+                            textTransform: "uppercase",
                             whiteSpace: "nowrap",
+                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                           }}
                         >
-                          <span style={{ fontSize: "0.8rem" }}>
-                            {getMoodEmoji(mood)}
-                          </span>
-                          <span>{mood}</span>
+                          {mood}
                         </div>
                       ))}
                     </div>
@@ -205,9 +202,10 @@ const Journal = () => {
                 style={{
                   padding: "0 48px 32px 48px",
                   color: textColor,
-                  lineHeight: "1.7",
-                  fontSize: "1rem",
+                  lineHeight: "1.6",
+                  fontSize: "1.3rem",
                   textShadow: "none",
+                  fontWeight: "400",
                 }}
               >
                 {entry.content}
