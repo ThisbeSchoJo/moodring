@@ -53,13 +53,54 @@ body {
   align-items: center;
 }
 
+.logo {
+  text-decoration: none;
+}
+
 .logo h1 {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
+    #4facfe 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+  position: relative;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.logo h1::before {
+  content: "MoodRing";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    135deg,
+    #4facfe 0%,
+    #00f2fe 25%,
+    #667eea 50%,
+    #764ba2 75%,
+    #f093fb 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.logo:hover h1::before {
+  opacity: 1;
 }
 
 .nav {
