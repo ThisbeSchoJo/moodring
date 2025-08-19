@@ -129,13 +129,16 @@ const EntryDetail = () => {
                 className="edit-button"
                 onClick={() => setIsEditing(!isEditing)}
                 disabled={isSaving}
+                title={isEditing ? "Cancel" : "Edit"}
               >
-                <Edit />
-                {isEditing ? "Cancel" : "Edit"}
+                <Edit size={20} />
               </button>
-              <button className="delete-button" onClick={handleDelete}>
-                <Trash2 />
-                Delete
+              <button
+                className="delete-button"
+                onClick={handleDelete}
+                title="Delete"
+              >
+                <Trash2 size={20} />
               </button>
             </>
           )}
@@ -156,9 +159,19 @@ const EntryDetail = () => {
         <div className="entry-meta" style={{ padding: "24px 24px 16px 24px" }}>
           <h1
             style={{
-              color: textColor,
-              marginBottom: "16px",
-              textShadow: textShadow,
+              margin: "0 0 16px 0",
+              fontSize: "2rem",
+              fontWeight: "800",
+              background:
+                "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              letterSpacing: "-0.02em",
+              textShadow: "none",
+              textTransform: "uppercase",
+              position: "relative",
+              transition: "all 0.3s ease",
             }}
           >
             {entry.title}
@@ -219,6 +232,27 @@ const EntryDetail = () => {
 
         {isEditing ? (
           <div className="edit-form" style={{ padding: "0 24px 24px 24px" }}>
+            <div className="form-group">
+              <input
+                type="text"
+                value={entry.title}
+                readOnly
+                placeholder="Entry title..."
+                className="title-input"
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "500",
+                  border: "none",
+                  borderBottom: "2px solid rgba(255,255,255,0.3)",
+                  borderRadius: "0",
+                  padding: "16px 0",
+                  background: "transparent",
+                  color: textColor,
+                  textShadow: textShadow,
+                  marginBottom: "32px",
+                }}
+              />
+            </div>
             <div className="edit-mood" style={{ marginBottom: "16px" }}>
               <label
                 htmlFor="mood"

@@ -79,20 +79,53 @@
 }
 
 .edit-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  padding: 12px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+  position: relative;
+  overflow: hidden;
+  width: 44px;
+  height: 44px;
+}
+
+.edit-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.edit-button:hover::before {
+  left: 100%;
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  border: 1px solid transparent;
 }
 
 .edit-button:disabled {
@@ -102,20 +135,68 @@
 }
 
 .delete-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 53, 69, 0.1) 0%,
+    rgba(200, 35, 51, 0.1) 100%
+  );
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  padding: 12px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.1);
+  position: relative;
+  overflow: hidden;
+  width: 44px;
+  height: 44px;
+}
+
+.delete-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.delete-button:hover::before {
+  left: 100%;
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 50%, #bd2130 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+  border: 1px solid transparent;
+}
+
+@media (min-width: 768px) {
+  .edit-button,
+  .delete-button {
+    padding: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .edit-button svg,
+  .delete-button svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .entry-content {
