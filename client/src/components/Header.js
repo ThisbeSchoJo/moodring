@@ -69,7 +69,12 @@ const Header = () => {
           )}
         </nav>
       </div>
-      {showLegend && <MoodLegend onClose={() => setShowLegend(false)} />}
+      {showLegend && (
+        <MoodLegend
+          isVisible={showLegend}
+          onToggle={() => setShowLegend(false)}
+        />
+      )}
     </header>
   );
 };

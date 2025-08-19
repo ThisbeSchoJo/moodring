@@ -115,9 +115,12 @@ const EntryDetail = () => {
   return (
     <div className="entry-detail">
       <div className="detail-header">
-        <button className="back-button" onClick={() => navigate("/")}>
-          <ArrowLeft />
-          Back to Journal
+        <button
+          className="back-button"
+          onClick={() => navigate("/")}
+          title="Back to Journal"
+        >
+          <ArrowLeft size={20} />
         </button>
         <div className="header-actions">
           {entry && entry.user_id === user.id && (
