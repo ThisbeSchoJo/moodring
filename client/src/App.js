@@ -60,7 +60,7 @@ function AppRoutes() {
         <Route
           path="/entry/:id"
           element={
-            <main className="container">
+            <main className="container full-width">
               {user ? <EntryDetail /> : <Navigate to="/login" replace />}
             </main>
           }

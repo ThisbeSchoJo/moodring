@@ -178,38 +178,41 @@ const EntryDetail = () => {
         className="entry-content"
         style={{
           background: moodColors.gradient,
-          borderRadius: "16px",
+          borderRadius: "19.416px" /* 12 * 1.618 ≈ 19.416 */,
           overflow: "hidden",
           boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
           color: textColor,
           textShadow: textShadow,
         }}
       >
-        <div className="entry-meta" style={{ padding: "24px 24px 16px 24px" }}>
+        <div
+          className="entry-meta"
+          style={{
+            padding: "38.832px 38.832px 25.888px 38.832px",
+            position: "relative",
+          }}
+        >
+          {" "}
+          {/* 24 * 1.618 ≈ 38.832, 16 * 1.618 ≈ 25.888 */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "8px",
-              marginBottom: "16px",
+              gap: "10.113px" /* 6.25 * 1.618 ≈ 10.113 */,
+              flex: "1",
+              minWidth: "0",
+              paddingRight: "320px",
             }}
           >
             {!isEditing ? (
               <h1
                 style={{
                   margin: "0",
-                  fontSize: "2rem",
+                  fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
                   fontWeight: "800",
-                  background:
-                    "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  letterSpacing: "-0.02em",
-                  textShadow: "none",
+                  color: "#1a252f",
                   textTransform: "uppercase",
-                  position: "relative",
-                  transition: "all 0.3s ease",
+                  letterSpacing: "-0.02em",
                 }}
               >
                 {entry.title}
@@ -222,46 +225,37 @@ const EntryDetail = () => {
                 placeholder="Entry title..."
                 className="title-input"
                 style={{
-                  fontSize: "2rem",
+                  fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
                   fontWeight: "800",
                   border: "none",
                   borderRadius: "0",
-                  padding: "16px 0",
-                  background:
-                    "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  letterSpacing: "-0.02em",
-                  textShadow: "none",
+                  padding: "25.888px 0" /* 16 * 1.618 ≈ 25.888 */,
+                  color: "#1a252f",
                   textTransform: "uppercase",
-                  position: "relative",
-                  transition: "all 0.3s ease",
+                  letterSpacing: "-0.02em",
                   width: "100%",
-                  color: textColor,
+                  minWidth: "0",
+                  boxSizing: "border-box",
+                  background: "transparent",
                 }}
               />
             )}
             <div
               className="entry-date"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "1rem",
-                color: "#ffffff",
-                textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                fontWeight: "500",
+                fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
+                color: "#1a252f",
+                fontWeight: "700",
                 opacity: "0.9",
-                backgroundColor: "rgba(0,0,0,0.2)",
-                padding: "4px 8px",
-                borderRadius: "6px",
-                backdropFilter: "blur(4px)",
-                border: "1px solid rgba(255,255,255,0.1)",
               }}
             >
-              <Calendar size={18} />
-              {formatDate(entry.created_at)}
+              {new Date(entry.created_at).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </div>
           </div>
           <div
@@ -269,8 +263,14 @@ const EntryDetail = () => {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "6px",
-              alignItems: "center",
+              gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
+              position: "absolute",
+              top: "38.832px",
+              right: "38.832px",
+              width: "300px",
+              maxWidth: "300px",
             }}
           >
             {parseMoods(entry.mood).map((mood, moodIndex) => (
@@ -279,17 +279,18 @@ const EntryDetail = () => {
                 style={{
                   background: getMoodColors(mood).gradient,
                   color: "#ffffff",
-                  padding: "8px 12px",
-                  borderRadius: "12px",
-                  fontSize: "1.2rem",
+                  padding:
+                    "10.113px 15.17px" /* 6.25 * 1.618 ≈ 10.113, 9.375 * 1.618 ≈ 15.17 */,
+                  borderRadius: "15.17px" /* 9.375 * 1.618 ≈ 15.17 */,
+                  fontSize: "1.571rem" /* 0.971 * 1.618 ≈ 1.571 */,
                   fontWeight: "600",
                   display: "flex",
                   alignItems: "center",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                  boxShadow: "0 2.5px 10px rgba(0,0,0,0.1)",
                   border: "1px solid rgba(255,255,255,0.3)",
                   textTransform: "uppercase",
                   whiteSpace: "nowrap",
-                  textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                  textShadow: "0 1.25px 2.5px rgba(0,0,0,0.3)",
                 }}
               >
                 {mood}
@@ -299,25 +300,30 @@ const EntryDetail = () => {
         </div>
 
         {isEditing ? (
-          <div className="edit-form" style={{ padding: "0 24px 24px 24px" }}>
+          <div
+            className="edit-form"
+            style={{ padding: "0 38.832px 38.832px 38.832px" }}
+          >
+            {" "}
+            {/* 24 * 1.618 ≈ 38.832 */}
             <textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
               placeholder="Write your entry content..."
               style={{
                 width: "100%",
-                minHeight: "200px",
-                padding: "16px",
+                minHeight: "323.6px" /* 200 * 1.618 ≈ 323.6 */,
+                padding: "25.888px" /* 16 * 1.618 ≈ 25.888 */,
                 border: "none",
-                borderRadius: "8px",
+                borderRadius: "12.944px" /* 8 * 1.618 ≈ 12.944 */,
                 background: "rgba(255,255,255,0.15)",
                 color: textColor,
-                fontSize: "1.1rem",
+                fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
                 lineHeight: "1.6",
                 resize: "vertical",
                 backdropFilter: "blur(10px)",
                 border: "1px solid rgba(255,255,255,0.3)",
-                fontWeight: "400",
+                fontWeight: "600",
                 textShadow: textShadow,
               }}
             />
@@ -330,18 +336,19 @@ const EntryDetail = () => {
                   "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
                 color: "#667eea",
                 border: "1px solid rgba(102, 126, 234, 0.2)",
-                padding: "0.75rem 1.25rem",
-                borderRadius: "10px",
+                padding:
+                  "19.416px 40.45px" /* 12 * 1.618 ≈ 19.416, 25 * 1.618 ≈ 40.45 */,
+                borderRadius: "16.18px" /* 10 * 1.618 ≈ 16.18 */,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                marginTop: "20px",
-                fontWeight: "600",
-                fontSize: "0.95rem",
+                gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
+                marginTop: "32.36px" /* 20 * 1.618 ≈ 32.36 */,
+                fontWeight: "700",
+                fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
                 transition: "all 0.4s ease",
                 textTransform: "uppercase",
-                letterSpacing: "0.3px",
+                letterSpacing: "0.485px" /* 0.3 * 1.618 ≈ 0.485 */,
                 position: "relative",
                 overflow: "hidden",
                 textDecoration: "none",
@@ -354,11 +361,12 @@ const EntryDetail = () => {
           <div
             className="entry-text"
             style={{
-              padding: "0 24px 24px 24px",
-              fontSize: "1.1rem",
-              lineHeight: "1.8",
+              padding: "0 38.832px 38.832px 38.832px" /* 24 * 1.618 ≈ 38.832 */,
+              fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
+              lineHeight: "1.6",
               color: textColor,
               textShadow: textShadow,
+              fontWeight: "600",
             }}
           >
             {entry.content}

@@ -145,6 +145,7 @@ const Journal = () => {
                         flexDirection: "column",
                         gap: "10.113px" /* 6.25 * 1.618 ≈ 10.113 */,
                         flex: "1",
+                        minWidth: "0",
                       }}
                     >
                       <div
@@ -184,6 +185,8 @@ const Journal = () => {
                         flexWrap: "wrap",
                         gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
                         justifyContent: "flex-end",
+                        alignItems: "flex-start",
+                        flexShrink: "0",
                         maxWidth: "485.4px" /* 300 * 1.618 ≈ 485.4 */,
                       }}
                     >

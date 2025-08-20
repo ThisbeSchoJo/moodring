@@ -146,9 +146,10 @@
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
+  margin-bottom: 12.944px; /* 8 * 1.618 ≈ 12.944 */
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 1.309rem; /* 0.809 * 1.618 ≈ 1.309 */
 }
 
 .form-group input,
@@ -157,15 +158,17 @@
   width: 100%;
   padding: 25.888px; /* 16 * 1.618 ≈ 25.888 */
   border-radius: 19.416px; /* 12 * 1.618 ≈ 19.416 */
-  font-size: 25.888px; /* 16 * 1.618 ≈ 25.888 */
+  font-size: 1.702rem; /* 1.052 * 1.618 ≈ 1.702 */
+  font-weight: 600;
   font-family: inherit;
+  color: #2d3748;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(16.18px); /* 10 * 1.618 ≈ 16.18 */
   transition: all 0.3s ease;
 }
 
 .form-group textarea {
-  min-height: 150px;
+  min-height: 242.7px; /* 150 * 1.618 ≈ 242.7 */
   resize: vertical;
 }
 
@@ -181,11 +184,12 @@
 
 /* Minimalistic input styling */
 .title-input {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 2.023rem; /* 1.25 * 1.618 ≈ 2.023 */
+  font-weight: 800;
+  color: #2d3748;
   border: none;
   border-radius: 0;
-  padding: 16px 0;
+  padding: 25.888px 0; /* 16 * 1.618 ≈ 25.888 */
   background: transparent;
   transition: all 0.3s ease;
 }
@@ -198,18 +202,20 @@
 }
 
 .title-input::placeholder {
-  color: rgba(102, 126, 234, 0.6);
+  color: rgba(102, 126, 234, 0.5);
   font-weight: 400;
 }
 
 .content-textarea {
-  font-size: 1.1rem;
+  font-size: 1.702rem; /* 1.052 * 1.618 ≈ 1.702 */
+  font-weight: 600;
+  color: #4a5568;
   line-height: 1.6;
   border: none;
   border-radius: 0;
-  padding: 20px 0;
+  padding: 32.36px 0; /* 20 * 1.618 ≈ 32.36 */
   background: transparent;
-  min-height: 200px;
+  min-height: 323.6px; /* 200 * 1.618 ≈ 323.6 */
   resize: none;
   transition: all 0.3s ease;
 }
@@ -222,7 +228,7 @@
 }
 
 .content-textarea::placeholder {
-  color: rgba(102, 126, 234, 0.6);
+  color: rgba(102, 126, 234, 0.5);
   font-weight: 400;
 }
 

@@ -1,18 +1,18 @@
 .entry-detail {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .detail-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  margin-bottom: 48.54px; /* 30 * 1.618 ≈ 48.54 */
+  padding-bottom: 32.36px; /* 20 * 1.618 ≈ 32.36 */
 }
 
 .back-button {
@@ -199,113 +199,113 @@
 }
 
 .entry-content {
-  margin-top: 20px;
+  margin-top: 32.36px; /* 20 * 1.618 ≈ 32.36 */
 }
 
 .entry-meta {
-  margin-bottom: 30px;
+  margin-bottom: 48.54px; /* 30 * 1.618 ≈ 48.54 */
 }
 
 .entry-info {
   display: flex;
-  gap: 20px;
+  gap: 32.36px; /* 20 * 1.618 ≈ 32.36 */
   align-items: center;
-  margin-top: 10px;
+  margin-top: 16.18px; /* 10 * 1.618 ≈ 16.18 */
 }
 
 .entry-meta h1 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 15px;
-  font-weight: 700;
+  font-size: 2.023rem; /* 1.25 * 1.618 ≈ 2.023 */
+  color: #2d3748;
+  margin-bottom: 24.27px; /* 15 * 1.618 ≈ 24.27 */
+  font-weight: 800;
 }
 
 .entry-date {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #6c757d;
-  font-size: 14px;
+  gap: 12.944px; /* 8 * 1.618 ≈ 12.944 */
+  color: #718096;
+  font-size: 1.309rem; /* 0.809 * 1.618 ≈ 1.309 */
+  font-weight: 700;
   font-style: italic;
 }
 
-.entry-mood-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #6c757d;
-  font-size: 14px;
-  font-style: italic;
-}
+/* .entry-mood-display styles removed - using inline styles instead */
 
 .entry-text {
-  font-size: 18px;
+  font-size: 1.702rem; /* 1.052 * 1.618 ≈ 1.702 */
+  font-weight: 600;
   line-height: 1.8;
-  color: #333;
+  color: #4a5568;
   background-color: white;
-  padding: 25px;
-  border-radius: 8px;
+  padding: 40.45px; /* 25 * 1.618 ≈ 40.45 */
+  border-radius: 12.944px; /* 8 * 1.618 ≈ 12.944 */
   white-space: pre-wrap;
 }
 
 .edit-form {
   background-color: white;
-  padding: 25px;
-  border-radius: 8px;
+  padding: 40.45px; /* 25 * 1.618 ≈ 40.45 */
+  border-radius: 12.944px; /* 8 * 1.618 ≈ 12.944 */
 }
 
 .edit-mood {
-  margin-bottom: 20px;
+  margin-bottom: 32.36px; /* 20 * 1.618 ≈ 32.36 */
 }
 
 .edit-mood label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
+  margin-bottom: 12.944px; /* 8 * 1.618 ≈ 12.944 */
+  font-weight: 700;
+  color: #4a5568;
+  font-size: 1.309rem; /* 0.809 * 1.618 ≈ 1.309 */
 }
 
 .edit-mood select {
-  width: 200px;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
+  width: 323.6px; /* 200 * 1.618 ≈ 323.6 */
+  padding: 16.18px; /* 10 * 1.618 ≈ 16.18 */
+  border-radius: 8.09px; /* 5 * 1.618 ≈ 8.09 */
+  font-size: 1.309rem; /* 0.809 * 1.618 ≈ 1.309 */
+  font-weight: 600;
+  color: #2d3748;
   font-family: inherit;
 }
 
 .edit-mood select:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3.236px rgba(0, 123, 255, 0.25); /* 2 * 1.618 ≈ 3.236 */
 }
 
 .edit-form textarea {
   width: 100%;
-  min-height: 300px;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 16px;
+  min-height: 485.4px; /* 300 * 1.618 ≈ 485.4 */
+  padding: 24.27px; /* 15 * 1.618 ≈ 24.27 */
+  border-radius: 8.09px; /* 5 * 1.618 ≈ 8.09 */
+  font-size: 1.702rem; /* 1.052 * 1.618 ≈ 1.702 */
+  font-weight: 600;
+  color: #4a5568;
   font-family: inherit;
   line-height: 1.6;
   resize: vertical;
-  margin-bottom: 20px;
+  margin-bottom: 32.36px; /* 20 * 1.618 ≈ 32.36 */
 }
 
 .edit-form textarea:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3.236px rgba(0, 123, 255, 0.25); /* 2 * 1.618 ≈ 3.236 */
 }
 
 .save-button {
   background-color: #28a745;
   color: white;
   border: none;
-  padding: 12px 25px;
-  border-radius: 5px;
+  padding: 19.416px 40.45px; /* 12 * 1.618 ≈ 19.416, 25 * 1.618 ≈ 40.45 */
+  border-radius: 8.09px; /* 5 * 1.618 ≈ 8.09 */
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 1.309rem; /* 0.809 * 1.618 ≈ 1.309 */
+  font-weight: 700;
 }
 
 .save-button:hover {
