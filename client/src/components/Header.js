@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import MoodLegend from "./MoodLegend";
-import { Palette, BookOpen, Plus } from "lucide-react";
+import { Palette, BookOpen, Plus, User } from "lucide-react";
 import "../styling/header.css";
 
 const Header = () => {
@@ -40,6 +40,9 @@ const Header = () => {
               </Link>
               <Link to="/new" className="nav-icon-button" title="New Entry">
                 <Plus size={20} />
+              </Link>
+              <Link to="/profile" className="nav-icon-button" title="Profile">
+                <User size={20} />
               </Link>
               <div className="user-section">
                 <button

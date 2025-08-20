@@ -11,6 +11,7 @@ import EntryForm from "./components/EntryForm";
 import EntryDetail from "./components/EntryDetail";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Profile from "./components/Profile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./App.css";
 
@@ -62,6 +63,14 @@ function AppRoutes() {
           element={
             <main className="container full-width">
               {user ? <EntryDetail /> : <Navigate to="/login" replace />}
+            </main>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <main className="container">
+              {user ? <Profile /> : <Navigate to="/login" replace />}
             </main>
           }
         />

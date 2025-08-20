@@ -172,7 +172,7 @@ def seed_database():
             title="The Trial",
             content="I have been accused of a crime, but no one will tell me what the crime is. I am being tried in a court that follows rules I do not understand, by judges who speak a language I cannot comprehend. The evidence against me is secret, the witnesses are anonymous, and my defense is irrelevant. I am guilty because I have been accused, and I will be punished because I am guilty. This is the logic of the system, and I am powerless to change it. But I refuse to accept this injustice, even if it means fighting a battle I cannot win. I will speak the truth, even if no one is listening.",
             mood="angry,confused",
-            user_id=user1.id
+        user_id=user1.id
         ),
         
         # More Virginia Woolf entries (stream of consciousness, feminist, introspective)
@@ -322,7 +322,7 @@ def seed_database():
             title="The Penal Colony",
             content="I am trapped in a system that I did not create, following rules that I do not understand, serving a purpose that I cannot comprehend. The machine of bureaucracy grinds on, crushing everything in its path, including my own humanity. I am angry at the injustice, at the cruelty, at the senselessness of it all. But my anger is impotent, my rage is useless, my fury is meaningless. I am just another cog in the machine, another victim of the system. I want to break free, to rebel, to fight back, but I do not know how. I am angry, but I am also afraid.",
             mood="angry,anxious",
-            user_id=user1.id
+        user_id=user1.id
         ),
         
         # Virginia Woolf with neutral mood
@@ -330,7 +330,7 @@ def seed_database():
             title="The Mark on the Wall",
             content="I am staring at a mark on the wall, a small, insignificant thing that has captured my attention completely. It is neither beautiful nor ugly, neither important nor trivial. It simply is. I find myself thinking about how we assign meaning to things, how we create stories around objects, how we make sense of the world through narrative. The mark is just a mark, but I have made it into something more. Perhaps this is what we all do—we take the raw material of existence and shape it into something meaningful, something that makes sense to us.",
             mood="neutral,calm",
-            user_id=user2.id
+        user_id=user2.id
         ),
         
         # Anne Frank with grateful mood

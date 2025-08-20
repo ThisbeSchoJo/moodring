@@ -258,5 +258,97 @@ class AnalyzeMood(Resource):
 
 api.add_resource(AnalyzeMood, '/analyze-mood')
 
+class UserProfile(Resource):
+    def get(self, user_id):
+        try:
+            # Get all entries for the user
+            entries = Entry.query.filter_by(user_id=user_id).all()
+            
+            if not entries:
+                return make_response({"error": "No entries found for this user"}, 404)
+            
+            # Combine all entry content for analysis
+            all_content = " ".join([entry.content for entry in entries])
+            all_titles = " ".join([entry.title for entry in entries])
+            
+            # Set up OpenAI client
+            api_key = os.getenv('OPENAI_API_KEY')
+            
+            if not api_key or api_key == 'your_openai_api_key_here':
+                return make_response({"error": "OpenAI API key not configured. Please set OPENAI_API_KEY in your .env file."}, 500)
+            
+            # Create the prompt for personality/mood profile analysis
+            prompt = f"""
+            Analyze this person's journal entries to understand their overall emotional personality and mood patterns.
+            
+            Journal titles: {all_titles}
+            Journal content: {all_content}
+            
+            Based on these entries, provide:
+            1. A dominant overall mood/personality trait (choose from: happy, excited, calm, neutral, sad, angry, anxious, grateful, hopeful, confused)
+            2. A secondary mood trait that also appears frequently
+            3. A brief personality description (2-3 sentences)
+            
+            Respond in this exact format:
+            DOMINANT_MOOD: [mood]
+            SECONDARY_MOOD: [mood]
+            DESCRIPTION: [description]
+            """
+            
+            # Call OpenAI API
+            openai.api_key = api_key
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a personality and mood analysis expert. Analyze journal entries to understand emotional patterns."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=200,
+                temperature=0.3
+            )
+            
+            # Parse the response
+            analysis_response = response.choices[0].message.content.strip()
+            
+            # Extract the components
+            lines = analysis_response.split('\n')
+            dominant_mood = "neutral"
+            secondary_mood = "neutral"
+            description = "A thoughtful journal keeper."
+            
+            for line in lines:
+                if line.startswith('DOMINANT_MOOD:'):
+                    dominant_mood = line.replace('DOMINANT_MOOD:', '').strip().lower()
+                elif line.startswith('SECONDARY_MOOD:'):
+                    secondary_mood = line.replace('SECONDARY_MOOD:', '').strip().lower()
+                elif line.startswith('DESCRIPTION:'):
+                    description = line.replace('DESCRIPTION:', '').strip()
+            
+            # Validate moods
+            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused']
+            if dominant_mood not in valid_moods:
+                dominant_mood = "neutral"
+            if secondary_mood not in valid_moods:
+                secondary_mood = "neutral"
+            
+            # Create combined mood for gradient
+            combined_mood = f"{dominant_mood},{secondary_mood}"
+            
+            return make_response({
+                "dominant_mood": dominant_mood,
+                "secondary_mood": secondary_mood,
+                "combined_mood": combined_mood,
+                "description": description,
+                "entry_count": len(entries)
+            }, 200)
+            
+        except Exception as e:
+            print(f"Error in profile analysis: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return make_response({"error": f"Failed to analyze profile: {str(e)}"}, 500)
+
+api.add_resource(UserProfile, '/user-profile/<int:user_id>')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5555)
