@@ -20,9 +20,10 @@ from config import app, db, api
 from sqlalchemy import select
 from models import Entry, User
 
-# Basic route for testing
+# Basic route for testing API connectivity
 @app.route('/')
 def home():
+    """Health check endpoint to verify API is running and OpenAI key is configured"""
     api_key = os.getenv('OPENAI_API_KEY')
     return jsonify({
         "message": "MoodRing API is running!",
@@ -30,12 +31,16 @@ def home():
     })
 
 class AllUsers(Resource):
+    """Resource for handling all user operations (GET all users, POST new user)"""
+    
     def get(self):
+        """Retrieve all users from the database"""
         users = User.query.all()
         response_body = [user.to_dict() for user in users]
         return make_response(response_body, 200)
     
     def post(self):
+        """Create a new user with username and password"""
         try:
             data = request.get_json()
             new_user = User(
@@ -54,7 +59,10 @@ class AllUsers(Resource):
 api.add_resource(AllUsers, '/users')
 
 class UserById(Resource):
+    """Resource for handling individual user operations (GET, PATCH, DELETE by ID)"""
+    
     def get(self, id):
+        """Retrieve a specific user by ID"""
         user = db.session.get(User, id)
         if user:
             return make_response(user.to_dict(), 200)
@@ -62,6 +70,7 @@ class UserById(Resource):
             return make_response({"error": "User not found"}, 404)
     
     def patch(self, id):
+        """Update a specific user's information"""
         user = db.session.get(User, id)
         if user:
             data = request.get_json()
@@ -73,6 +82,7 @@ class UserById(Resource):
             return make_response({"error": "User not found"}, 404)  
     
     def delete(self, id):
+        """Delete a specific user by ID"""
         user = db.session.get(User, id)
         if user:
             db.session.delete(user)
@@ -84,7 +94,10 @@ class UserById(Resource):
 api.add_resource(UserById, '/users/<int:id>')
 
 class Login(Resource):
+    """Resource for user authentication"""
+    
     def post(self):
+        """Authenticate user with username and password"""
         try:
             data = request.get_json()
             user = User.query.filter_by(username=data['username']).first()
@@ -99,7 +112,10 @@ class Login(Resource):
 api.add_resource(Login, '/login')
 
 class AllEntries(Resource):
+    """Resource for handling all journal entry operations"""
+    
     def get(self):
+        """Retrieve all entries for a specific user"""
         # For now, we'll get user_id from query params
         # In a real app, this would come from JWT token
         user_id = request.args.get('user_id', 1)  # Default to user 1 for now
@@ -108,6 +124,7 @@ class AllEntries(Resource):
         return make_response(response_body, 200)
     
     def post(self):
+        """Create a new journal entry"""
         try:
             data = request.get_json()
             new_entry = Entry(
@@ -128,13 +145,18 @@ class AllEntries(Resource):
 api.add_resource(AllEntries, '/entries')
 
 class EntryById(Resource):
+    """Resource for handling individual journal entry operations"""
+    
     def get(self, id):
+        """Retrieve a specific journal entry by ID"""
         entry = db.session.get(Entry, id)
         if entry:
             return make_response(entry.to_dict(), 200)
         else:
             return make_response({"error": "Entry not found"}, 404)
+    
     def patch(self, id):
+        """Update a specific journal entry"""
         entry = db.session.get(Entry, id)
         if entry:
             try:
@@ -160,6 +182,7 @@ class EntryById(Resource):
             return make_response({"error": "Entry not found"}, 404)
     
     def delete(self, id):
+        """Delete a specific journal entry"""
         entry = db.session.get(Entry, id)
         if entry:
             try:
@@ -182,7 +205,10 @@ class EntryById(Resource):
 api.add_resource(EntryById, '/entries/<int:id>')
 
 class AnalyzeMood(Resource):
+    """Resource for AI-powered mood analysis of journal entries"""
+    
     def post(self):
+        """Analyze the emotional tone of journal content using OpenAI GPT-3.5-turbo"""
         try:
             data = request.get_json()
             content = data.get('content', '')
@@ -259,7 +285,10 @@ class AnalyzeMood(Resource):
 api.add_resource(AnalyzeMood, '/analyze-mood')
 
 class UserProfile(Resource):
+    """Resource for AI-generated personality profiles based on journal entries"""
+    
     def get(self, user_id):
+        """Generate a comprehensive personality profile by analyzing all user's journal entries"""
         try:
             # Get all entries for the user
             entries = Entry.query.filter_by(user_id=user_id).all()
@@ -350,5 +379,6 @@ class UserProfile(Resource):
 
 api.add_resource(UserProfile, '/user-profile/<int:user_id>')
 
+# Run the Flask application
 if __name__ == '__main__':
     app.run(debug=True, port=5555)

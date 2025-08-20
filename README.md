@@ -11,6 +11,26 @@ A groovy, AI-powered journal application that analyzes your emotions and creates
 - **Responsive Design**: Works beautifully on all devices
 - **Real-time Analysis**: Instant emotion detection as you write
 
+## 📸 Screenshots & Demo
+
+### Screenshots
+
+![Signup Form](screenshots/signup.png)
+![Login Form](screenshots/login.png)
+![New Entry Form](screenshots/newentry.png)
+![Journal View](screenshots/journal.png)
+![Mood Color Guide](screenshots/colorguide.png)
+![Entry Detail](screenshots/entrydetail.png)
+![Profile Page](screenshots/profile.png)
+
+
+
+
+### Demo Video
+
+<!-- Add demo video link here -->
+<!-- Example: [Watch Demo Video](https://youtube.com/watch?v=your-video-id) -->
+
 ## Tech Stack
 
 - **Frontend**: React, React Router, Axios, Lucide React
@@ -37,7 +57,8 @@ chmod +x setup.sh
 ```
 
 2. **Configure environment**
-   Edit `server/.env` and add your OpenAI API key:
+
+Edit `server/.env` and add your OpenAI API key:
 
 ```bash
 OPENAI_API_KEY=your_actual_openai_api_key_here

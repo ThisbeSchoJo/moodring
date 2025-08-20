@@ -1,3 +1,5 @@
+// Main App component - sets up routing, authentication, and overall application structure
+// Uses React Router for navigation and AuthProvider for user state management
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -15,17 +17,23 @@ import Profile from "./components/Profile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./App.css";
 
+// Main routing component with authentication protection
 function AppRoutes() {
   const { user, loading } = useAuth();
 
+  // Show loading screen while checking authentication status
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="App">
+      {/* Header component appears on all authenticated pages */}
       <Header />
+
+      {/* Route definitions with authentication guards */}
       <Routes>
+        {/* Login page - redirects to home if already logged in */}
         <Route
           path="/login"
           element={
@@ -34,6 +42,8 @@ function AppRoutes() {
             </main>
           }
         />
+
+        {/* Signup page - redirects to home if already logged in */}
         <Route
           path="/signup"
           element={
@@ -42,6 +52,8 @@ function AppRoutes() {
             </main>
           }
         />
+
+        {/* Home/Journal page - main dashboard showing all entries */}
         <Route
           path="/"
           element={
@@ -50,6 +62,8 @@ function AppRoutes() {
             </main>
           }
         />
+
+        {/* New entry form - for creating new journal entries */}
         <Route
           path="/new"
           element={
@@ -58,6 +72,8 @@ function AppRoutes() {
             </main>
           }
         />
+
+        {/* Entry detail page - for viewing and editing individual entries */}
         <Route
           path="/entry/:id"
           element={
@@ -66,6 +82,8 @@ function AppRoutes() {
             </main>
           }
         />
+
+        {/* Profile page - AI-generated personality insights */}
         <Route
           path="/profile"
           element={
@@ -79,9 +97,12 @@ function AppRoutes() {
   );
 }
 
+// Root App component that wraps everything with providers
 function App() {
   return (
+    // AuthProvider manages user authentication state across the app
     <AuthProvider>
+      {/* Router enables client-side navigation */}
       <Router>
         <AppRoutes />
       </Router>
