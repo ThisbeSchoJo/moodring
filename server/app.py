@@ -259,7 +259,7 @@ class AnalyzeMood(Resource):
             mood_response = response.choices[0].message.content.strip().lower()
             
             # Parse and validate the moods
-            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused']
+            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused', 'in love']
             
             # Split by comma and clean up each mood
             detected_moods = [mood.strip() for mood in mood_response.split(',')]
@@ -369,7 +369,7 @@ class UserProfile(Resource):
                     description = line.replace('DESCRIPTION:', '').strip()
             
             # Validate moods with better logic
-            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused']
+            valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused', 'in love']
             
             # Only default to neutral if no valid mood was found or if both moods are neutral
             if dominant_mood not in valid_moods:
