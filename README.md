@@ -7,7 +7,7 @@ A groovy, AI-powered journal application that analyzes your emotions and creates
 - **AI Emotion Analysis**: Automatic emotion detection and color assignment
 - **Beautiful Visual Design**: Gradient backgrounds with seamless blending effects
 - **User Authentication**: Secure login and signup system
-- **Personality Profiles**: AI-generated insights based on your journaling
+- **Personality Profiles**: AI-generated insights based on your journaling with consistent mood detection
 - **Responsive Design**: Works beautifully on all devices
 - **Real-time Analysis**: Instant emotion detection as you write
 
@@ -22,9 +22,6 @@ A groovy, AI-powered journal application that analyzes your emotions and creates
 ![Mood Color Guide](screenshots/colorguide.png)
 ![Entry Detail](screenshots/entrydetail.png)
 ![Profile Page](screenshots/profile.png)
-
-
-
 
 ### Demo Video
 
