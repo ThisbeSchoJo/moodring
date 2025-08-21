@@ -313,14 +313,25 @@ class UserProfile(Resource):
             Journal titles: {all_titles}
             Journal content: {all_content}
             
+            CRITICAL MOOD DETECTION RULES:
+            - Look for ANY emotional content in the writing (happy, sad, anxious, excited, etc.)
+            - If you find ANY emotions, DO NOT choose "neutral" as the dominant mood
+            - Only use "neutral" if the entries are completely devoid of emotional content
+            - Be aggressive about detecting emotions - even subtle ones should be identified
+            
             Based on these entries, provide:
             1. A dominant overall mood/personality trait (choose from: happy, excited, calm, neutral, sad, angry, anxious, grateful, hopeful, confused)
             2. A secondary mood trait that also appears frequently
-            3. A brief personality description (2-3 sentences)
+            3. A brief personality description (2-3 sentences) written directly to the user using "you" - make it personal and engaging
             
-            IMPORTANT: Only choose "neutral" as the dominant mood if the entries truly show no strong emotional patterns. 
-            If you detect any clear emotions (happy, sad, anxious, etc.), use those instead of defaulting to neutral.
-            Look for emotional themes, recurring feelings, and personality traits in the writing.
+            MOOD DETECTION PRIORITY:
+            - First, scan for obvious emotions (happy, sad, angry, anxious)
+            - Then look for subtle emotions (grateful, hopeful, confused, excited)
+            - Only default to "neutral" if absolutely no emotional patterns are found
+            - If you see ANY emotional content, use that instead of neutral
+            
+            For the description, write as if you're speaking directly to the user about their personality and emotional patterns.
+            Use "you" and "your" to make it personal and engaging.
             
             Respond in this exact format:
             DOMINANT_MOOD: [mood]
@@ -366,35 +377,47 @@ class UserProfile(Resource):
             if secondary_mood not in valid_moods:
                 secondary_mood = "neutral"
             
-            # If both moods are neutral, try to extract emotions from the actual entry content
-            if dominant_mood == "neutral" and secondary_mood == "neutral":
-                # Analyze the actual entry moods to find the most common one
-                all_entry_moods = []
-                for entry in entries:
-                    if entry.mood and entry.mood != "neutral":
-                        all_entry_moods.extend([mood.strip() for mood in entry.mood.split(',') if mood.strip() != "neutral"])
+            # Always use entry mood data as the primary source of truth for consistency
+            all_entry_moods = []
+            for entry in entries:
+                if entry.mood and entry.mood != "neutral":
+                    all_entry_moods.extend([mood.strip() for mood in entry.mood.split(',') if mood.strip() != "neutral"])
+            
+            # If we have entry mood data, use it to validate/override AI response
+            if all_entry_moods:
+                # Count mood frequencies from actual entries
+                mood_counts = {}
+                for mood in all_entry_moods:
+                    if mood in valid_moods:
+                        mood_counts[mood] = mood_counts.get(mood, 0) + 1
                 
-                if all_entry_moods:
-                    # Count mood frequencies
-                    mood_counts = {}
-                    for mood in all_entry_moods:
-                        if mood in valid_moods:
-                            mood_counts[mood] = mood_counts.get(mood, 0) + 1
-                    
-                    # Use the most frequent mood as dominant
+                if mood_counts:
+                    # Use the most frequent mood from entries as dominant (more reliable than AI)
+                    dominant_mood = max(mood_counts, key=mood_counts.get)
+                    # Remove the dominant mood from counts and get the second most frequent
+                    mood_counts.pop(dominant_mood, None)
                     if mood_counts:
-                        dominant_mood = max(mood_counts, key=mood_counts.get)
-                        # Remove the dominant mood from counts and get the second most frequent
-                        mood_counts.pop(dominant_mood, None)
-                        if mood_counts:
-                            secondary_mood = max(mood_counts, key=mood_counts.get)
-                        else:
-                            secondary_mood = "calm"  # Default secondary if no other moods found
+                        secondary_mood = max(mood_counts, key=mood_counts.get)
                     else:
-                        secondary_mood = "calm"
+                        # If only one mood found, use a complementary mood as secondary
+                        if dominant_mood in ["happy", "excited"]:
+                            secondary_mood = "grateful"
+                        elif dominant_mood in ["sad", "angry"]:
+                            secondary_mood = "hopeful"
+                        elif dominant_mood in ["anxious", "confused"]:
+                            secondary_mood = "calm"
+                        else:
+                            secondary_mood = "calm"
                 else:
-                    # If no moods found in entries, use calm as secondary instead of neutral
-                    secondary_mood = "calm"
+                    # Fallback if no valid moods found in entries
+                    dominant_mood = "calm"
+                    secondary_mood = "hopeful"
+            else:
+                # If no entry mood data, use AI response but avoid neutral
+                if dominant_mood == "neutral":
+                    dominant_mood = "calm"
+                if secondary_mood == "neutral":
+                    secondary_mood = "hopeful"
             
             # Create combined mood for gradient
             combined_mood = f"{dominant_mood},{secondary_mood}"
