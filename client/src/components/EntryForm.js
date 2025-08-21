@@ -25,8 +25,10 @@ const EntryForm = () => {
 
     setIsSubmitting(true);
 
-    // If mood hasn't been analyzed yet, analyze it automatically
-    if (mood === "neutral" && content.trim()) {
+    let finalMood = mood; // Start with current mood
+
+    // Always analyze mood for new entries
+    if (content.trim()) {
       try {
         const response = await fetch("http://localhost:5555/analyze-mood", {
           method: "POST",
@@ -38,11 +40,12 @@ const EntryForm = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setMood(data.mood);
+          finalMood = data.mood; // Use the analyzed mood
+          setMood(data.mood); // Update the state as well
         }
       } catch (error) {
         console.error("Error auto-analyzing mood:", error);
-        // Continue with neutral mood if analysis fails
+        // Continue with current mood if analysis fails
       }
     }
 
@@ -55,7 +58,7 @@ const EntryForm = () => {
         body: JSON.stringify({
           title: title.trim(),
           content: content.trim(),
-          mood: mood, // This will be the AI-analyzed mood
+          mood: finalMood, // Use the analyzed mood
           user_id: user.id, // Use the logged-in user's ID
         }),
       });

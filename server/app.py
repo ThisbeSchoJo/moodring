@@ -236,6 +236,7 @@ class AnalyzeMood(Resource):
             - grateful: thankful, appreciative feelings
             - hopeful: optimistic, looking forward feelings
             - confused: uncertain, unclear feelings
+            - in love: romantic, passionate, loving feelings
             
             Journal entry: "{content}"
             
@@ -248,7 +249,7 @@ class AnalyzeMood(Resource):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are an emotion analysis expert. Respond with only the mood categories separated by commas."},
+                    {"role": "system", "content": "You are an emotion analysis expert. Be aggressive about detecting emotions. Only use 'neutral' if the content is truly devoid of any emotional content. Look for subtle emotions and personality traits."},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=50,
@@ -258,18 +259,47 @@ class AnalyzeMood(Resource):
             # Extract the moods from the response
             mood_response = response.choices[0].message.content.strip().lower()
             
+            # Debug: Print the raw AI response
+            print(f"Raw AI response: '{mood_response}'")
+            
             # Parse and validate the moods
             valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused', 'in love']
             
             # Split by comma and clean up each mood
             detected_moods = [mood.strip() for mood in mood_response.split(',')]
+            print(f"Detected moods: {detected_moods}")
             
             # Filter to only include valid moods
             validated_moods = [mood for mood in detected_moods if mood in valid_moods]
+            print(f"Validated moods: {validated_moods}")
             
-            # If no valid moods found, default to neutral
-            if not validated_moods:
-                validated_moods = ['neutral']
+            # If no valid moods found, try to extract emotions from the content itself
+            if not validated_moods or (len(validated_moods) == 1 and validated_moods[0] == 'neutral'):
+                # Look for emotional keywords in the content
+                content_lower = content.lower()
+                emotion_keywords = {
+                    'happy': ['happy', 'joy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'loved', 'loving'],
+                    'sad': ['sad', 'unhappy', 'depressed', 'miserable', 'terrible', 'awful', 'hate', 'hated'],
+                    'angry': ['angry', 'mad', 'furious', 'irritated', 'frustrated', 'annoyed'],
+                    'anxious': ['anxious', 'worried', 'nervous', 'stressed', 'afraid', 'scared', 'fear'],
+                    'grateful': ['grateful', 'thankful', 'appreciate', 'blessed', 'fortunate'],
+                    'hopeful': ['hopeful', 'optimistic', 'hope', 'future', 'dream', 'wish'],
+                    'confused': ['confused', 'uncertain', 'unsure', 'doubt', 'question'],
+                    'calm': ['calm', 'peaceful', 'relaxed', 'serene', 'quiet', 'tranquil'],
+                    'in love': ['love', 'loving', 'romantic', 'passion', 'heart', 'soulmate', 'beloved']
+                }
+                
+                found_emotions = []
+                for emotion, keywords in emotion_keywords.items():
+                    if any(keyword in content_lower for keyword in keywords):
+                        found_emotions.append(emotion)
+                
+                if found_emotions:
+                    validated_moods = found_emotions[:2]  # Take up to 2 emotions
+                    print(f"Found emotions from keywords: {validated_moods}")
+                else:
+                    validated_moods = ['calm']  # Default to calm instead of neutral
+                    print("No emotions found, defaulting to calm")
             
             # Join back into comma-separated string
             mood = ','.join(validated_moods)
