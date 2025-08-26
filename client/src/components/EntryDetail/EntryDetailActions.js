@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { handleApiError, ERROR_CONTEXTS } from "../utils/errorHandling";
+import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";
 
 const useEntryDetailActions = (
   id,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "../styling/signup.css";
+import "../../styling/signup.css";
 
 const Signup = () => {
   const [username, setUsername] = useState("");

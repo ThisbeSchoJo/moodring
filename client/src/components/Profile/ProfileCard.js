@@ -1,7 +1,7 @@
 import React from "react";
 import { User } from "lucide-react";
 import ProfileStats from "./ProfileStats";
-import { getMoodColors, createEntryGradient } from "../utils/moodColors";
+import { getMoodColors, createEntryGradient } from "../../utils/moodColors";
 import SparkleEffect from "./SparkleEffect";
 
 const ProfileCard = ({ user, profile }) => {

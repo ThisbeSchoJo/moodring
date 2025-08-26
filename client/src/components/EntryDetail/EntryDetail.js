@@ -4,16 +4,16 @@ import EntryDetailHeader from "./EntryDetailHeader";
 import EntryDetailContent from "./EntryDetailContent";
 import EntryEditForm from "./EntryEditForm";
 import useEntryDetailActions from "./EntryDetailActions";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
 import {
   getMoodColors,
   getTextColor,
   getTextShadow,
-} from "../utils/moodColors";
-import { handleApiError, ERROR_CONTEXTS } from "../utils/errorHandling";
-import "../styling/entrydetail.css";
+} from "../../utils/moodColors";
+import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";
+import "../../styling/entrydetail.css";
 
 const EntryDetail = () => {
   const { id } = useParams();

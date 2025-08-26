@@ -7,13 +7,13 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Header from "./components/Header";
-import Journal from "./components/Journal";
-import EntryForm from "./components/EntryForm";
-import EntryDetail from "./components/EntryDetail";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Profile from "./components/Profile";
+import Header from "./components/Common/Header";
+import Journal from "./components/Journal/Journal";
+import EntryForm from "./components/Common/EntryForm";
+import EntryDetail from "./components/EntryDetail/EntryDetail";
+import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
+import Profile from "./components/Profile/Profile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import "./App.css";
 

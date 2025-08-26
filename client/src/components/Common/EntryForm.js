@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Save, ArrowLeft, Sparkles } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
-import "../styling/entryform.css";
+import "../../styling/entryform.css";
 
 const EntryForm = () => {
   const navigate = useNavigate();

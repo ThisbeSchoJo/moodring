@@ -1,5 +1,5 @@
 import React from "react";
-import { getMoodColors, parseMoods } from "../utils/moodColors";
+import { getMoodColors, parseMoods } from "../../utils/moodColors";
 
 const EntryDetailContent = ({
   entry,

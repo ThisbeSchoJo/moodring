@@ -5,7 +5,7 @@ import {
   parseMoods,
   getTextColor,
   createEntryGradient,
-} from "../utils/moodColors";
+} from "../../utils/moodColors";
 
 const JournalEntryItem = ({
   entry,

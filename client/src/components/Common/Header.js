@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import MoodLegend from "./MoodLegend";
 import { Palette, BookOpen, Plus, User } from "lucide-react";
-import "../styling/header.css";
+import "../../styling/header.css";
 
 const Header = () => {
   const { user, logout } = useAuth();

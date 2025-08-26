@@ -2,11 +2,11 @@
 // Features: AI-generated mood colors, seamless gradient blending, hover effects
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import JournalEntryItem from "./JournalEntryItem";
-import { getMoodColors, parseMoods } from "../utils/moodColors";
-import "../styling/journal.css";
+import { getMoodColors, parseMoods } from "../../utils/moodColors";
+import "../../styling/journal.css";
 
 const Journal = () => {
   // State for storing journal entries and tracking hover state

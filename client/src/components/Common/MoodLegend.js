@@ -1,6 +1,6 @@
 import React from "react";
-import { MOOD_COLORS } from "../utils/moodColors";
-import "../styling/moodlegend.css";
+import { MOOD_COLORS } from "../../utils/moodColors";
+import "../../styling/moodlegend.css";
 
 const MoodLegend = ({ isVisible, onToggle }) => {
   if (!isVisible) return null;
