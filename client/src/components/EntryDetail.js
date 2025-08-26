@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Edit, Trash2, Calendar, Heart } from "lucide-react";
+import EntryDetailHeader from "./EntryDetailHeader";
 import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
@@ -238,48 +238,14 @@ const EntryDetail = () => {
         </div>
       )}
 
-      <div className="detail-header">
-        <button
-          className="back-button"
-          onClick={() => navigate("/")}
-          onKeyDown={(e) => e.key === "Enter" && navigate("/")}
-          aria-label="Back to Journal"
-          title="Back to Journal"
-          role="button"
-          tabIndex={0}
-        >
-          <ArrowLeft size={20} />
-        </button>
-        <div className="header-actions">
-          {entry && entry.user_id === user.id && (
-            <>
-              <button
-                className="edit-button"
-                onClick={() => setIsEditing(!isEditing)}
-                onKeyDown={(e) => e.key === "Enter" && setIsEditing(!isEditing)}
-                disabled={isSaving}
-                aria-label={isEditing ? "Cancel editing" : "Edit entry"}
-                title={isEditing ? "Cancel" : "Edit"}
-                role="button"
-                tabIndex={0}
-              >
-                <Edit size={20} />
-              </button>
-              <button
-                className="delete-button"
-                onClick={handleDelete}
-                onKeyDown={(e) => e.key === "Enter" && handleDelete()}
-                aria-label="Delete entry"
-                title="Delete"
-                role="button"
-                tabIndex={0}
-              >
-                <Trash2 size={20} />
-              </button>
-            </>
-          )}
-        </div>
-      </div>
+      <EntryDetailHeader
+        onBack={() => navigate("/")}
+        onEdit={() => setIsEditing(!isEditing)}
+        onDelete={handleDelete}
+        isEditing={isEditing}
+        isSaving={isSaving}
+        canEdit={entry && entry.user_id === user.id}
+      />
 
       <div
         className="entry-content"
