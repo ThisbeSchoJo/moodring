@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EntryDetailHeader from "./EntryDetailHeader";
 import EntryDetailContent from "./EntryDetailContent";
@@ -38,11 +38,7 @@ const EntryDetail = () => {
     navigate
   );
 
-  useEffect(() => {
-    fetchEntry();
-  }, [id]);
-
-  const fetchEntry = async () => {
+  const fetchEntry = useCallback(async () => {
     try {
       setError(null);
       const response = await axios.get(`http://localhost:5555/entries/${id}`);
@@ -57,7 +53,11 @@ const EntryDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    fetchEntry();
+  }, [fetchEntry]);
 
   if (loading) {
     return (

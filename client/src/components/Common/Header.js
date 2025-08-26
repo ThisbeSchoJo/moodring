@@ -33,7 +33,6 @@ const Header = () => {
                 onKeyDown={(e) => e.key === "Enter" && setShowLegend(true)}
                 aria-label="View Mood Color Guide"
                 title="View Mood Color Guide"
-                role="button"
                 tabIndex={0}
               >
                 <Palette size={20} />
@@ -70,7 +69,6 @@ const Header = () => {
                   className="logout-button"
                   aria-label="Logout"
                   title="Logout"
-                  role="button"
                   tabIndex={0}
                 >
                   <svg

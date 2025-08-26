@@ -1,7 +1,6 @@
 // Journal component - displays all journal entries for the current user
 // Features: AI-generated mood colors, seamless gradient blending, hover effects
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import JournalEntryItem from "./JournalEntryItem";

@@ -17,7 +17,6 @@ const EntryDetailHeader = ({
         onKeyDown={(e) => e.key === "Enter" && onBack()}
         aria-label="Back to Journal"
         title="Back to Journal"
-        role="button"
         tabIndex={0}
       >
         <ArrowLeft size={20} />
@@ -32,7 +31,6 @@ const EntryDetailHeader = ({
               disabled={isSaving}
               aria-label={isEditing ? "Cancel editing" : "Edit entry"}
               title={isEditing ? "Cancel" : "Edit"}
-              role="button"
               tabIndex={0}
             >
               <Edit size={20} />
@@ -43,7 +41,6 @@ const EntryDetailHeader = ({
               onKeyDown={(e) => e.key === "Enter" && onDelete()}
               aria-label="Delete entry"
               title="Delete"
-              role="button"
               tabIndex={0}
             >
               <Trash2 size={20} />

@@ -142,8 +142,7 @@ export const createEntryGradient = (entry, index, totalEntries, allEntries) => {
   }
 
   // Shorter transition zones for subtle blending
-  const transitionZone = 0.15; // 15% of the entry height for transitions
-  const mainZone = 1 - 2 * transitionZone; // 70% for the main color
+  // const transitionZone = 0.15; // 15% of the entry height for transitions
 
   if (index === 0) {
     // First entry: starts with a subtle blend from its own color, transitions to next entry's color

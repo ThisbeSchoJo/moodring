@@ -17,7 +17,6 @@ const JournalEntryItem = ({
   createHoverGradient,
 }) => {
   // Get mood colors and parse emotions for this entry
-  const moodColors = getMoodColors(entry.mood);
   const moods = parseMoods(entry.mood);
   const textColor = getTextColor(entry.mood);
 

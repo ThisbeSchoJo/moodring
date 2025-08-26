@@ -33,7 +33,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5555/users", {
+      await axios.post("http://localhost:5555/users", {
         username,
         password,
       });

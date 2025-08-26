@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Save, ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 import "../../styling/entryform.css";
@@ -91,7 +91,6 @@ const EntryForm = () => {
           onKeyDown={(e) => e.key === "Enter" && navigate("/")}
           aria-label="Back to Journal"
           title="Back to Journal"
-          role="button"
           tabIndex={0}
         >
           <ArrowLeft size={20} />
@@ -154,7 +153,6 @@ const EntryForm = () => {
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         disabled={isSubmitting}
         aria-label="Publish journal entry"
-        role="button"
         tabIndex={0}
       >
         {isSubmitting ? "Publishing..." : "Publish Entry"}

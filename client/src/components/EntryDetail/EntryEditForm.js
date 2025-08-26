@@ -81,7 +81,6 @@ const EntryEditForm = ({
             disabled={isSaving}
             aria-label="Save changes"
             title="Save changes"
-            role="button"
             tabIndex={0}
             style={{
               background:
@@ -104,7 +103,6 @@ const EntryEditForm = ({
             onKeyDown={(e) => e.key === "Enter" && onSave()}
           >
             {isSaving ? "Saving..." : "Save Changes"}
-            {/* Shimmer effect */}
             <div
               style={{
                 position: "absolute",
