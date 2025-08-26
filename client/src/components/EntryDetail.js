@@ -8,8 +8,6 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import {
   getMoodColors,
-  getMoodEmoji,
-  parseMoods,
   getTextColor,
   getTextShadow,
 } from "../utils/moodColors";
@@ -23,7 +21,7 @@ const EntryDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState("");
-  const [editedMood, setEditedMood] = useState("");
+
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -38,7 +36,6 @@ const EntryDetail = () => {
       const response = await axios.get(`http://localhost:5555/entries/${id}`);
       setEntry(response.data);
       setEditedContent(response.data.content);
-      setEditedMood(response.data.mood || "neutral");
     } catch (error) {
       console.error("Error fetching entry:", error);
       let errorMessage = "Failed to load entry";
@@ -75,7 +72,7 @@ const EntryDetail = () => {
 
     try {
       // First, re-analyze the mood with AI
-      let updatedMood = editedMood;
+      let updatedMood = entry.mood;
       try {
         const moodResponse = await axios.post(
           "http://localhost:5555/analyze-mood",
@@ -85,7 +82,6 @@ const EntryDetail = () => {
         );
         if (moodResponse.data && moodResponse.data.mood) {
           updatedMood = moodResponse.data.mood;
-          setEditedMood(updatedMood);
         }
       } catch (moodError) {
         console.error("Error analyzing mood:", moodError);
@@ -163,16 +159,6 @@ const EntryDetail = () => {
 
       setError(errorMessage);
     }
-  };
-
-  const formatDate = (timestamp) => {
-    return new Date(timestamp).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
   };
 
   if (loading) {
