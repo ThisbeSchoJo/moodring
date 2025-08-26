@@ -259,19 +259,14 @@ class AnalyzeMood(Resource):
             # Extract the moods from the response
             mood_response = response.choices[0].message.content.strip().lower()
             
-            # Debug: Print the raw AI response
-            print(f"Raw AI response: '{mood_response}'")
-            
             # Parse and validate the moods
             valid_moods = ['happy', 'excited', 'calm', 'neutral', 'sad', 'angry', 'anxious', 'grateful', 'hopeful', 'confused', 'in love']
             
             # Split by comma and clean up each mood
             detected_moods = [mood.strip() for mood in mood_response.split(',')]
-            print(f"Detected moods: {detected_moods}")
             
             # Filter to only include valid moods
             validated_moods = [mood for mood in detected_moods if mood in valid_moods]
-            print(f"Validated moods: {validated_moods}")
             
             # If no valid moods found, try to extract emotions from the content itself
             if not validated_moods or (len(validated_moods) == 1 and validated_moods[0] == 'neutral'):
@@ -296,10 +291,8 @@ class AnalyzeMood(Resource):
                 
                 if found_emotions:
                     validated_moods = found_emotions[:2]  # Take up to 2 emotions
-                    print(f"Found emotions from keywords: {validated_moods}")
                 else:
                     validated_moods = ['calm']  # Default to calm instead of neutral
-                    print("No emotions found, defaulting to calm")
             
             # Join back into comma-separated string
             mood = ','.join(validated_moods)

@@ -51,18 +51,15 @@ const EntryDetail = () => {
       // First, re-analyze the mood with AI
       let updatedMood = editedMood;
       try {
-        console.log("Analyzing mood for content:", editedContent.trim());
         const moodResponse = await axios.post(
           "http://localhost:5555/analyze-mood",
           {
             content: editedContent.trim(),
           }
         );
-        console.log("Mood analysis response:", moodResponse.data);
         if (moodResponse.data && moodResponse.data.mood) {
           updatedMood = moodResponse.data.mood;
           setEditedMood(updatedMood);
-          console.log("Updated mood to:", updatedMood);
         }
       } catch (moodError) {
         console.error("Error analyzing mood:", moodError);
@@ -70,7 +67,6 @@ const EntryDetail = () => {
       }
 
       // Then save the entry with the updated mood
-      console.log("Saving entry with mood:", updatedMood);
       const response = await axios.patch(
         `http://localhost:5555/entries/${id}`,
         {
@@ -80,7 +76,6 @@ const EntryDetail = () => {
           user_id: user.id, // Pass user_id for verification
         }
       );
-      console.log("Save response:", response.data);
       setEntry(response.data);
       setIsEditing(false);
     } catch (error) {

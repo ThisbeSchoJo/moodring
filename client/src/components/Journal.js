@@ -28,7 +28,6 @@ const Journal = () => {
           `http://localhost:5555/entries?user_id=${user.id}`
         );
         setEntries(response.data);
-        console.log("Fetched entries:", response.data);
       } catch (error) {
         console.error("Error fetching entries:", error);
       }
