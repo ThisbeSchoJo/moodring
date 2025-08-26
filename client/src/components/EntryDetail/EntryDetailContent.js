@@ -14,16 +14,16 @@ const EntryDetailContent = ({
     <div
       className="entry-meta"
       style={{
-        padding: "38.832px 38.832px 25.888px 38.832px",
+        padding: "39px 39px 26px 39px",
         position: "relative",
       }}
     >
-      {/* 24 * 1.618 ≈ 38.832, 16 * 1.618 ≈ 25.888 */}
+      {/* 24 * 1.618 ≈ 39, 16 * 1.618 ≈ 26 */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10.113px" /* 6.25 * 1.618 ≈ 10.113 */,
+          gap: "10px" /* 6.25 * 1.618 ≈ 10 */,
           flex: "1",
           minWidth: "0",
           paddingRight: "320px",
@@ -33,7 +33,7 @@ const EntryDetailContent = ({
           <h1
             style={{
               margin: "0",
-              fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
+              fontSize: "2rem" /* 1.25 * 1.618 ≈ 2 */,
               fontWeight: "800",
               color: "#1a252f",
               textTransform: "uppercase",
@@ -51,11 +51,11 @@ const EntryDetailContent = ({
             className="title-input"
             aria-label="Edit entry title"
             style={{
-              fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
+              fontSize: "2rem" /* 1.25 * 1.618 ≈ 2 */,
               fontWeight: "800",
               border: "none",
               borderRadius: "0",
-              padding: "25.888px 0" /* 16 * 1.618 ≈ 25.888 */,
+              padding: "26px 0" /* 16 * 1.618 ≈ 26 */,
               color: "#1a252f",
               textTransform: "uppercase",
               letterSpacing: "-0.02em",
@@ -69,7 +69,7 @@ const EntryDetailContent = ({
         <div
           className="entry-date"
           style={{
-            fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
+            fontSize: "1.3rem" /* 0.809 * 1.618 ≈ 1.3 */,
             color: "#1a252f",
             fontWeight: "700",
             opacity: "0.9",
@@ -89,12 +89,12 @@ const EntryDetailContent = ({
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
+          gap: "8px" /* 5 * 1.618 ≈ 8 */,
           justifyContent: "flex-end",
           alignItems: "flex-start",
           position: "absolute",
-          top: "38.832px",
-          right: "38.832px",
+          top: "39px",
+          right: "39px",
           width: "300px",
           maxWidth: "300px",
         }}
@@ -105,10 +105,9 @@ const EntryDetailContent = ({
             style={{
               background: getMoodColors(mood).gradient,
               color: "#ffffff",
-              padding:
-                "10.113px 15.17px" /* 6.25 * 1.618 ≈ 10.113, 9.375 * 1.618 ≈ 15.17 */,
-              borderRadius: "15.17px" /* 9.375 * 1.618 ≈ 15.17 */,
-              fontSize: "1.571rem" /* 0.971 * 1.618 ≈ 1.571 */,
+              padding: "10px 15px" /* 6.25 * 1.618 ≈ 10, 9.375 * 1.618 ≈ 15 */,
+              borderRadius: "15px" /* 9.375 * 1.618 ≈ 15 */,
+              fontSize: "1.6rem" /* 0.971 * 1.618 ≈ 1.6 */,
               fontWeight: "600",
               display: "flex",
               alignItems: "center",

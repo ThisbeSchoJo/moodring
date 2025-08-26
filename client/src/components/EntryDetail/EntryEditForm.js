@@ -14,29 +14,29 @@ const EntryEditForm = ({
   return (
     <div
       style={{
-        padding: "0 38.832px 38.832px 38.832px",
+        padding: "0 39px 39px 39px",
         position: "relative",
       }}
     >
-      {/* 24 * 1.618 ≈ 38.832 */}
+      {/* 24 * 1.618 ≈ 39 */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "32.36px" /* 20 * 1.618 ≈ 32.36 */,
+          gap: "32px" /* 20 * 1.618 ≈ 32 */,
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "16.18px" /* 10 * 1.618 ≈ 16.18 */,
+            gap: "16px" /* 10 * 1.618 ≈ 16 */,
           }}
         >
           <label
             htmlFor="content"
             style={{
-              fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
+              fontSize: "1.3rem" /* 0.809 * 1.618 ≈ 1.3 */,
               fontWeight: "700",
               color: textColor,
               textShadow: textShadow,
@@ -54,8 +54,8 @@ const EntryEditForm = ({
             style={{
               width: "100%",
               minHeight: "300px",
-              padding: "25.888px" /* 16 * 1.618 ≈ 25.888 */,
-              fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
+              padding: "26px" /* 16 * 1.618 ≈ 26 */,
+              fontSize: "1.7rem" /* 1.052 * 1.618 ≈ 1.7 */,
               fontWeight: "600",
               lineHeight: "1.6",
               color: textColor,
@@ -74,7 +74,7 @@ const EntryEditForm = ({
           style={{
             display: "flex",
             justifyContent: "flex-end",
-            gap: "16.18px" /* 10 * 1.618 ≈ 16.18 */,
+            gap: "16px" /* 10 * 1.618 ≈ 16 */,
           }}
         >
           <button
@@ -89,10 +89,9 @@ const EntryEditForm = ({
                 "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
               color: "white",
               border: "1px solid transparent",
-              padding:
-                "16.18px 32.36px" /* 10 * 1.618 ≈ 16.18, 20 * 1.618 ≈ 32.36 */,
-              borderRadius: "16.18px" /* 10 * 1.618 ≈ 16.18 */,
-              fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
+              padding: "16px 32px" /* 10 * 1.618 ≈ 16, 20 * 1.618 ≈ 32 */,
+              borderRadius: "16px" /* 10 * 1.618 ≈ 16 */,
+              fontSize: "1.3rem" /* 0.809 * 1.618 ≈ 1.3 */,
               fontWeight: "600",
               cursor: "pointer",
               transition: "all 0.3s ease",

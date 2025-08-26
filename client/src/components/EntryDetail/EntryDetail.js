@@ -137,7 +137,7 @@ const EntryDetail = () => {
         className="entry-content"
         style={{
           background: moodColors.gradient,
-          borderRadius: "19.416px" /* 12 * 1.618 ≈ 19.416 */,
+          borderRadius: "19px" /* 12 * 1.618 ≈ 19 */,
           overflow: "hidden",
           boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
           color: textColor,
@@ -166,8 +166,8 @@ const EntryDetail = () => {
           <div
             className="entry-text"
             style={{
-              padding: "0 38.832px 38.832px 38.832px" /* 24 * 1.618 ≈ 38.832 */,
-              fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
+              padding: "0 39px 39px 39px" /* 24 * 1.618 ≈ 39 */,
+              fontSize: "1.7rem" /* 1.052 * 1.618 ≈ 1.7 */,
               lineHeight: "1.6",
               color: textColor,
               textShadow: textShadow,

@@ -74,10 +74,9 @@ const JournalEntryItem = ({
           style={{
             padding:
               index === 0
-                ? "38.832px 58.248px 38.832px 58.248px" /* 24 * 1.618 ≈ 38.832, 36 * 1.618 ≈ 58.248 */
-                : "38.832px 58.248px 38.832px 58.248px",
-            margin:
-              "0 58.248px 19.416px 58.248px" /* 36 * 1.618 ≈ 58.248, 12 * 1.618 ≈ 19.416 */,
+                ? "39px 58px 39px 58px" /* 24 * 1.618 ≈ 39, 36 * 1.618 ≈ 58 */
+                : "39px 58px 39px 58px",
+            margin: "0 58px 19px 58px" /* 36 * 1.618 ≈ 58, 12 * 1.618 ≈ 19 */,
           }}
         >
           <div
@@ -85,15 +84,15 @@ const JournalEntryItem = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
-              gap: "20.225px" /* 12.5 * 1.618 ≈ 20.225 */,
-              marginBottom: "20.225px" /* 12.5 * 1.618 ≈ 20.225 */,
+              gap: "20px" /* 12.5 * 1.618 ≈ 20 */,
+              marginBottom: "20px" /* 12.5 * 1.618 ≈ 20 */,
             }}
           >
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "10.113px" /* 6.25 * 1.618 ≈ 10.113 */,
+                gap: "10px" /* 6.25 * 1.618 ≈ 10 */,
                 flex: "1",
                 minWidth: "0",
               }}
@@ -102,7 +101,7 @@ const JournalEntryItem = ({
                 style={{
                   color: "#1a252f",
                   textDecoration: "none",
-                  fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
+                  fontSize: "2rem" /* 1.25 * 1.618 ≈ 2 */,
                   fontWeight: "800",
                   textTransform: "uppercase",
                 }}
@@ -111,7 +110,7 @@ const JournalEntryItem = ({
               </div>
               <div
                 style={{
-                  fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
+                  fontSize: "1.3rem" /* 0.809 * 1.618 ≈ 1.3 */,
                   color: "#1a252f",
                   fontWeight: "700",
                   opacity: "0.9",
@@ -130,11 +129,11 @@ const JournalEntryItem = ({
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
+                gap: "8px" /* 5 * 1.618 ≈ 8 */,
                 justifyContent: "flex-end",
                 alignItems: "flex-start",
                 flexShrink: "0",
-                maxWidth: "485.4px" /* 300 * 1.618 ≈ 485.4 */,
+                maxWidth: "485px" /* 300 * 1.618 ≈ 485 */,
               }}
             >
               {moods.map((mood, moodIndex) => (
@@ -144,9 +143,9 @@ const JournalEntryItem = ({
                     background: getMoodColors(mood).gradient,
                     color: "#ffffff",
                     padding:
-                      "10.113px 15.17px" /* 6.25 * 1.618 ≈ 10.113, 9.375 * 1.618 ≈ 15.17 */,
-                    borderRadius: "15.17px" /* 9.375 * 1.618 ≈ 15.17 */,
-                    fontSize: "1.571rem" /* 0.971 * 1.618 ≈ 1.571 */,
+                      "10px 15px" /* 6.25 * 1.618 ≈ 10, 9.375 * 1.618 ≈ 15 */,
+                    borderRadius: "15px" /* 9.375 * 1.618 ≈ 15 */,
+                    fontSize: "1.6rem" /* 0.971 * 1.618 ≈ 1.6 */,
                     fontWeight: "600",
                     display: "flex",
                     alignItems: "center",
@@ -166,7 +165,7 @@ const JournalEntryItem = ({
             style={{
               color: "#1a252f",
               lineHeight: "1.6",
-              fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
+              fontSize: "1.7rem" /* 1.052 * 1.618 ≈ 1.7 */,
               fontWeight: "600",
             }}
           >
