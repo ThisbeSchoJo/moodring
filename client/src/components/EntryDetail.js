@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EntryDetailHeader from "./EntryDetailHeader";
 import EntryDetailContent from "./EntryDetailContent";
+import EntryEditForm from "./EntryEditForm";
 import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
@@ -268,68 +269,15 @@ const EntryDetail = () => {
         />
 
         {isEditing ? (
-          <div
-            className="edit-form"
-            style={{ padding: "0 38.832px 38.832px 38.832px" }}
-          >
-            {" "}
-            {/* 24 * 1.618 ≈ 38.832 */}
-            <textarea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-              placeholder="Write your entry content..."
-              aria-label="Edit entry content"
-              style={{
-                width: "100%",
-                minHeight: "323.6px" /* 200 * 1.618 ≈ 323.6 */,
-                padding: "25.888px" /* 16 * 1.618 ≈ 25.888 */,
-                border: "none",
-                borderRadius: "12.944px" /* 8 * 1.618 ≈ 12.944 */,
-                background: "rgba(255,255,255,0.15)",
-                color: textColor,
-                fontSize: "1.702rem" /* 1.052 * 1.618 ≈ 1.702 */,
-                lineHeight: "1.6",
-                resize: "vertical",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.3)",
-                fontWeight: "600",
-                textShadow: textShadow,
-              }}
-            />
-            <button
-              className="save-button"
-              onClick={handleSave}
-              onKeyDown={(e) => e.key === "Enter" && handleSave()}
-              disabled={isSaving}
-              aria-label="Save entry changes"
-              role="button"
-              tabIndex={0}
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
-                color: "#667eea",
-                border: "1px solid rgba(102, 126, 234, 0.2)",
-                padding:
-                  "19.416px 40.45px" /* 12 * 1.618 ≈ 19.416, 25 * 1.618 ≈ 40.45 */,
-                borderRadius: "16.18px" /* 10 * 1.618 ≈ 16.18 */,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "8.09px" /* 5 * 1.618 ≈ 8.09 */,
-                marginTop: "32.36px" /* 20 * 1.618 ≈ 32.36 */,
-                fontWeight: "700",
-                fontSize: "1.309rem" /* 0.809 * 1.618 ≈ 1.309 */,
-                transition: "all 0.4s ease",
-                textTransform: "uppercase",
-                letterSpacing: "0.485px" /* 0.3 * 1.618 ≈ 0.485 */,
-                position: "relative",
-                overflow: "hidden",
-                textDecoration: "none",
-              }}
-            >
-              {isSaving ? "Saving..." : "Save Changes"}
-            </button>
-          </div>
+          <EntryEditForm
+            entry={entry}
+            editedContent={editedContent}
+            onContentChange={(e) => setEditedContent(e.target.value)}
+            onSave={handleSave}
+            isSaving={isSaving}
+            textColor={textColor}
+            textShadow={textShadow}
+          />
         ) : (
           <div
             className="entry-text"
