@@ -1,3 +1,5 @@
+// ProfileStats component - displays user statistics in the profile view
+// Features: Entry count, dominant mood display, glassmorphism design, responsive layout
 import React from "react";
 import { BookOpen, Heart } from "lucide-react";
 

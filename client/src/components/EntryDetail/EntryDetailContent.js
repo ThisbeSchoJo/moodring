@@ -1,3 +1,5 @@
+// EntryDetailContent component - displays entry title, date, and mood tags
+// Features: Editable title, formatted date display, mood tag rendering, golden ratio styling
 import React from "react";
 import { getMoodColors, parseMoods } from "../../utils/moodColors";
 

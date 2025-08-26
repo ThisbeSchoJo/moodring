@@ -1,3 +1,5 @@
+// Header component - main navigation bar with logo, navigation links, and mood legend
+// Features: Responsive navigation, user authentication state, mood color guide, logout functionality
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

@@ -1,3 +1,5 @@
+// JournalEntryItem component - displays individual journal entries in the main journal list
+// Features: Mood-based gradients, hover effects, shimmer animations, seamless blending, golden ratio styling
 import React from "react";
 import { Link } from "react-router-dom";
 import {

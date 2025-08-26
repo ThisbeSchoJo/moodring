@@ -1,8 +1,9 @@
+// EntryForm component - form for creating new journal entries with AI mood analysis
+// Features: Form validation, automatic mood detection, accessibility support, loading states
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-
 import "../../styling/entryform.css";
 
 const EntryForm = () => {

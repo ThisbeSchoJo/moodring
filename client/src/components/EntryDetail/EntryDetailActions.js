@@ -1,3 +1,5 @@
+// useEntryDetailActions hook - manages save and delete operations for journal entries
+// Features: AI mood re-analysis, error handling, loading states, user confirmation for deletion
 import { useState } from "react";
 import axios from "axios";
 import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";

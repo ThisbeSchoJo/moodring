@@ -1,3 +1,5 @@
+// Signup component - handles new user registration
+// Features: Form validation, password confirmation, password visibility toggles, error handling
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";

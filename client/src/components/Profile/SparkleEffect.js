@@ -1,3 +1,5 @@
+// SparkleEffect component - creates animated sparkle effects for visual enhancement
+// Features: Random sparkle generation, star and circle shapes, CSS animations, configurable count
 import React, { useState, useEffect } from "react";
 
 const SparkleEffect = ({ count = 35 }) => {

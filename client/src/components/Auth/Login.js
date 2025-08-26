@@ -1,3 +1,5 @@
+// Login component - handles user authentication with username/password
+// Features: Form validation, password visibility toggle, error handling, success messages
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

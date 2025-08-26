@@ -1,11 +1,12 @@
+// ProfileCard component - displays user's AI-generated personality profile with visual effects
+// Features: Mood-based gradients, sparkle animations, user statistics, personality insights, glassmorphism design
 import React from "react";
 import { User } from "lucide-react";
 import ProfileStats from "./ProfileStats";
-import { getMoodColors, createEntryGradient } from "../../utils/moodColors";
+import { createEntryGradient } from "../../utils/moodColors";
 import SparkleEffect from "./SparkleEffect";
 
 const ProfileCard = ({ user, profile }) => {
-  const profileColors = getMoodColors(profile.combined_mood);
   const profileGradient = createEntryGradient(profile.combined_mood, 0, 1, []);
 
   return (

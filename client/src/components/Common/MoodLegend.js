@@ -1,3 +1,5 @@
+// MoodLegend component - displays the mood color guide with all available emotions
+// Features: Visual color representation, mood descriptions, helpful tips about color blending
 import React from "react";
 import { MOOD_COLORS } from "../../utils/moodColors";
 import "../../styling/moodlegend.css";

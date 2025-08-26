@@ -1,3 +1,5 @@
+// ProfileHeader component - header section for the profile page with navigation and title
+// Features: Back navigation, gradient text styling, responsive design
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";

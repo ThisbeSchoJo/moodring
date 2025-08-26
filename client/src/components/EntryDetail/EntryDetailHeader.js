@@ -1,3 +1,5 @@
+// EntryDetailHeader component - navigation and action buttons for entry detail view
+// Features: Back navigation, edit/delete actions, accessibility support, conditional rendering
 import React from "react";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 

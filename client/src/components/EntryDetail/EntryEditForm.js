@@ -1,3 +1,5 @@
+// EntryEditForm component - form for editing existing journal entries
+// Features: Content editing, save functionality, loading states, accessibility support, golden ratio styling
 import React from "react";
 
 const EntryEditForm = ({

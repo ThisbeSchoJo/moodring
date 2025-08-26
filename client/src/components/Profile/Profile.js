@@ -1,9 +1,9 @@
+// Profile component - displays AI-generated personality insights based on user's journal entries
+// Features: Mood analysis, personality insights, entry statistics, and visual effects
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
 import axios from "axios";
-
 import ProfileCard from "./ProfileCard";
 import ProfileHeader from "./ProfileHeader";
 
