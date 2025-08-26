@@ -616,17 +616,6 @@ html {
   cursor: not-allowed;
 }
 
-/* Entry Detail */
-.entry-detail {
-  max-width: 1200px;
-  margin: 51.776px auto 0 auto; /* 32 * 1.618 ≈ 51.776 for top margin */
-  padding: 32.36px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
 .detail-header {
   display: flex;
   justify-content: space-between;
