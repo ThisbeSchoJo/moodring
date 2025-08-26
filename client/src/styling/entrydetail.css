@@ -82,8 +82,9 @@
 
 .entry-detail {
   width: 100%;
-  margin: 0;
-  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
   background-color: transparent;
   border-radius: 0;
   box-shadow: none;
