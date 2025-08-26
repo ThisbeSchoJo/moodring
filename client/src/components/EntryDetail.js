@@ -142,7 +142,11 @@ const EntryDetail = () => {
         <button
           className="back-button"
           onClick={() => navigate("/")}
+          onKeyDown={(e) => e.key === "Enter" && navigate("/")}
+          aria-label="Back to Journal"
           title="Back to Journal"
+          role="button"
+          tabIndex={0}
         >
           <ArrowLeft size={20} />
         </button>
@@ -152,15 +156,23 @@ const EntryDetail = () => {
               <button
                 className="edit-button"
                 onClick={() => setIsEditing(!isEditing)}
+                onKeyDown={(e) => e.key === "Enter" && setIsEditing(!isEditing)}
                 disabled={isSaving}
+                aria-label={isEditing ? "Cancel editing" : "Edit entry"}
                 title={isEditing ? "Cancel" : "Edit"}
+                role="button"
+                tabIndex={0}
               >
                 <Edit size={20} />
               </button>
               <button
                 className="delete-button"
                 onClick={handleDelete}
+                onKeyDown={(e) => e.key === "Enter" && handleDelete()}
+                aria-label="Delete entry"
                 title="Delete"
+                role="button"
+                tabIndex={0}
               >
                 <Trash2 size={20} />
               </button>
@@ -219,6 +231,7 @@ const EntryDetail = () => {
                 onChange={(e) => setEntry({ ...entry, title: e.target.value })}
                 placeholder="Entry title..."
                 className="title-input"
+                aria-label="Edit entry title"
                 style={{
                   fontSize: "2.023rem" /* 1.25 * 1.618 ≈ 2.023 */,
                   fontWeight: "800",
@@ -305,6 +318,7 @@ const EntryDetail = () => {
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
               placeholder="Write your entry content..."
+              aria-label="Edit entry content"
               style={{
                 width: "100%",
                 minHeight: "323.6px" /* 200 * 1.618 ≈ 323.6 */,
@@ -325,7 +339,11 @@ const EntryDetail = () => {
             <button
               className="save-button"
               onClick={handleSave}
+              onKeyDown={(e) => e.key === "Enter" && handleSave()}
               disabled={isSaving}
+              aria-label="Save entry changes"
+              role="button"
+              tabIndex={0}
               style={{
                 background:
                   "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
