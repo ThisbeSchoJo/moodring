@@ -24,24 +24,55 @@ export const AuthProvider = ({ children }) => {
 
   // Check for existing user session on app startup
   useEffect(() => {
-    // Retrieve user data from localStorage if available
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      setUser(JSON.parse(userData));
+    try {
+      // Retrieve user data from localStorage if available
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        const parsedUser = JSON.parse(userData);
+        // Validate stored user data
+        if (parsedUser && parsedUser.id && parsedUser.username) {
+          setUser(parsedUser);
+        } else {
+          // Invalid data in localStorage, clear it
+          localStorage.removeItem("user");
+          console.warn("Invalid user data found in localStorage, cleared");
+        }
+      }
+    } catch (error) {
+      console.error("Error loading user from localStorage:", error);
+      // Clear corrupted localStorage data
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   // Login function - authenticates user with backend API
   const login = async (username, password) => {
     try {
+      // Validate input
+      if (!username?.trim() || !password?.trim()) {
+        return {
+          success: false,
+          error: "Username and password are required",
+        };
+      }
+
       // Send login request to backend
       const response = await axios.post("http://localhost:5555/login", {
-        username,
+        username: username.trim(),
         password,
       });
 
       const userData = response.data;
+
+      // Validate response data
+      if (!userData || !userData.id || !userData.username) {
+        return {
+          success: false,
+          error: "Invalid response from server",
+        };
+      }
 
       // Update user state and persist to localStorage
       setUser(userData);
@@ -49,18 +80,42 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true };
     } catch (error) {
-      // Return error message from backend or generic error
+      console.error("Login error:", error);
+
+      let errorMessage = "Login failed";
+
+      if (error.response?.status === 401) {
+        errorMessage = "Invalid username or password";
+      } else if (error.response?.status === 400) {
+        errorMessage = error.response.data?.error || "Invalid login data";
+      } else if (error.response?.status === 404) {
+        errorMessage = "User not found";
+      } else if (error.code === "NETWORK_ERROR" || !error.response) {
+        errorMessage =
+          "Network error. Please check your connection and try again.";
+      } else if (error.response?.status >= 500) {
+        errorMessage = "Server error. Please try again later.";
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+
       return {
         success: false,
-        error: error.response?.data?.error || "Login failed",
+        error: errorMessage,
       };
     }
   };
 
   // Logout function - clears user session
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+    try {
+      setUser(null);
+      localStorage.removeItem("user");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      // Even if localStorage fails, clear the user state
+      setUser(null);
+    }
   };
 
   // Context value object containing all auth-related functions and state
