@@ -30,25 +30,48 @@ const Header = () => {
               <button
                 className="legend-button"
                 onClick={() => setShowLegend(true)}
+                onKeyDown={(e) => e.key === "Enter" && setShowLegend(true)}
+                aria-label="View Mood Color Guide"
                 title="View Mood Color Guide"
+                role="button"
+                tabIndex={0}
               >
                 <Palette size={20} />
                 Color Guide
               </button>
-              <Link to="/" className="nav-icon-button" title="Journal">
+              <Link
+                to="/"
+                className="nav-icon-button"
+                title="Journal"
+                aria-label="Go to Journal"
+              >
                 <BookOpen size={20} />
               </Link>
-              <Link to="/new" className="nav-icon-button" title="New Entry">
+              <Link
+                to="/new"
+                className="nav-icon-button"
+                title="New Entry"
+                aria-label="Create New Entry"
+              >
                 <Plus size={20} />
               </Link>
-              <Link to="/profile" className="nav-icon-button" title="Profile">
+              <Link
+                to="/profile"
+                className="nav-icon-button"
+                title="Profile"
+                aria-label="View Profile"
+              >
                 <User size={20} />
               </Link>
               <div className="user-section">
                 <button
                   onClick={handleLogout}
+                  onKeyDown={(e) => e.key === "Enter" && handleLogout()}
                   className="logout-button"
+                  aria-label="Logout"
                   title="Logout"
+                  role="button"
+                  tabIndex={0}
                 >
                   <svg
                     width="20"
@@ -68,7 +91,7 @@ const Header = () => {
               </div>
             </>
           ) : (
-            <Link to="/login" className="nav-link">
+            <Link to="/login" className="nav-link" aria-label="Go to Login">
               <span>Login</span>
             </Link>
           )}
