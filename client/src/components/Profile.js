@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-import { ArrowLeft } from "lucide-react";
 import axios from "axios";
-import SparkleEffect from "./SparkleEffect";
+
 import ProfileCard from "./ProfileCard";
+import ProfileHeader from "./ProfileHeader";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -113,52 +113,7 @@ const Profile = () => {
         minHeight: "100vh",
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "1rem",
-          marginBottom: "3rem",
-          paddingBottom: "2rem",
-          borderBottom: "1px solid rgba(0,0,0,0.1)",
-        }}
-      >
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "44px",
-            height: "44px",
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            color: "white",
-            borderRadius: "50%",
-            textDecoration: "none",
-            transition: "all 0.3s ease",
-            boxShadow: "0 4px 15px rgba(102, 126, 234, 0.3)",
-          }}
-        >
-          <ArrowLeft size={20} />
-        </Link>
-        <h1
-          style={{
-            margin: 0,
-            fontSize: "2.5rem",
-            fontWeight: "800",
-            background:
-              "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            textTransform: "uppercase",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Your Mood Profile
-        </h1>
-      </div>
+      <ProfileHeader />
 
       <ProfileCard user={user} profile={profile} />
 
