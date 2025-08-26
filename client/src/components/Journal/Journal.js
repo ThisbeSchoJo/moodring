@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import JournalEntryItem from "./JournalEntryItem";
 import { getMoodColors, parseMoods } from "../../utils/moodColors";
+import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";
 import "../../styling/journal.css";
 
 const Journal = () => {
@@ -22,7 +23,8 @@ const Journal = () => {
         );
         setEntries(response.data);
       } catch (error) {
-        console.error("Error fetching entries:", error);
+        // Handle error silently for now - could add error state if needed
+        handleApiError(error, ERROR_CONTEXTS.FETCH_ENTRIES);
       }
     };
 

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
+import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";
 import "../../styling/entryform.css";
 
 const EntryForm = () => {
@@ -31,53 +33,35 @@ const EntryForm = () => {
     // Always analyze mood for new entries
     if (content.trim()) {
       try {
-        const response = await fetch("http://localhost:5555/analyze-mood", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content: content.trim() }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          finalMood = data.mood; // Use the analyzed mood
-          setMood(data.mood); // Update the state as well
-        }
+        const response = await axios.post(
+          "http://localhost:5555/analyze-mood",
+          {
+            content: content.trim(),
+          }
+        );
+        finalMood = response.data.mood; // Use the analyzed mood
+        setMood(response.data.mood); // Update the state as well
       } catch (error) {
-        console.error("Error auto-analyzing mood:", error);
         // Continue with current mood if analysis fails
+        // Don't show error to user since this is background analysis
       }
     }
 
     try {
-      const response = await fetch("http://localhost:5555/entries", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: title.trim(),
-          content: content.trim(),
-          mood: finalMood, // Use the analyzed mood
-          user_id: user.id, // Use the logged-in user's ID
-        }),
+      await axios.post("http://localhost:5555/entries", {
+        title: title.trim(),
+        content: content.trim(),
+        mood: finalMood, // Use the analyzed mood
+        user_id: user.id, // Use the logged-in user's ID
       });
 
-      if (response.ok) {
-        setMessage("Entry created successfully! Redirecting...");
-        setTimeout(() => {
-          navigate("/"); // Go back to journal after showing success message
-        }, 1500);
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        setMessage(
-          `Failed to create entry: ${errorData.message || "Unknown error"}`
-        );
-      }
+      setMessage("Entry created successfully! Redirecting...");
+      setTimeout(() => {
+        navigate("/"); // Go back to journal after showing success message
+      }, 1500);
     } catch (error) {
-      console.error("Error creating entry:", error);
-      setMessage("Network error. Please check your connection and try again.");
+      const errorMessage = handleApiError(error, ERROR_CONTEXTS.CREATE_ENTRY);
+      setMessage(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

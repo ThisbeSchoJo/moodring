@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import ProfileCard from "./ProfileCard";
 import ProfileHeader from "./ProfileHeader";
+import { handleApiError, ERROR_CONTEXTS } from "../../utils/errorHandling";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -24,8 +25,8 @@ const Profile = () => {
         );
         setProfile(response.data);
       } catch (err) {
-        console.error("Error fetching profile:", err);
-        setError(err.response?.data?.error || "Failed to load profile");
+        const errorMessage = handleApiError(err, ERROR_CONTEXTS.FETCH_PROFILE);
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }

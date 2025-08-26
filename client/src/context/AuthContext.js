@@ -35,12 +35,11 @@ export const AuthProvider = ({ children }) => {
         } else {
           // Invalid data in localStorage, clear it
           localStorage.removeItem("user");
-          console.warn("Invalid user data found in localStorage, cleared");
+          // Invalid user data found in localStorage, cleared
         }
       }
     } catch (error) {
-      console.error("Error loading user from localStorage:", error);
-      // Clear corrupted localStorage data
+      // Clear corrupted localStorage data silently
       localStorage.removeItem("user");
     } finally {
       setLoading(false);
@@ -80,8 +79,6 @@ export const AuthProvider = ({ children }) => {
 
       return { success: true };
     } catch (error) {
-      console.error("Login error:", error);
-
       let errorMessage = "Login failed";
 
       if (error.response?.status === 401) {
@@ -112,7 +109,6 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       localStorage.removeItem("user");
     } catch (error) {
-      console.error("Error during logout:", error);
       // Even if localStorage fails, clear the user state
       setUser(null);
     }

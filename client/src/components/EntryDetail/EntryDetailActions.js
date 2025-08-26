@@ -40,8 +40,8 @@ const useEntryDetailActions = (
           updatedMood = moodResponse.data.mood;
         }
       } catch (moodError) {
-        console.error("Error analyzing mood:", moodError);
         // Continue with current mood if analysis fails
+        // Don't show error to user since this is background analysis
       }
 
       // Then save the entry with the updated mood
