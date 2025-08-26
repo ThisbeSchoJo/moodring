@@ -11,6 +11,7 @@ import {
   getTextColor,
   getTextShadow,
 } from "../utils/moodColors";
+import { handleApiError, ERROR_CONTEXTS } from "../utils/errorHandling";
 import "../styling/entrydetail.css";
 
 const EntryDetail = () => {
@@ -37,20 +38,7 @@ const EntryDetail = () => {
       setEntry(response.data);
       setEditedContent(response.data.content);
     } catch (error) {
-      console.error("Error fetching entry:", error);
-      let errorMessage = "Failed to load entry";
-
-      if (error.response?.status === 404) {
-        errorMessage = "Entry not found";
-      } else if (error.response?.status === 403) {
-        errorMessage = "You don't have permission to view this entry";
-      } else if (error.code === "NETWORK_ERROR" || !error.response) {
-        errorMessage =
-          "Network error. Please check your connection and try again.";
-      } else if (error.response?.status >= 500) {
-        errorMessage = "Server error. Please try again later.";
-      }
-
+      const errorMessage = handleApiError(error, ERROR_CONTEXTS.FETCH_ENTRY);
       setError(errorMessage);
       setTimeout(() => {
         navigate("/");
@@ -103,22 +91,7 @@ const EntryDetail = () => {
       setSuccessMessage("Entry updated successfully!");
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (error) {
-      console.error("Error updating entry:", error);
-      let errorMessage = "Failed to update entry";
-
-      if (error.response?.status === 403) {
-        errorMessage = "You can only edit your own entries";
-      } else if (error.response?.status === 404) {
-        errorMessage = "Entry not found";
-      } else if (error.response?.status === 400) {
-        errorMessage = error.response.data?.error || "Invalid entry data";
-      } else if (error.code === "NETWORK_ERROR" || !error.response) {
-        errorMessage =
-          "Network error. Please check your connection and try again.";
-      } else if (error.response?.status >= 500) {
-        errorMessage = "Server error. Please try again later.";
-      }
-
+      const errorMessage = handleApiError(error, ERROR_CONTEXTS.UPDATE_ENTRY);
       setError(errorMessage);
     } finally {
       setIsSaving(false);
@@ -143,20 +116,7 @@ const EntryDetail = () => {
         navigate("/");
       }, 1500);
     } catch (error) {
-      console.error("Error deleting entry:", error);
-      let errorMessage = "Failed to delete entry";
-
-      if (error.response?.status === 403) {
-        errorMessage = "You can only delete your own entries";
-      } else if (error.response?.status === 404) {
-        errorMessage = "Entry not found";
-      } else if (error.code === "NETWORK_ERROR" || !error.response) {
-        errorMessage =
-          "Network error. Please check your connection and try again.";
-      } else if (error.response?.status >= 500) {
-        errorMessage = "Server error. Please try again later.";
-      }
-
+      const errorMessage = handleApiError(error, ERROR_CONTEXTS.DELETE_ENTRY);
       setError(errorMessage);
     }
   };
