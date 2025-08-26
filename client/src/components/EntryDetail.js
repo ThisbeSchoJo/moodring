@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import EntryDetailHeader from "./EntryDetailHeader";
 import EntryDetailContent from "./EntryDetailContent";
 import EntryEditForm from "./EntryEditForm";
+import useEntryDetailActions from "./EntryDetailActions";
 import { useAuth } from "../context/AuthContext";
 // axios is used to make HTTP requests to the server (automatic JSON parsing, better error handling, request/response interceptors, request cancellation, progress monitoring)
 import axios from "axios";
@@ -22,10 +23,20 @@ const EntryDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState("");
-
-  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  // Use custom hook for entry actions
+  const { isSaving, handleSave, handleDelete } = useEntryDetailActions(
+    id,
+    user,
+    entry,
+    setEntry,
+    setIsEditing,
+    setError,
+    setSuccessMessage,
+    navigate
+  );
 
   useEffect(() => {
     fetchEntry();
@@ -45,79 +56,6 @@ const EntryDetail = () => {
       }, 3000);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSave = async () => {
-    if (!editedContent.trim()) {
-      setError("Entry content cannot be empty");
-      return;
-    }
-
-    setIsSaving(true);
-    setError(null);
-    setSuccessMessage(null);
-
-    try {
-      // First, re-analyze the mood with AI
-      let updatedMood = entry.mood;
-      try {
-        const moodResponse = await axios.post(
-          "http://localhost:5555/analyze-mood",
-          {
-            content: editedContent.trim(),
-          }
-        );
-        if (moodResponse.data && moodResponse.data.mood) {
-          updatedMood = moodResponse.data.mood;
-        }
-      } catch (moodError) {
-        console.error("Error analyzing mood:", moodError);
-        // Continue with current mood if analysis fails
-      }
-
-      // Then save the entry with the updated mood
-      const response = await axios.patch(
-        `http://localhost:5555/entries/${id}`,
-        {
-          title: entry.title,
-          content: editedContent,
-          mood: updatedMood,
-          user_id: user.id, // Pass user_id for verification
-        }
-      );
-      setEntry(response.data);
-      setIsEditing(false);
-      setSuccessMessage("Entry updated successfully!");
-      setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (error) {
-      const errorMessage = handleApiError(error, ERROR_CONTEXTS.UPDATE_ENTRY);
-      setError(errorMessage);
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete this entry? This action cannot be undone."
-      )
-    )
-      return;
-
-    setError(null);
-    try {
-      await axios.delete(
-        `http://localhost:5555/entries/${id}?user_id=${user.id}`
-      );
-      setSuccessMessage("Entry deleted successfully!");
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    } catch (error) {
-      const errorMessage = handleApiError(error, ERROR_CONTEXTS.DELETE_ENTRY);
-      setError(errorMessage);
     }
   };
 
@@ -219,7 +157,7 @@ const EntryDetail = () => {
             entry={entry}
             editedContent={editedContent}
             onContentChange={(e) => setEditedContent(e.target.value)}
-            onSave={handleSave}
+            onSave={() => handleSave(editedContent)}
             isSaving={isSaving}
             textColor={textColor}
             textShadow={textShadow}
