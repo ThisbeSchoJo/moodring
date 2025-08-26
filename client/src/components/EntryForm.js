@@ -88,7 +88,11 @@ const EntryForm = () => {
         <button
           className="back-button"
           onClick={() => navigate("/")}
+          onKeyDown={(e) => e.key === "Enter" && navigate("/")}
+          aria-label="Back to Journal"
           title="Back to Journal"
+          role="button"
+          tabIndex={0}
         >
           <ArrowLeft size={20} />
         </button>
@@ -107,6 +111,9 @@ const EntryForm = () => {
 
       <form>
         <div className="form-group">
+          <label htmlFor="title" className="sr-only">
+            Entry Title
+          </label>
           <input
             type="text"
             id="title"
@@ -114,24 +121,41 @@ const EntryForm = () => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Entry title..."
             className="title-input"
+            aria-label="Entry title"
+            aria-describedby="title-help"
           />
+          <div id="title-help" className="sr-only">
+            Enter a title for your journal entry
+          </div>
         </div>
 
         <div className="form-group">
+          <label htmlFor="content" className="sr-only">
+            Entry Content
+          </label>
           <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="What's on your mind?"
             className="content-textarea"
+            aria-label="Entry content"
+            aria-describedby="content-help"
           />
+          <div id="content-help" className="sr-only">
+            Write your thoughts, feelings, or experiences
+          </div>
         </div>
       </form>
 
       <button
         className="publish-button"
         onClick={handleSubmit}
+        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         disabled={isSubmitting}
+        aria-label="Publish journal entry"
+        role="button"
+        tabIndex={0}
       >
         {isSubmitting ? "Publishing..." : "Publish Entry"}
       </button>
