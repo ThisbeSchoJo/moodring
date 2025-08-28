@@ -1,5 +1,6 @@
 // API configuration and utilities
 // Centralized configuration for API endpoints and settings
+import axios from "axios";
 
 // Base URL for API calls - can be overridden by environment variables
 export const API_BASE_URL =
@@ -15,9 +16,6 @@ export const API_ENDPOINTS = {
   ENTRY_BY_ID: (id) => `${API_BASE_URL}/entries/${id}`,
   ENTRIES_BY_USER: (userId) => `${API_BASE_URL}/entries?user_id=${userId}`,
 };
-
-// Axios instance with default configuration
-import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

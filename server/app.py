@@ -224,13 +224,21 @@ class AnalyzeMood(Resource):
             
             # Create the prompt for mood analysis
             prompt = f"""
-            Analyze the emotional tone of this journal entry and identify ALL the emotions present. 
+            Analyze the emotional tone of this journal entry and identify the PRIMARY emotions present.
+            
+            IMPORTANT RULES:
+            - Only identify emotions that are CLEARLY expressed in the content
+            - Do NOT infer emotions from punctuation alone (like "...")
+            - Do NOT add emotions unless they are explicitly stated or strongly implied
+            - If the content is minimal or unclear, default to "neutral"
+            - Be conservative - it's better to miss an emotion than to add one that isn't there
+            
             Choose from these categories:
-            - happy: positive, joyful, content feelings
+            - happy: explicitly positive, joyful, content feelings
             - excited: enthusiastic, energetic, thrilled feelings  
             - calm: peaceful, relaxed, serene feelings
-            - neutral: balanced, neither positive nor negative
-            - sad: unhappy, down, disappointed feelings
+            - neutral: balanced, factual, or unclear emotional content
+            - sad: explicitly unhappy, down, disappointed feelings
             - angry: frustrated, irritated, mad feelings
             - anxious: worried, nervous, stressed feelings
             - grateful: thankful, appreciative feelings
@@ -240,8 +248,8 @@ class AnalyzeMood(Resource):
             
             Journal entry: "{content}"
             
-            Respond with ONLY the mood categories separated by commas (e.g., "happy,excited" or "sad,anxious" or "neutral"). 
-            If multiple emotions are present, include all of them. Be accurate and comprehensive.
+            Respond with ONLY the mood categories separated by commas (e.g., "happy" or "sad,anxious" or "neutral").
+            If no clear emotions are present, respond with "neutral".
             """
             
             # Call OpenAI API
@@ -249,7 +257,7 @@ class AnalyzeMood(Resource):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are an emotion analysis expert. Be aggressive about detecting emotions. Only use 'neutral' if the content is truly devoid of any emotional content. Look for subtle emotions and personality traits."},
+                    {"role": "system", "content": "You are an emotion analysis expert. Be CONSERVATIVE and ACCURATE. Only identify emotions that are clearly expressed in the text. Do not infer emotions from minimal content or punctuation. When in doubt, choose 'neutral'."},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=50,
@@ -268,31 +276,15 @@ class AnalyzeMood(Resource):
             # Filter to only include valid moods
             validated_moods = [mood for mood in detected_moods if mood in valid_moods]
             
-            # If no valid moods found, try to extract emotions from the content itself
-            if not validated_moods or (len(validated_moods) == 1 and validated_moods[0] == 'neutral'):
-                # Look for emotional keywords in the content
-                content_lower = content.lower()
-                emotion_keywords = {
-                    'happy': ['happy', 'joy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'loved', 'loving'],
-                    'sad': ['sad', 'unhappy', 'depressed', 'miserable', 'terrible', 'awful', 'hate', 'hated'],
-                    'angry': ['angry', 'mad', 'furious', 'irritated', 'frustrated', 'annoyed'],
-                    'anxious': ['anxious', 'worried', 'nervous', 'stressed', 'afraid', 'scared', 'fear'],
-                    'grateful': ['grateful', 'thankful', 'appreciate', 'blessed', 'fortunate'],
-                    'hopeful': ['hopeful', 'optimistic', 'hope', 'future', 'dream', 'wish'],
-                    'confused': ['confused', 'uncertain', 'unsure', 'doubt', 'question'],
-                    'calm': ['calm', 'peaceful', 'relaxed', 'serene', 'quiet', 'tranquil'],
-                    'in love': ['love', 'loving', 'romantic', 'passion', 'heart', 'soulmate', 'beloved']
-                }
-                
-                found_emotions = []
-                for emotion, keywords in emotion_keywords.items():
-                    if any(keyword in content_lower for keyword in keywords):
-                        found_emotions.append(emotion)
-                
-                if found_emotions:
-                    validated_moods = found_emotions[:2]  # Take up to 2 emotions
-                else:
-                    validated_moods = ['calm']  # Default to calm instead of neutral
+            # If no valid moods found, default to neutral (more conservative approach)
+            if not validated_moods:
+                validated_moods = ['neutral']
+            elif len(validated_moods) == 1 and validated_moods[0] == 'neutral':
+                # Keep neutral if that's what the AI determined
+                pass
+            else:
+                # Limit to maximum 2 emotions to avoid over-analysis
+                validated_moods = validated_moods[:2]
             
             # Join back into comma-separated string
             mood = ','.join(validated_moods)
