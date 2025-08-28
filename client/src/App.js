@@ -15,6 +15,7 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Profile from "./components/Profile/Profile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import ErrorBoundary from "./components/Common/ErrorBoundary";
 import "./App.css";
 
 // Main routing component with authentication protection
@@ -104,7 +105,9 @@ function App() {
     <AuthProvider>
       {/* Router enables client-side navigation */}
       <Router>
-        <AppRoutes />
+        <ErrorBoundary>
+          <AppRoutes />
+        </ErrorBoundary>
       </Router>
     </AuthProvider>
   );
